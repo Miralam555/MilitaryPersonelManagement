@@ -71,8 +71,6 @@ namespace Business.Concrete
         
         public async Task<IResult> AddAsync(MilitaryMedicalAssessmentAddDto dto)
         {
-
-            
             await _militaryMedicalAssessmentDal.AddAsync(_mapper.Map<MilitaryMedicalAssessment>(dto));
             return new SuccessResult(Messages.SuccessfullyAdded);
         }
