@@ -21,7 +21,7 @@ using System.Threading.Tasks;
 
 namespace Business.Concrete
 {
-    [LogAspect(typeof(DatabaseLogger))]
+    
     public class MilitaryMedicalAssessmentManager : IMilitaryMedicalAssessmentService
     {
         private readonly IMilitaryMedicalAssessmentDal _militaryMedicalAssessmentDal;

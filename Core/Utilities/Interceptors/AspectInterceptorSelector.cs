@@ -20,9 +20,20 @@ namespace Core.Utilities.Interceptors
             var methodAttributes = type.GetMethod(method.Name)
                 .GetCustomAttributes<MethodInterceptionBaseAttribute>(true);
             classAttributes.AddRange(methodAttributes);
-            classAttributes.Add(new PerformanceAspect(7));
-            classAttributes.Add(new ExceptionLogAspect(typeof(DatabaseLogger)));
-            
+            if (!classAttributes.Any(x => x is LogAspect))
+            {
+                classAttributes.Add(new LogAspect(typeof(FileLogger)));
+            }
+            if (!classAttributes.Any(x => x is PerformanceAspect))
+            {
+                classAttributes.Add(new PerformanceAspect(7));
+            }
+
+            if (!classAttributes.Any(x => x is ExceptionLogAspect))
+            {
+                classAttributes.Add(new ExceptionLogAspect(typeof(FileLogger)));
+            }
+
             return classAttributes.OrderBy(x => x.Priority).ToArray();
         }
     }

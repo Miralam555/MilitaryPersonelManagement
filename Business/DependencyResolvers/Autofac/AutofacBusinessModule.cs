@@ -46,6 +46,17 @@ namespace Business.DependencyResolvers.Autofac
             builder.RegisterType<EfMilitaryPersonelPenaltyDal>().As<IMilitaryPersonelPenaltyDal>().SingleInstance();
 
 
+             builder.RegisterType<MilitaryPersonelEducationManager>().As<IMilitaryPersonelEducationService>().SingleInstance();
+            builder.RegisterType<EfMilitaryPersonelEducationDal>().As<IMilitaryPersonelEducationDal>().SingleInstance();
+
+             builder.RegisterType<MilitaryPersonelFamilyMemberForeignTravelManager>().As<IMilitaryPersonelFamilyMemberForeignTravelService>().SingleInstance();
+            builder.RegisterType<EfMilitaryPersonelFamilyMemberForeignTravelDal>().As<IMilitaryPersonelFamilyMemberForeignTravelDal>().SingleInstance();
+
+            
+             builder.RegisterType<MilitaryPersonelForeignLanguageLevelManager>().As<IMilitaryPersonelForeignLanguageLevelService>().SingleInstance();
+            builder.RegisterType<EfMilitaryPersonelForeignLanguageLevelDal>().As<IMilitaryPersonelForeignLanguageLevelDal>().SingleInstance();
+
+
 
             builder.RegisterType<UserManager>().As<IUserService>();
             builder.RegisterType<EfUserDal>().As<IUserDal>();
