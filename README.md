@@ -4,6 +4,8 @@ This project is my final submission for the course and is built using Aspect-Ori
 
 Key cross-cutting concerns implemented in this project include:
 
+Caching
+
 Logging
 
 Validation
