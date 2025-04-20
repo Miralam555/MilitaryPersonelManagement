@@ -31,7 +31,7 @@ namespace WebAPI
             
             services.AddEndpointsApiExplorer();
             services.AddSwaggerGen();
-            
+
             services.AddAutoMapper(typeof(MilitaryPersonelMapper));
             services.AddCors(options =>
             {
