@@ -8,7 +8,7 @@ namespace WebAPI.Controllers
     [ApiController]
     [Route("api/[controller]")]
     [Authorize]
-    public class FamilyMemberController : Controller
+    public class FamilyMemberController : ControllerBase
     {
         private readonly IFamilyMemberService _service;
 

@@ -8,7 +8,7 @@ namespace WebAPI.Controllers
     [ApiController]
     [Route("api/[controller]")]
     [Authorize]
-    public class FamilyMemberForeignTravelController : Controller
+    public class FamilyMemberForeignTravelController : ControllerBase
     {
         private readonly IMilitaryPersonelFamilyMemberForeignTravelService _service;
 

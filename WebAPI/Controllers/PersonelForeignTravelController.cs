@@ -9,7 +9,7 @@ namespace WebAPI.Controllers
     [ApiController]
     [Route("api/[controller]")]
     [Authorize]
-    public class PersonelForeignTravelController : Controller
+    public class PersonelForeignTravelController : ControllerBase
     {
         private readonly IMilitaryPersonelForeignTravelService _service;
 

@@ -8,7 +8,7 @@ namespace WebAPI.Controllers
     [ApiController]
     [Route("api/[controller]")]
     [Authorize]
-    public class CrimeRecordController : Controller
+    public class CrimeRecordController : ControllerBase
     {
         private readonly ICrimeRecordService _service;
 
@@ -22,7 +22,7 @@ namespace WebAPI.Controllers
             var result=await _service.GetAllCrimeRecordsAsync();
             if (result.IsSuccess)
             {
-                return Json(result.Data);
+                return Ok(result.Data);
             }
             return BadRequest(result.Data);
         }
@@ -32,7 +32,7 @@ namespace WebAPI.Controllers
             var result=await _service.GetCrimeRecordsByPersonelIdAsync(id);
             if (result.IsSuccess)
             {
-                return Json(result.Data);
+                return Ok(result.Data);
             }
             return BadRequest(result.Data);
         }
@@ -42,7 +42,7 @@ namespace WebAPI.Controllers
             var result=await _service.GetCrimeRecordsByMemberIdAsync(id);
             if (result.IsSuccess)
             {
-                return Json(result.Data);
+                return Ok(result.Data);
             }
             return BadRequest(result.Data);
         }

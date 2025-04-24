@@ -6,7 +6,7 @@ namespace WebAPI.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class MilitaryPersonelController : Controller
+    public class MilitaryPersonelController : ControllerBase
     {
         private readonly IMilitaryPersonelService _service;
         public MilitaryPersonelController(IMilitaryPersonelService service)
@@ -39,7 +39,7 @@ namespace WebAPI.Controllers
             var result=await _service.GetAllPersonelAsync();
             if (result.IsSuccess)
             {
-                return Json(result.Data);
+                return Ok(result.Data);
             }
             return BadRequest(result.Message);
         }
@@ -49,7 +49,7 @@ namespace WebAPI.Controllers
             var result = await _service.GetByIdPersonel(id);
             if (result.IsSuccess)
             {
-                return Json(result.Data);
+                return Ok(result.Data);
             }
             return BadRequest(result.Message);
         }

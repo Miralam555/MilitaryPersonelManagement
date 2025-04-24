@@ -1,25 +1,27 @@
 ﻿using Business.Abstract;
-using Entities.DTOs.MilitaryPersonelPenaltyDtos;
+using Entities.DTOs.MilitaryPersonelRecognitionDtos;
+using Entities.DTOs.PersonelReputationRiskFindingDtos;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebAPI.Controllers
 {
-    [ApiController]
     [Route("api/[controller]")]
+    [ApiController]
     [Authorize]
-    public class MilitaryPersonelPenaltyController : ControllerBase
+    public class PersonelReputationRiskFindingController : ControllerBase
     {
-        public IMilitaryPersonelPenaltyService _service;
+        private readonly IMilitaryPersonelReputationRiskFindingService _service;
 
-        public MilitaryPersonelPenaltyController(IMilitaryPersonelPenaltyService service)
+        public PersonelReputationRiskFindingController(IMilitaryPersonelReputationRiskFindingService service)
         {
             _service = service;
         }
         [HttpGet("getall")]
-        public async Task<IActionResult> GetAllPenaltiesAsync()
+        public async Task<IActionResult> GetAllRisksAsync()
         {
-            var result = await _service.GetAllPenaltiesAsync();
+            var result = await _service.GetAllRisksAsync();
             if (result.IsSuccess)
             {
                 return Ok(result.Data);
@@ -27,19 +29,20 @@ namespace WebAPI.Controllers
             return BadRequest(result.Message);
         }
         [HttpGet("getallbypersonelid")]
-        public async Task<IActionResult> GetAllPenaltiesByPersonelIdAsync(int personelId)
+        public async Task<IActionResult> GetAllRisksByPersonelIdAsync(int personelId)
         {
-            var result=await _service.GetAllPenaltiesByPersonelIdAsync(personelId);
+            var result = await _service.GetAllRisksByPersonelIdAsync(personelId);
             if (result.IsSuccess)
             {
                 return Ok(result.Data);
             }
+            
             return BadRequest(result.Message);
         }
         [HttpGet("getbyid")]
-        public async Task<IActionResult> GetPenaltyByIdAsync(int id)
+        public async Task<IActionResult> GetRiskByIdAsync(int id)
         {
-            var result = await _service.GetPenaltyByIdAsync(id);
+            var result = await _service.GetRiskByIdAsync(id);
             if (result.IsSuccess)
             {
                 return Ok(result.Data);
@@ -47,38 +50,34 @@ namespace WebAPI.Controllers
             return BadRequest(result.Message);
         }
         [HttpPost("add")]
-        public async Task<IActionResult> AddPenaltyAsync(PenaltyAddDto dto)
+        public async Task<IActionResult> AddRiskAsync(PersonelReputationRiskFindingAddDto dto)
         {
-            var result=await _service.AddPenaltyAsync(dto);
+            var result = await _service.AddRiskAsync(dto);
             if (result.IsSuccess)
             {
                 return Ok(result.Message);
             }
-                
             return BadRequest(result.Message);
         }
         [HttpPut("update")]
-        public async Task<IActionResult> UpdatePenaltyAsync(PenaltyUpdateDto dto)
+        public async Task<IActionResult> UpdateRiskAsync(PersonelReputationRiskFindingUpdateDto dto)
         {
-            var result = await _service.UpdatePenaltyAsync(dto);
+            var result = await _service.UpdateRiskAsync(dto);
             if (result.IsSuccess)
             {
                 return Ok(result.Message);
             }
-
             return BadRequest(result.Message);
         }
         [HttpDelete("delete")]
-        public async Task<IActionResult> DeletePenaltyAsync(int id)
+        public async Task<IActionResult> DeleteRiskAsync(int id)
         {
-            var result = await _service.DeletePenaltyAsync(id);
+            var result = await _service.DeleteRiskAsync(id);
             if (result.IsSuccess)
             {
                 return Ok(result.Message);
             }
-
             return BadRequest(result.Message);
         }
-        
     }
 }

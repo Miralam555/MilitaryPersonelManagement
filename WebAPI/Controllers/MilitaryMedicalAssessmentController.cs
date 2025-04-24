@@ -9,7 +9,7 @@ namespace WebAPI.Controllers
     [ApiController]
     [Route("api/[controller]")]
     [Authorize]
-    public class MilitaryMedicalAssessmentController : Controller
+    public class MilitaryMedicalAssessmentController : ControllerBase
     {
         private readonly IMilitaryMedicalAssessmentService _service;
 

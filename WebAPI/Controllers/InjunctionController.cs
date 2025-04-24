@@ -8,7 +8,7 @@ namespace WebAPI.Controllers
     [ApiController]
     [Route("api/[controller]")]
     [Authorize]
-    public class InjunctionController : Controller
+    public class InjunctionController : ControllerBase
     {
         private readonly IInjunctionService _service;
 

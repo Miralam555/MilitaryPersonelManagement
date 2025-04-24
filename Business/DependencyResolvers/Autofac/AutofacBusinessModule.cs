@@ -56,6 +56,18 @@ namespace Business.DependencyResolvers.Autofac
              builder.RegisterType<MilitaryPersonelForeignLanguageLevelManager>().As<IMilitaryPersonelForeignLanguageLevelService>().SingleInstance();
             builder.RegisterType<EfMilitaryPersonelForeignLanguageLevelDal>().As<IMilitaryPersonelForeignLanguageLevelDal>().SingleInstance();
 
+            
+             builder.RegisterType<PersonelForeignTravelManager>().As<IMilitaryPersonelForeignTravelService>().SingleInstance();
+            builder.RegisterType<EfMilitaryPersonelForeignTravelDal>().As<IMilitaryPersonelForeignTravelDal>().SingleInstance();
+
+            
+             builder.RegisterType<PersonelRecognitionManager>().As<IMilitaryPersonelRecognitionService>().SingleInstance();
+            builder.RegisterType<EfMilitaryPersonelRecognitionDal>().As<IMilitaryPersonelRecognitionDal>().SingleInstance();
+
+             builder.RegisterType<PersonelReputationRiskFindingManager>().As<IMilitaryPersonelReputationRiskFindingService>().SingleInstance();
+            builder.RegisterType<EfMilitaryPersonelReputationRiskFindingDal>().As<IMilitaryPersonelReputationRiskFindingDal>().SingleInstance();
+
+
 
 
             builder.RegisterType<UserManager>().As<IUserService>();

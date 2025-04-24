@@ -1,25 +1,26 @@
 ﻿using Business.Abstract;
-using Entities.DTOs.PersonelForeignLanguageLevel;
+using Entities.DTOs.MilitaryPersonelRecognitionDtos;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebAPI.Controllers
 {
-    [ApiController]
     [Route("api/[controller]")]
+    [ApiController]
     [Authorize]
-    public class PersonelForeignLanguageLevelController : ControllerBase
+    public class PersonelRecognitionController : ControllerBase
     {
-        private readonly IMilitaryPersonelForeignLanguageLevelService _service;
+        private readonly IMilitaryPersonelRecognitionService _service;
 
-        public PersonelForeignLanguageLevelController(IMilitaryPersonelForeignLanguageLevelService service)
+        public PersonelRecognitionController(IMilitaryPersonelRecognitionService service)
         {
             _service = service;
         }
         [HttpGet("getall")]
-        public async Task<IActionResult> GetAllAsync()
+        public async Task<IActionResult> GetAllRecognitionsAsync()
         {
-            var result = await _service.GetAllLevelAsync();
+            var result = await _service.GetAllRecognitionsAsync();
             if (result.IsSuccess)
             {
                 return Ok(result.Data);
@@ -27,9 +28,9 @@ namespace WebAPI.Controllers
             return BadRequest(result.Message);
         }
         [HttpGet("getallbyinjunctionid")]
-        public async Task<IActionResult> GetAllByInjunctionIdAsync(int injunctionId)
+        public async Task<IActionResult> GetAllRecognitionsByInjunctionIdAsync(int injunctionId)
         {
-            var result = await _service.GetAllLevelByInjunctionIdAsync(injunctionId);
+            var result = await _service.GetAllRecognitionsByInjunctionIdAsync(injunctionId);
             if (result.IsSuccess)
             {
                 return Ok(result.Data);
@@ -37,9 +38,9 @@ namespace WebAPI.Controllers
             return BadRequest(result.Message);
         }
         [HttpGet("getallbypersonelid")]
-        public async Task<IActionResult> GetAllByPersonelIdAsync(int personelId)
+        public async Task<IActionResult> GetAllRecognitionsByPersonelIdAsync(int personelId)
         {
-            var result = await _service.GetAllLevelByPersonelIdAsync(personelId);
+            var result = await _service.GetAllRecognitionsByPersonelIdAsync(personelId);
             if (result.IsSuccess)
             {
                 return Ok(result.Data);
@@ -47,9 +48,9 @@ namespace WebAPI.Controllers
             return BadRequest(result.Message);
         }
         [HttpGet("getbyid")]
-        public async Task<IActionResult> GetByIdAsync(int id)
+        public async Task<IActionResult> GetRecognitionByIdAsync(int id)
         {
-            var result = await _service.GetLevelByIdAsync(id);
+            var result = await _service.GetRecognitionByIdAsync(id);
             if (result.IsSuccess)
             {
                 return Ok(result.Data);
@@ -57,35 +58,36 @@ namespace WebAPI.Controllers
             return BadRequest(result.Message);
         }
         [HttpPost("add")]
-        public async Task<IActionResult> AddAsync(PersonelForeignLanguageLevelAddDto dto)
+        public async Task<IActionResult> AddRecognitionAsync(PersonelRecognitionAddDto dto)
         {
-            var result = await _service.AddLevelAsync(dto);
+            var result = await _service.AddRecognitionAsync(dto);
             if (result.IsSuccess)
             {
                 return Ok(result.Message);
+
             }
             return BadRequest(result.Message);
         }
         [HttpPut("update")]
-        public async Task<IActionResult> UpdateAsync(PersonelForeignLanguageLevelUpdateDto dto)
+        public async Task<IActionResult> UpdateRecognitionAsync(PersonelRecognitionUpdateDto dto)
         {
-            var result = await _service.UpdateLevelAsync(dto);
+            var result = await _service.UpdateRecognitionAsync(dto);
             if (result.IsSuccess)
             {
                 return Ok(result.Message);
+
             }
             return BadRequest(result.Message);
         }
         [HttpDelete("delete")]
-        public async Task<IActionResult> DeleteAsync(int id)
+        public async Task<IActionResult> DeleteRecognitionAsync(int id)
         {
-            var result = await _service.DeleteAsync(id);
+            var result = await _service.DeleteRecognitionAsync(id);
             if (result.IsSuccess)
             {
                 return Ok(result.Message);
             }
             return BadRequest(result.Message);
         }
-
     }
 }
