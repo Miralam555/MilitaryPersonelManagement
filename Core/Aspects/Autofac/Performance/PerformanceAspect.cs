@@ -41,13 +41,13 @@ namespace Core.Aspects.Autofac.Performance
         }
         private void SendMailPerformanceWarning(IInvocation invocation)
         {
-            string fromMail = "bmirelem77@gmail.com";
-            string fromPassword = "isji srna ggeb nqtr";
+            string fromMail = "my@gmail.com";
+            string fromPassword = "iaddf asdfasdf asdfasd ";
 
             MailMessage message = new MailMessage();
             message.From = new MailAddress(fromMail);
             message.Subject = "Performance Warning";
-            message.To.Add(new MailAddress("androidapps634@gmail.com"));
+            message.To.Add(new MailAddress("example@mail.com"));
             message.Body = $"<html><body> {invocation.Method.DeclaringType.FullName}.{invocation.Method.Name}-->{_stopwatch.Elapsed.TotalSeconds} </body></html>";
             message.IsBodyHtml = true;
 
