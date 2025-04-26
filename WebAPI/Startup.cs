@@ -93,8 +93,8 @@ namespace WebAPI
             app.ConfigureCustomExceptionMiddleware();
 
             app.UseRouting();
-            
 
+            app.UseStaticFiles();
             app.UseCors(builder => builder.AllowAnyOrigin().AllowAnyHeader());
 
             app.UseAuthentication();

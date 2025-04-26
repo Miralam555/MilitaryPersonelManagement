@@ -68,6 +68,13 @@ namespace Business.DependencyResolvers.Autofac
             builder.RegisterType<EfMilitaryPersonelReputationRiskFindingDal>().As<IMilitaryPersonelReputationRiskFindingDal>().SingleInstance();
 
 
+               builder.RegisterType<PersonelSpecialSkillManager>().As<IMilitaryPersonelSpecialSkillService>().SingleInstance();
+            builder.RegisterType<EfMilitaryPersonelSpecialSkillDal>().As<IMilitaryPersonelSpecialSkillDal>().SingleInstance();
+
+                 builder.RegisterType<MilitaryRankManager>().As<IMilitaryRankService>().SingleInstance();
+            builder.RegisterType<EfMilitaryRankDal>().As<IMilitaryRankDal>().SingleInstance();
+
+
 
 
             builder.RegisterType<UserManager>().As<IUserService>();
