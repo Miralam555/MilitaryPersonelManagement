@@ -15,7 +15,7 @@ namespace DataAccess.Conrete.EntityFramework.Context
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Server=BAYRAMOV\SQLEXPRESS;Database=MilitaryBaseFinal;User Id=sa;Password=123;TrustServerCertificate=True;");
+            optionsBuilder.UseSqlServer(@"Server=BAYRAMOV\SQLEXPRESS;Database=MilitaryBase;User Id=sa;Password=123;TrustServerCertificate=True;");
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

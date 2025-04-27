@@ -7,9 +7,9 @@ namespace MyMilitaryFinalProject.EntityConfigurations
     {
         public void Configure(EntityTypeBuilder<MilitaryRank> builder)
         {
-            builder.HasKey(e => e.InjunctionId);
+            builder.HasKey(e => e.Id);
 
-            builder.Property(e => e.InjunctionId).HasColumnName("InjunctionID");
+            builder.Property(e => e.InjunctionId);
             
             builder.Property(e => e.RankName).HasMaxLength(30);
 
@@ -19,8 +19,8 @@ namespace MyMilitaryFinalProject.EntityConfigurations
                 .HasForeignKey(d => d.PersonelId)
                 .OnDelete(DeleteBehavior.ClientSetNull);
 
-            builder.HasOne(d => d.Injunction).WithOne(p => p.MilitaryRank)
-                .HasForeignKey<MilitaryRank>(d=>d.InjunctionId)
+            builder.HasOne(d => d.Injunction).WithMany(p => p.MilitaryRanks)
+                .HasForeignKey(d=>d.InjunctionId)
                 .OnDelete(DeleteBehavior.ClientSetNull);
         }
     }

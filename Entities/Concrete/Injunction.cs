@@ -22,10 +22,11 @@ public  class Injunction:IEntity
     public DateTime? UpdatedDate { get; set; }
 
     public  InjunctionType InjunctionType { get; set; } = null!;
-    public MilitaryRank MilitaryRank { get; set; } = null!;
+    
     public  MilitaryPersonel IssuedByPersonel { get; set; } = null!;
     public MilitarySkillRecord MilitarySkillRecord { get; set; }=null!;
     public MilitaryServiceHistory MilitaryServiceHistory { get; set; } = null!;
+    public ICollection<MilitaryRank> MilitaryRanks { get; set; } = new List<MilitaryRank>();
     public ICollection<MilitaryServiceExtension> MilitaryServiceExtensions { get; set; } = new List<MilitaryServiceExtension>();
 
     public  ICollection<MilitaryPersonelForeignLanguageLevel> MilitaryPersonelForeignLanguageLevels { get; set; } = new List<MilitaryPersonelForeignLanguageLevel>();

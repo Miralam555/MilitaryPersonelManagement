@@ -8,6 +8,7 @@ namespace MyMilitaryFinalProject.Entities.Concrete;
 public  class MilitaryServiceHistory:IEntity
 {
     public int Id { get; set; }
+    public int PersonelId { get; set; }
 
     public DateOnly StartDate { get; set; }
 

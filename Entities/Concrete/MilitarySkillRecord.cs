@@ -8,7 +8,7 @@ namespace MyMilitaryFinalProject.Entities.Concrete;
 public  class MilitarySkillRecord:IEntity
 {
     public int Id { get; set; }
-
+    public int PersonelId { get; set; }
     public string SkillDegree { get; set; } = null!;
 
     public int IssuedByInjunctionId { get; set; }

@@ -646,19 +646,20 @@ namespace DataAccess.Migrations
                 name: "MilitaryRanks",
                 columns: table => new
                 {
-                    InjunctionID = table.Column<int>(type: "int", nullable: false),
-                    Id = table.Column<int>(type: "int", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     PersonelId = table.Column<int>(type: "int", nullable: false),
+                    InjunctionId = table.Column<int>(type: "int", nullable: false),
                     RankName = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_MilitaryRanks", x => x.InjunctionID);
+                    table.PrimaryKey("PK_MilitaryRanks", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_MilitaryRanks_Injunctions_InjunctionID",
-                        column: x => x.InjunctionID,
+                        name: "FK_MilitaryRanks_Injunctions_InjunctionId",
+                        column: x => x.InjunctionId,
                         principalTable: "Injunctions",
                         principalColumn: "Id");
                     table.ForeignKey(
@@ -702,6 +703,7 @@ namespace DataAccess.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false),
+                    PersonelId = table.Column<int>(type: "int", nullable: false),
                     StartDate = table.Column<DateOnly>(type: "date", nullable: false),
                     EndDate = table.Column<DateOnly>(type: "date", nullable: false),
                     InjunctionId = table.Column<int>(type: "int", nullable: false),
@@ -721,8 +723,8 @@ namespace DataAccess.Migrations
                         principalTable: "Injunctions",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_MilitaryServiceHistory_MilitaryPersonels_Id",
-                        column: x => x.Id,
+                        name: "FK_MilitaryServiceHistory_MilitaryPersonels_PersonelId",
+                        column: x => x.PersonelId,
                         principalTable: "MilitaryPersonels",
                         principalColumn: "PersonelID");
                 });
@@ -732,6 +734,7 @@ namespace DataAccess.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false),
+                    PersonelId = table.Column<int>(type: "int", nullable: false),
                     SkillDegree = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
                     IssuedByInjunctionId = table.Column<int>(type: "int", nullable: false),
                     ApprovedByInjunctionId = table.Column<int>(type: "int", nullable: false),
@@ -748,8 +751,8 @@ namespace DataAccess.Migrations
                         principalTable: "Injunctions",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_MilitarySkillRecords_MilitaryPersonels_Id",
-                        column: x => x.Id,
+                        name: "FK_MilitarySkillRecords_MilitaryPersonels_PersonelId",
+                        column: x => x.PersonelId,
                         principalTable: "MilitaryPersonels",
                         principalColumn: "PersonelID");
                 });
@@ -926,6 +929,11 @@ namespace DataAccess.Migrations
                 column: "PersonelId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_MilitaryRanks_InjunctionId",
+                table: "MilitaryRanks",
+                column: "InjunctionId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_MilitaryRanks_PersonelId",
                 table: "MilitaryRanks",
                 column: "PersonelId");
@@ -947,10 +955,20 @@ namespace DataAccess.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
+                name: "IX_MilitaryServiceHistory_PersonelId",
+                table: "MilitaryServiceHistory",
+                column: "PersonelId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_MilitarySkillRecords_ApprovedByInjunctionId",
                 table: "MilitarySkillRecords",
                 column: "ApprovedByInjunctionId",
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_MilitarySkillRecords_PersonelId",
+                table: "MilitarySkillRecords",
+                column: "PersonelId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_PreMilitaryWorkExperience_PersonelId",

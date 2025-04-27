@@ -54,9 +54,9 @@ public  class MilitaryPersonel:IEntity
 
     public  ICollection<MilitaryServiceExtension> MilitaryServiceExtensions { get; set; } = new List<MilitaryServiceExtension>();
 
-    public MilitaryServiceHistory MilitaryServiceHistory { get; set; } = null!;
+    public ICollection<MilitaryServiceHistory> MilitaryServiceHistories { get; set; } = new List<MilitaryServiceHistory>();
 
-    public MilitarySkillRecord MilitarySkillRecord { get; set; } = null!;
+    public ICollection<MilitarySkillRecord> MilitarySkillRecords { get; set; } = new List<MilitarySkillRecord>();
 
     public  ICollection<PreMilitaryWorkExperience> PreMilitaryWorkExperiences { get; set; } = new List<PreMilitaryWorkExperience>();
 

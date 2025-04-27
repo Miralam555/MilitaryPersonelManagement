@@ -20,8 +20,8 @@ namespace MyMilitaryFinalProject.EntityConfigurations
                 .HasForeignKey<MilitaryServiceHistory>(d => d.InjunctionId)
                 .OnDelete(DeleteBehavior.ClientSetNull);
 
-            builder.HasOne(d => d.Personel).WithOne(p => p.MilitaryServiceHistory)
-                .HasForeignKey<MilitaryServiceHistory>(d => d.Id)
+            builder.HasOne(d => d.Personel).WithMany(p => p.MilitaryServiceHistories)
+                .HasForeignKey(d => d.PersonelId)
                 .OnDelete(DeleteBehavior.ClientSetNull);
         }
     }

@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataAccess.Migrations
 {
     [DbContext(typeof(MilitaryBaseContext))]
-    [Migration("20250327131156_mig_1")]
+    [Migration("20250427091022_mig_1")]
     partial class mig_1
     {
         /// <inheritdoc />
@@ -911,14 +911,16 @@ namespace DataAccess.Migrations
 
             modelBuilder.Entity("MyMilitaryFinalProject.Entities.Concrete.MilitaryRank", b =>
                 {
-                    b.Property<int>("InjunctionId")
-                        .HasColumnType("int")
-                        .HasColumnName("InjunctionID");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("Id")
+                    b.Property<int>("InjunctionId")
                         .HasColumnType("int");
 
                     b.Property<int>("PersonelId")
@@ -932,7 +934,9 @@ namespace DataAccess.Migrations
                     b.Property<DateTime?>("UpdatedDate")
                         .HasColumnType("datetime2");
 
-                    b.HasKey("InjunctionId");
+                    b.HasKey("Id");
+
+                    b.HasIndex("InjunctionId");
 
                     b.HasIndex("PersonelId");
 
@@ -1004,6 +1008,9 @@ namespace DataAccess.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("PersonelId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Position")
                         .IsRequired()
                         .HasMaxLength(40)
@@ -1019,6 +1026,8 @@ namespace DataAccess.Migrations
 
                     b.HasIndex("InjunctionId")
                         .IsUnique();
+
+                    b.HasIndex("PersonelId");
 
                     b.ToTable("MilitaryServiceHistory", (string)null);
                 });
@@ -1037,6 +1046,9 @@ namespace DataAccess.Migrations
                     b.Property<int>("IssuedByInjunctionId")
                         .HasColumnType("int");
 
+                    b.Property<int>("PersonelId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Record")
                         .HasColumnType("nvarchar(max)");
 
@@ -1052,6 +1064,8 @@ namespace DataAccess.Migrations
 
                     b.HasIndex("ApprovedByInjunctionId")
                         .IsUnique();
+
+                    b.HasIndex("PersonelId");
 
                     b.ToTable("MilitarySkillRecords");
                 });
@@ -1474,8 +1488,8 @@ namespace DataAccess.Migrations
             modelBuilder.Entity("MyMilitaryFinalProject.Entities.Concrete.MilitaryRank", b =>
                 {
                     b.HasOne("MyMilitaryFinalProject.Entities.Concrete.Injunction", "Injunction")
-                        .WithOne("MilitaryRank")
-                        .HasForeignKey("MyMilitaryFinalProject.Entities.Concrete.MilitaryRank", "InjunctionId")
+                        .WithMany("MilitaryRanks")
+                        .HasForeignKey("InjunctionId")
                         .IsRequired();
 
                     b.HasOne("MyMilitaryFinalProject.Entities.Concrete.MilitaryPersonel", "Personel")
@@ -1507,14 +1521,14 @@ namespace DataAccess.Migrations
 
             modelBuilder.Entity("MyMilitaryFinalProject.Entities.Concrete.MilitaryServiceHistory", b =>
                 {
-                    b.HasOne("MyMilitaryFinalProject.Entities.Concrete.MilitaryPersonel", "Personel")
-                        .WithOne("MilitaryServiceHistory")
-                        .HasForeignKey("MyMilitaryFinalProject.Entities.Concrete.MilitaryServiceHistory", "Id")
-                        .IsRequired();
-
                     b.HasOne("MyMilitaryFinalProject.Entities.Concrete.Injunction", "Injunction")
                         .WithOne("MilitaryServiceHistory")
                         .HasForeignKey("MyMilitaryFinalProject.Entities.Concrete.MilitaryServiceHistory", "InjunctionId")
+                        .IsRequired();
+
+                    b.HasOne("MyMilitaryFinalProject.Entities.Concrete.MilitaryPersonel", "Personel")
+                        .WithMany("MilitaryServiceHistories")
+                        .HasForeignKey("PersonelId")
                         .IsRequired();
 
                     b.Navigation("Injunction");
@@ -1530,8 +1544,8 @@ namespace DataAccess.Migrations
                         .IsRequired();
 
                     b.HasOne("MyMilitaryFinalProject.Entities.Concrete.MilitaryPersonel", "Personel")
-                        .WithOne("MilitarySkillRecord")
-                        .HasForeignKey("MyMilitaryFinalProject.Entities.Concrete.MilitarySkillRecord", "Id")
+                        .WithMany("MilitarySkillRecords")
+                        .HasForeignKey("PersonelId")
                         .IsRequired();
 
                     b.Navigation("Injunction");
@@ -1620,8 +1634,7 @@ namespace DataAccess.Migrations
 
                     b.Navigation("MilitaryPersonelRecognitions");
 
-                    b.Navigation("MilitaryRank")
-                        .IsRequired();
+                    b.Navigation("MilitaryRanks");
 
                     b.Navigation("MilitaryServiceExtensions");
 
@@ -1684,11 +1697,9 @@ namespace DataAccess.Migrations
 
                     b.Navigation("MilitaryServiceExtensions");
 
-                    b.Navigation("MilitaryServiceHistory")
-                        .IsRequired();
+                    b.Navigation("MilitaryServiceHistories");
 
-                    b.Navigation("MilitarySkillRecord")
-                        .IsRequired();
+                    b.Navigation("MilitarySkillRecords");
 
                     b.Navigation("PreMilitaryWorkExperiences");
 
