@@ -74,6 +74,16 @@ namespace Business.DependencyResolvers.Autofac
                  builder.RegisterType<MilitaryRankManager>().As<IMilitaryRankService>().SingleInstance();
             builder.RegisterType<EfMilitaryRankDal>().As<IMilitaryRankDal>().SingleInstance();
 
+             builder.RegisterType<MilitaryServiceExtensionManager>().As<IMilitaryServiceExtensionService>().SingleInstance();
+            builder.RegisterType<EfMilitaryServiceExtensionDal>().As<IMilitaryRankDal>().SingleInstance();
+
+            builder.RegisterType<MilitaryServiceHistoryManager>().As<IMilitaryServiceHistoryService>().SingleInstance();
+            builder.RegisterType<EfMilitaryServiceHistoryDal>().As<IMilitaryServiceHistoryDal>().SingleInstance();
+
+
+             builder.RegisterType<PreMilitaryWorkExperienceManager>().As<IPreMilitaryWorkExperienceService>().SingleInstance();
+            builder.RegisterType<EfPreMilitaryWorkExperienceDal>().As<IPreMilitaryWorkExperienceDal>().SingleInstance();
+
 
 
 

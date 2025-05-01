@@ -20,18 +20,7 @@ namespace Core.Utilities.Business
             }
             return null;
         }
-        //public static async Task<IResult> RunAsync(params Task<IResult>[] logics)
-        //{
-        //    foreach (var item in logics)
-        //    {
-        //        var item1 = await item;
-        //        if (!item1.IsSuccess)
-        //        {
-        //            return await item;
-        //        }
-        //    }
-        //    return null; 
-        //}
+       
 
     }
 }
