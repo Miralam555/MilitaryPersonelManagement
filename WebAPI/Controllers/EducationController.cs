@@ -8,11 +8,12 @@ namespace WebAPI.Controllers
     [ApiController]
     [Route("api/[controller]")]
     [Authorize]
-    public class MilitaryPersonelEducationController : ControllerBase
+    
+    public class EducationController : ControllerBase
     {
         private readonly IMilitaryPersonelEducationService _service;
 
-        public MilitaryPersonelEducationController(IMilitaryPersonelEducationService service)
+        public EducationController(IMilitaryPersonelEducationService service)
         {
             _service = service;
         }
@@ -58,7 +59,7 @@ namespace WebAPI.Controllers
         }
 
         [HttpPut("update")]
-        public async Task<IActionResult> AddAsync(EducationUpdateDto dto)
+        public async Task<IActionResult> UpdateAsync(EducationUpdateDto dto)
         {
             var result = await _service.UpdateAsync(dto);
             if (result.IsSuccess)

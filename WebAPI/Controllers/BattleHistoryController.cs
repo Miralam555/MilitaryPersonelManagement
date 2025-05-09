@@ -24,19 +24,19 @@ namespace WebAPI.Controllers
             var result = await _service.GetAllBattleHistoryAsync();
             if (result.IsSuccess)
             {
-                return Ok(result);
+                return Ok(result.Data);
             }
-            return BadRequest(result);
+            return BadRequest(result.Message);
         }
         [HttpGet("getallbypersonelId")]
-        public async Task<IActionResult> GetAllById(int id)
+        public async Task<IActionResult> GetAllByPersonelId(int personelid)
         {
-            var result = await _service.GetAllHistoryByPersonelIdAsync(id);
+            var result = await _service.GetAllHistoriesByPersonelIdAsync(personelid);
             if (result.IsSuccess)
             {
-                return Ok(result);
+                return Ok(result.Data);
             }
-            return BadRequest(result);
+            return BadRequest(result.Message);
         }
         [HttpPost("addbattlehistory")]
         public async Task<IActionResult> AddHistory(BattleHistoryAddDto dto)
@@ -45,29 +45,29 @@ namespace WebAPI.Controllers
             var result=await _service.AddBattleHistoryAsync(dto);
             if (result.IsSuccess)
             {
-                return Ok(result);
+                return Ok(result.Message);
             }
-            return BadRequest(result);
+            return BadRequest(result.Message);
         }
         [HttpGet("getbyid")]
-        public async Task<IActionResult> GetByIdAsync(int id)
+        public async Task<IActionResult> GetHistoryByIdAsync(int id)
         {
-            var result=await _service.GetByIdAsync(id);
+            var result=await _service.GetHistoryByIdAsync(id);
             if (result.IsSuccess)
             {
-                return Ok(result);
+                return Ok(result.Data);
             }
-            return BadRequest(result);
+            return BadRequest(result.Message);
         }
         [HttpPut("update")]
-        public async Task<IActionResult> UpdateAsync(BattleHistoryUpdateAndGetDto dto)
+        public async Task<IActionResult> UpdateAsync(BattleHistoryUpdateDto dto)
         {
             var result = await _service.UpdateHistoryAsync(dto);
             if (result.IsSuccess)
             {
                 return Ok(result.Message);
             }
-            return BadRequest(result);
+            return BadRequest(result.Message);
         }
         [HttpDelete("delete")]
         public async Task<IActionResult> DeleteAsync(int id)
@@ -75,9 +75,9 @@ namespace WebAPI.Controllers
             var result = await _service.DeleteHistoryAsync(id);
             if (result.IsSuccess)
             {
-                return Ok(result);
+                return Ok(result.Message);
             }
-            return BadRequest(result);
+            return BadRequest(result.Message);
         }
     }
 }

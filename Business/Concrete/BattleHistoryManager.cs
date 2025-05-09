@@ -35,28 +35,41 @@ namespace Business.Concrete
 
         [SecuredOperation("admin,cmd.get")]
         [CacheAspect]
-        public async Task<IDataResult<List<BattleHistoryUpdateAndGetDto>>> GetAllBattleHistoryAsync()
+        public async Task<IDataResult<List<BattleHistoryGetDto>>> GetAllBattleHistoryAsync()
         {
 
-            List<BattleHistory> histories = await _battleHistoryDal.GetAllAsync();
+            List<BattleHistoryGetDto> histories = await _battleHistoryDal.GetAllHistoriesAsync();
 
             if (histories != null)
             {
-                return new SuccessDataResult<List<BattleHistoryUpdateAndGetDto>>(_mapper.Map<List<BattleHistoryUpdateAndGetDto>>(histories));
+                return new SuccessDataResult<List<BattleHistoryGetDto>>(_mapper.Map<List<BattleHistoryGetDto>>(histories));
             }
-            return new ErrorDataResult<List<BattleHistoryUpdateAndGetDto>>();
+            return new ErrorDataResult<List<BattleHistoryGetDto>>();
         }
 
         [SecuredOperation("admin,cmd.get")]
         [CacheAspect]
-        public async Task<IDataResult<List<BattleHistoryUpdateAndGetDto>>> GetAllHistoryByPersonelIdAsync(int id)
+        public async Task<IDataResult<List<BattleHistoryGetDto>>> GetAllHistoriesByPersonelIdAsync(int personelId)
         {
-            List<BattleHistory> history = await _battleHistoryDal.GetAllAsync(p => p.PersonelId == id);
+            List<BattleHistoryGetDto> history = await _battleHistoryDal.GetAllHistoriesByPersonelIdAsync(personelId);
+
             if (history != null)
             {
-                return new SuccessDataResult<List<BattleHistoryUpdateAndGetDto>>(_mapper.Map<List<BattleHistoryUpdateAndGetDto>>(history));
+                return new SuccessDataResult<List<BattleHistoryGetDto>>(_mapper.Map<List<BattleHistoryGetDto>>(history));
             }
-            return new ErrorDataResult<List<BattleHistoryUpdateAndGetDto>>(Messages.EntityNotFound);
+            return new ErrorDataResult<List<BattleHistoryGetDto>>(Messages.EntityNotFound);
+        }
+        [CacheAspect]
+        [SecuredOperation("admin,cmd.get")]
+        public async Task<IDataResult<BattleHistoryGetDto>> GetHistoryByIdAsync(int id)
+        {
+            BattleHistoryGetDto entity = await _battleHistoryDal.GetHistoryByIdAsync( id);
+            if (entity != null)
+            {
+                
+                return new SuccessDataResult<BattleHistoryGetDto>(entity);
+            }
+            return new ErrorDataResult<BattleHistoryGetDto>(Messages.EntityNotFound);
         }
 
         [ValidationAspect(typeof(BattleHistoryValidator))]
@@ -72,23 +85,11 @@ namespace Business.Concrete
             return new SuccessResult(Messages.SuccessfullyAdded);
         }
 
-        [CacheAspect]
-        [SecuredOperation("admin,cmd.get")]
-        public async Task<IResult> GetByIdAsync(int id)
-        {
-            BattleHistory entity = await _battleHistoryDal.GetAsync(p => p.Id == id);
-            if (entity != null)
-            {
-                var result = _mapper.Map<BattleHistoryAddDto>(entity);
-                return new SuccessDataResult<BattleHistoryAddDto>(result);
-            }
-            return new ErrorDataResult<BattleHistoryAddDto>("Bele isci yoxdur");
-        }
-      
+   
         [CacheRemoveAspect("IBattleHistoryService.Get")]
         [ValidationAspect(typeof(BattleHistoryValidator))]
         [SecuredOperation("admin,cmd.update")]
-        public async Task<IResult> UpdateHistoryAsync(BattleHistoryUpdateAndGetDto dto)
+        public async Task<IResult> UpdateHistoryAsync(BattleHistoryUpdateDto dto)
         {
             BattleHistory entity = await _battleHistoryDal.GetAsync(p => p.Id == dto.Id);
             _mapper.Map(dto, entity);

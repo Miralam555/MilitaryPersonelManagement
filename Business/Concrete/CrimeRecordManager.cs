@@ -29,45 +29,57 @@ namespace Business.Concrete
             _crimeRecordDal = crimeRecordDal;
             _mapper = mapper;
         }
-       
+
         [CacheAspect]
         [SecuredOperation("admin,cmd.get")]
-        public async Task<IDataResult<List<CrimeRecordUpdateAndGetDto>>> GetAllCrimeRecordsAsync()
+        public async Task<IDataResult<List<CrimeRecordGetDto>>> GetAllCrimeRecordsAsync()
         {
-            List<CrimeRecord> records = await _crimeRecordDal.GetAllAsync();
+            List<CrimeRecordGetDto> records = await _crimeRecordDal.GetAllCrimeRecordsAsync();
 
             if (records.Count > 0)
             {
-                return new SuccessDataResult<List<CrimeRecordUpdateAndGetDto>>(_mapper.Map<List<CrimeRecordUpdateAndGetDto>>(records));
+                return new SuccessDataResult<List<CrimeRecordGetDto>>(records);
             }
-            return new ErrorDataResult<List<CrimeRecordUpdateAndGetDto>>();
-        }
-       
-        [CacheAspect]
-        [SecuredOperation("admin,cmd.get")]
-        public async Task<IDataResult<List<CrimeRecordUpdateAndGetDto>>> GetCrimeRecordsByPersonelIdAsync(int id)
-        {
-            List<CrimeRecord> records = await _crimeRecordDal.GetAllAsync(p => p.PersonelId == id);
-            if (records.Count > 0)
-            {
-                return new SuccessDataResult<List<CrimeRecordUpdateAndGetDto>>(_mapper.Map<List<CrimeRecordUpdateAndGetDto>>(records));
-            }
-            return new ErrorDataResult<List<CrimeRecordUpdateAndGetDto>>();
-        }
-  
-        [CacheAspect]
-        [SecuredOperation("admin,cmd.get")]
-        public async Task<IDataResult<List<CrimeRecordUpdateAndGetDto>>> GetCrimeRecordsByMemberIdAsync(int id)
-        {
-            List<CrimeRecord> records = await _crimeRecordDal.GetAllAsync(p => p.MemberId == id);
-            if (records.Count > 0)
-            {
-                return new SuccessDataResult<List<CrimeRecordUpdateAndGetDto>>(_mapper.Map<List<CrimeRecordUpdateAndGetDto>>(records));
-            }
-            return new ErrorDataResult<List<CrimeRecordUpdateAndGetDto>>();
+            return new ErrorDataResult<List<CrimeRecordGetDto>>(Messages.NoData);
         }
 
-   
+        [CacheAspect]
+        [SecuredOperation("admin,cmd.get")]
+        public async Task<IDataResult<List<CrimeRecordGetDto>>> GetCrimeRecordsByPersonelIdAsync(int personelId)
+        {
+            List<CrimeRecordGetDto> records = await _crimeRecordDal.GetAllCrimeRecordsByPersonelIdAsync(personelId);
+            if (records.Count > 0)
+            {
+                return new SuccessDataResult<List<CrimeRecordGetDto>>(records);
+            }
+            return new ErrorDataResult<List<CrimeRecordGetDto>>(Messages.NoData);
+        }
+
+        [CacheAspect]
+        [SecuredOperation("admin,cmd.get")]
+        public async Task<IDataResult<List<CrimeRecordGetDto>>> GetCrimeRecordsByMemberIdAsync(int memberId)
+        {
+            List<CrimeRecordGetDto> records = await _crimeRecordDal.GetAllCrimeRecordsByMemberIdAsync(memberId);
+            if (records.Count > 0)
+            {
+                return new SuccessDataResult<List<CrimeRecordGetDto>>(records);
+            }
+            return new ErrorDataResult<List<CrimeRecordGetDto>>(Messages.NoData);
+        }
+        [CacheAspect]
+        [SecuredOperation("admin,cmd.get")]
+        public async Task<IDataResult<CrimeRecordGetDto>> GetCrimeRecordByIdAsync(int id)
+        {
+            CrimeRecordGetDto entity = await _crimeRecordDal.GetCrimeRecordByIdAsync(id);
+            if (entity == null)
+            {
+                return new ErrorDataResult<CrimeRecordGetDto>(Messages.EntityNotFound);
+            }
+
+            return new SuccessDataResult<CrimeRecordGetDto>(entity);
+        }
+
+
         [CacheRemoveAspect("ICrimeRecordService.Get")]
         [SecuredOperation("admin,cmd.add")]
         [ValidationAspect(typeof(CrimeRecordValidator))]
@@ -77,11 +89,11 @@ namespace Business.Concrete
             await _crimeRecordDal.AddAsync(record);
             return new SuccessResult(Messages.SuccessfullyAdded);
         }
-    
+
         [CacheRemoveAspect("ICrimeRecordService.Get")]
         [SecuredOperation("admin,cmd.update")]
         [ValidationAspect(typeof(CrimeRecordValidator))]
-        public async Task<IResult> UpdateCrimeRecordAsync(CrimeRecordUpdateAndGetDto dto)
+        public async Task<IResult> UpdateCrimeRecordAsync(CrimeRecordUpdateDto dto)
         {
             CrimeRecord entity = await _crimeRecordDal.GetAsync(p => p.Id == dto.Id);
             _mapper.Map(dto, entity);

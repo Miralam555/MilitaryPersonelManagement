@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Entities.DTOs.FamilyMembersInServiceDtos
 {
-    public class FamilyMembersInServiceUpdateAndGetDto:IDto
+    public class FamilyMembersInServiceUpdateDto:IDto
     {
         public int Id { get; set; }
         public int PersonelId { get; set; }
@@ -16,4 +16,5 @@ namespace Entities.DTOs.FamilyMembersInServiceDtos
 
         public string? Record { get; set; }
     }
+
 }

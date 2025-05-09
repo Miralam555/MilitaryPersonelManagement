@@ -31,7 +31,7 @@ namespace Business.DependencyResolvers.Autofac
 
             builder.RegisterType<CrimeRecordManager>().As<ICrimeRecordService>().SingleInstance();
             builder.RegisterType<EfCrimeRecordDal>().As<ICrimeRecordDal>().SingleInstance();
-            
+
             builder.RegisterType<FamilyMemberManager>().As<IFamilyMemberService>().SingleInstance();
             builder.RegisterType<EfFamilyMemberDal>().As<IFamilyMemberDal>().SingleInstance();
 
@@ -42,46 +42,46 @@ namespace Business.DependencyResolvers.Autofac
             builder.RegisterType<EfMilitaryMedicalAssessmentDal>().As<IMilitaryMedicalAssessmentDal>().SingleInstance();
 
 
-             builder.RegisterType<MilitaryPersonelPenaltyManager>().As<IMilitaryPersonelPenaltyService>().SingleInstance();
+            builder.RegisterType<MilitaryPersonelPenaltyManager>().As<IMilitaryPersonelPenaltyService>().SingleInstance();
             builder.RegisterType<EfMilitaryPersonelPenaltyDal>().As<IMilitaryPersonelPenaltyDal>().SingleInstance();
 
 
-             builder.RegisterType<MilitaryPersonelEducationManager>().As<IMilitaryPersonelEducationService>().SingleInstance();
+            builder.RegisterType<MilitaryPersonelEducationManager>().As<IMilitaryPersonelEducationService>().SingleInstance();
             builder.RegisterType<EfMilitaryPersonelEducationDal>().As<IMilitaryPersonelEducationDal>().SingleInstance();
 
-             builder.RegisterType<MilitaryPersonelFamilyMemberForeignTravelManager>().As<IMilitaryPersonelFamilyMemberForeignTravelService>().SingleInstance();
+            builder.RegisterType<MilitaryPersonelFamilyMemberForeignTravelManager>().As<IMilitaryPersonelFamilyMemberForeignTravelService>().SingleInstance();
             builder.RegisterType<EfMilitaryPersonelFamilyMemberForeignTravelDal>().As<IMilitaryPersonelFamilyMemberForeignTravelDal>().SingleInstance();
 
-            
-             builder.RegisterType<MilitaryPersonelForeignLanguageLevelManager>().As<IMilitaryPersonelForeignLanguageLevelService>().SingleInstance();
+
+            builder.RegisterType<MilitaryPersonelForeignLanguageLevelManager>().As<IMilitaryPersonelForeignLanguageLevelService>().SingleInstance();
             builder.RegisterType<EfMilitaryPersonelForeignLanguageLevelDal>().As<IMilitaryPersonelForeignLanguageLevelDal>().SingleInstance();
 
-            
-             builder.RegisterType<PersonelForeignTravelManager>().As<IMilitaryPersonelForeignTravelService>().SingleInstance();
+
+            builder.RegisterType<PersonelForeignTravelManager>().As<IMilitaryPersonelForeignTravelService>().SingleInstance();
             builder.RegisterType<EfMilitaryPersonelForeignTravelDal>().As<IMilitaryPersonelForeignTravelDal>().SingleInstance();
 
-            
-             builder.RegisterType<PersonelRecognitionManager>().As<IMilitaryPersonelRecognitionService>().SingleInstance();
+
+            builder.RegisterType<PersonelRecognitionManager>().As<IMilitaryPersonelRecognitionService>().SingleInstance();
             builder.RegisterType<EfMilitaryPersonelRecognitionDal>().As<IMilitaryPersonelRecognitionDal>().SingleInstance();
 
-             builder.RegisterType<PersonelReputationRiskFindingManager>().As<IMilitaryPersonelReputationRiskFindingService>().SingleInstance();
+            builder.RegisterType<PersonelReputationRiskFindingManager>().As<IMilitaryPersonelReputationRiskFindingService>().SingleInstance();
             builder.RegisterType<EfMilitaryPersonelReputationRiskFindingDal>().As<IMilitaryPersonelReputationRiskFindingDal>().SingleInstance();
 
 
-               builder.RegisterType<PersonelSpecialSkillManager>().As<IMilitaryPersonelSpecialSkillService>().SingleInstance();
+            builder.RegisterType<PersonelSpecialSkillManager>().As<IMilitaryPersonelSpecialSkillService>().SingleInstance();
             builder.RegisterType<EfMilitaryPersonelSpecialSkillDal>().As<IMilitaryPersonelSpecialSkillDal>().SingleInstance();
 
-                 builder.RegisterType<MilitaryRankManager>().As<IMilitaryRankService>().SingleInstance();
+            builder.RegisterType<MilitaryRankManager>().As<IMilitaryRankService>().SingleInstance();
             builder.RegisterType<EfMilitaryRankDal>().As<IMilitaryRankDal>().SingleInstance();
 
-             builder.RegisterType<MilitaryServiceExtensionManager>().As<IMilitaryServiceExtensionService>().SingleInstance();
-            builder.RegisterType<EfMilitaryServiceExtensionDal>().As<IMilitaryRankDal>().SingleInstance();
+            builder.RegisterType<MilitaryServiceExtensionManager>().As<IMilitaryServiceExtensionService>().SingleInstance();
+            builder.RegisterType<EfMilitaryServiceExtensionDal>().As<IMilitaryServiceExtensionDal>().SingleInstance();
 
             builder.RegisterType<MilitaryServiceHistoryManager>().As<IMilitaryServiceHistoryService>().SingleInstance();
             builder.RegisterType<EfMilitaryServiceHistoryDal>().As<IMilitaryServiceHistoryDal>().SingleInstance();
 
 
-             builder.RegisterType<PreMilitaryWorkExperienceManager>().As<IPreMilitaryWorkExperienceService>().SingleInstance();
+            builder.RegisterType<PreMilitaryWorkExperienceManager>().As<IPreMilitaryWorkExperienceService>().SingleInstance();
             builder.RegisterType<EfPreMilitaryWorkExperienceDal>().As<IPreMilitaryWorkExperienceDal>().SingleInstance();
 
 

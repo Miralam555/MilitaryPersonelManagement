@@ -31,26 +31,50 @@ namespace Business.Concrete
         }
         
         [CacheAspect]
-        [ValidationAspect(typeof(FamilyMembersInServiceValidator))]
         [SecuredOperation("admin,cmd.get")]
-        public async Task<IDataResult<List<FamilyMembersInServiceUpdateAndGetDto>>> GetAllFamilyMembersInService()
+        public async Task<IDataResult<List<FamilyMembersInServiceGetDto>>> GetAllFamilyMembersInService()
         {
-            List<FamilyMembersInService> services = await _familyMemberInServiceDal.GetAllAsync();
+            List<FamilyMembersInServiceGetDto> services = await _familyMemberInServiceDal.GetAllFamilyMembersInServiceAsync();
             if (services.Count > 0)
             {
-                return new SuccessDataResult<List<FamilyMembersInServiceUpdateAndGetDto>>(_mapper.Map<List<FamilyMembersInServiceUpdateAndGetDto>>(services));
+                return new SuccessDataResult<List<FamilyMembersInServiceGetDto>>(services);
             }
-            return new ErrorDataResult<List<FamilyMembersInServiceUpdateAndGetDto>>();
+            return new ErrorDataResult<List<FamilyMembersInServiceGetDto>>();
         }
-        [PerformanceAspect(3)]
         [CacheAspect]
-        [ValidationAspect(typeof(FamilyMembersInServiceValidator))]
         [SecuredOperation("admin,cmd.get")]
-        public async Task<IDataResult<FamilyMembersInServiceUpdateAndGetDto>> GetByIdFamilyMembersInService(int id)
+        public async Task<IDataResult<List<FamilyMembersInServiceGetDto>>> GetAllFamilyMembersInServiceByPersonelId(int personelId)
         {
-            FamilyMembersInService service = await _familyMemberInServiceDal.GetAsync(p=>p.Id==id);
+            List<FamilyMembersInServiceGetDto> services = await _familyMemberInServiceDal.GetAllFamilyMembersInServiceByPersonelIdAsync(personelId);
+            if (services.Count > 0)
+            {
+                return new SuccessDataResult<List<FamilyMembersInServiceGetDto>>(services);
+            }
+            return new ErrorDataResult<List<FamilyMembersInServiceGetDto>>();
+        }
+        [CacheAspect]
+        [SecuredOperation("admin,cmd.get")]
+        public async Task<IDataResult<List<FamilyMembersInServiceGetDto>>> GetAllFamilyMembersInServiceByMemberId(int memberId)
+        {
+            List<FamilyMembersInServiceGetDto> services = await _familyMemberInServiceDal.GetAllFamilyMembersInServiceByMemberIdAsync(memberId);
+            if (services.Count > 0)
+            {
+                return new SuccessDataResult<List<FamilyMembersInServiceGetDto>>(services);
+            }
+            return new ErrorDataResult<List<FamilyMembersInServiceGetDto>>();
+        }
+
+        [CacheAspect]
+        [SecuredOperation("admin,cmd.get")]
+        public async Task<IDataResult<FamilyMembersInServiceGetDto>> GetByIdFamilyMemberInService(int id)
+        {
+            FamilyMembersInServiceGetDto entity = await _familyMemberInServiceDal.GetFamilyMemberInServiceByIdAsync(id);
+            if (entity == null)
+            {
+                return new ErrorDataResult<FamilyMembersInServiceGetDto>(Messages.EntityNotFound);
+            }
            
-            return new SuccessDataResult<FamilyMembersInServiceUpdateAndGetDto>(_mapper.Map<FamilyMembersInServiceUpdateAndGetDto>(service));
+            return new SuccessDataResult<FamilyMembersInServiceGetDto>(entity);
           
         }
 
@@ -67,7 +91,7 @@ namespace Business.Concrete
         [CacheRemoveAspect("IFamilyMembersInService_Service.Get")]
         [ValidationAspect(typeof(FamilyMembersInServiceValidator))]
         [SecuredOperation("admin,cmd.update")]
-        public async Task<IResult> UpdateFamilyMembersInService(FamilyMembersInServiceUpdateAndGetDto dto)
+        public async Task<IResult> UpdateFamilyMembersInService(FamilyMembersInServiceUpdateDto dto)
         {
             FamilyMembersInService entity = await _familyMemberInServiceDal.GetAsync(p => p.Id == dto.Id);
              _mapper.Map(dto,entity);
@@ -76,7 +100,6 @@ namespace Business.Concrete
             return new SuccessResult(Messages.SuccessfullyUpdated);
         }
         [CacheRemoveAspect("IFamilyMembersInService_Service.Get")]
-        [ValidationAspect(typeof(FamilyMembersInServiceValidator))]
         [SecuredOperation("admin")]
         public async Task<IResult> DeleteFamilyMembersInService(int id)
         {

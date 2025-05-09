@@ -14,7 +14,7 @@ namespace Business.AutoMapper
         public FamilyMembersInServiceMapper()
         {
             CreateMap<FamilyMembersInServiceAddDto, FamilyMember>();
-            CreateMap<FamilyMembersInServiceUpdateAndGetDto, FamilyMember>()
+            CreateMap<FamilyMembersInServiceUpdateDto, FamilyMember>()
                 .ForMember(d => d.CreatedDate, opt => opt.Ignore());
         }
     }

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Entities.DTOs.BattleHistoryDtos
 {
-    public class BattleHistoryUpdateAndGetDto:IDto
+    public class BattleHistoryUpdateDto:IDto
     {
         public int Id { get; set; } 
 
@@ -25,4 +25,5 @@ namespace Entities.DTOs.BattleHistoryDtos
         public string? VeteranNote { get; set; }
 
     }
+
 }

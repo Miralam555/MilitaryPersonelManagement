@@ -24,7 +24,7 @@ namespace WebAPI.Controllers
             {
                 return Ok(result.Data);
             }
-            return BadRequest(result.Data);
+            return BadRequest(result.Message);
         }
         [HttpGet("getbypersonelid")]
         public async Task<IActionResult> GetCrimeRecordByPersonelId(int id)
@@ -34,17 +34,27 @@ namespace WebAPI.Controllers
             {
                 return Ok(result.Data);
             }
-            return BadRequest(result.Data);
+            return BadRequest(result.Message);
         }
         [HttpGet("getbymemberid")]
-        public async Task<IActionResult> GetCrimeRecordByMemberId(int id)
+        public async Task<IActionResult> GetCrimeRecordsByMemberId(int id)
         {
             var result=await _service.GetCrimeRecordsByMemberIdAsync(id);
             if (result.IsSuccess)
             {
                 return Ok(result.Data);
             }
-            return BadRequest(result.Data);
+            return BadRequest(result.Message);
+        }
+         [HttpGet("getbyid")]
+        public async Task<IActionResult> GetCrimeRecordById(int id)
+        {
+            var result=await _service.GetCrimeRecordByIdAsync(id);
+            if (result.IsSuccess)
+            {
+                return Ok(result.Data);
+            }
+            return BadRequest(result.Message);
         }
 
         [HttpPost("add")]
@@ -58,7 +68,7 @@ namespace WebAPI.Controllers
             return BadRequest();
         }
          [HttpPut("update")]
-        public async Task<IActionResult> UpdateCrimeRecordAsync(CrimeRecordUpdateAndGetDto dto)
+        public async Task<IActionResult> UpdateCrimeRecordAsync(CrimeRecordUpdateDto dto)
         {
             var result=await _service.UpdateCrimeRecordAsync(dto);
             if (result.IsSuccess)

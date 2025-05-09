@@ -14,9 +14,9 @@ namespace Business.AutoMapper
         public FamilyMemberMapper()
         {
             CreateMap<FamilyMemberAddDto, FamilyMember>();
-            CreateMap<FamilyMemberUpdateAndGetDto, FamilyMember>()
+            CreateMap<FamilyMemberUpdateDto, FamilyMember>()
                 .ForMember(d=>d.CreatedDate,opt=>opt.Ignore());
-            CreateMap<FamilyMember, FamilyMemberUpdateAndGetDto>();
+           
         }
     }
 }

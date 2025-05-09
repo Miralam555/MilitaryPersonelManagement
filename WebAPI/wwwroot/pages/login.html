@@ -4,7 +4,67 @@
     <meta charset="UTF-8">
     <title>Login Page</title>
     <style>
-        /* eyni style qalır */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #74ebd5, #ACB6E5);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .login-container {
+            background-color: white;
+            padding: 40px 30px;
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+
+            .login-container h2 {
+                margin-bottom: 20px;
+                color: #333;
+            }
+
+        input[type="email"],
+        input[type="password"] {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 16px;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            margin-top: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+            button:hover {
+                background-color: #45a049;
+            }
+
+        .message {
+            margin-top: 15px;
+            font-size: 14px;
+        }
     </style>
 </head>
 <body>
@@ -16,6 +76,9 @@
             <input type="password" id="password" placeholder="Password" required />
             <button type="submit">Login</button>
         </form>
+        <button type="button" onclick="window.location.href='/pages/register.html'" style="background-color:#2196F3; margin-top: 10px;">
+            Register
+        </button>
         <div class="message" id="message"></div>
     </div>
 

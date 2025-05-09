@@ -1,17 +1,15 @@
 ﻿using Core.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Entities.DTOs.FamilyMemberDtos
 {
-    public class FamilyMemberUpdateAndGetDto:IDto
+    public class FamilyMemberGetDto:IDto
     {
         public int Id { get; set; }
 
         public int PersonelId { get; set; }
+        public string PersonelName { get; set; } = null!;
+
+        public string PersonelSurname { get; set; } = null!;
 
         public string RelationShip { get; set; } = null!;
 
@@ -27,4 +25,5 @@ namespace Entities.DTOs.FamilyMemberDtos
 
         public string Occupation { get; set; } = null!;
     }
+
 }

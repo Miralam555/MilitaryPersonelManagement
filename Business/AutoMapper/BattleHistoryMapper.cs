@@ -16,7 +16,7 @@ namespace Business.AutoMapper
             CreateMap<BattleHistoryAddDto, BattleHistory>();
 
 
-            CreateMap<BattleHistoryUpdateAndGetDto, BattleHistory>()
+            CreateMap<BattleHistoryUpdateDto, BattleHistory>()
                 .ForMember(d => d.CreatedDate, opt => opt.Ignore());
                 
         }

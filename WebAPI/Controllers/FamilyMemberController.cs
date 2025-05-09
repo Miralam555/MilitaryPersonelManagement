@@ -27,16 +27,27 @@ namespace WebAPI.Controllers
             }
             return BadRequest();
         }
-        [HttpGet("getbypersonelid")]
-        public async Task<IActionResult> GetByPersonelIdFamilyMemberAsync(int id)
+        [HttpGet("getallbypersonelid")]
+        public async Task<IActionResult> GetAllFamilyMembersByPersonelIdAsync(int personelId)
         {
-            var result = await _service.GetAllFamilyMembersByPersonelIdAsync(id);
+            var result = await _service.GetAllFamilyMembersByPersonelIdAsync(personelId);
             if (result.IsSuccess)
             {
                 return Ok(result.Data);
             }
-            return BadRequest(result.Data);
+            return BadRequest(result.Message);
         }
+         [HttpGet("getbyid")]
+        public async Task<IActionResult> GetMemberByIdAsync(int id)
+        {
+            var result = await _service.GetMemberByIdAsync(id);
+            if (result.IsSuccess)
+            {
+                return Ok(result.Data);
+            }
+            return BadRequest(result.Message);
+        }
+
         [HttpGet("getall")]
         public async Task<IActionResult> GetAllFamilyMemberAsync()
         {
@@ -45,10 +56,10 @@ namespace WebAPI.Controllers
             {
                 return Ok(result.Data);
             }
-            return BadRequest(result.Data);
+            return BadRequest(result.Message);
         }
         [HttpPut("update")]
-        public async Task<IActionResult> UpdateFamilyMemberAsync(FamilyMemberUpdateAndGetDto dto)
+        public async Task<IActionResult> UpdateFamilyMemberAsync(FamilyMemberUpdateDto dto)
         {
             var result = await _service.UpdateFamilyMemberAsync(dto);
             if (result.IsSuccess)

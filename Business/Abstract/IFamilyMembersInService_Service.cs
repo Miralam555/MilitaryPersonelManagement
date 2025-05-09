@@ -12,9 +12,11 @@ namespace Business.Abstract
     public interface IFamilyMembersInService_Service
     {
         Task<IResult> DeleteFamilyMembersInService(int id);
-        Task<IResult> UpdateFamilyMembersInService(FamilyMembersInServiceUpdateAndGetDto dto);
+        Task<IResult> UpdateFamilyMembersInService(FamilyMembersInServiceUpdateDto dto);
         Task<IResult> AddFamilyMembersInService(FamilyMembersInServiceAddDto dto);
-        Task<IDataResult<FamilyMembersInServiceUpdateAndGetDto>> GetByIdFamilyMembersInService(int id);
-        Task<IDataResult<List<FamilyMembersInServiceUpdateAndGetDto>>> GetAllFamilyMembersInService();
+        Task<IDataResult<List<FamilyMembersInServiceGetDto>>> GetAllFamilyMembersInService();
+        Task<IDataResult<List<FamilyMembersInServiceGetDto>>> GetAllFamilyMembersInServiceByPersonelId(int personelId);
+        Task<IDataResult<FamilyMembersInServiceGetDto>> GetByIdFamilyMemberInService(int id);
+        Task<IDataResult<List<FamilyMembersInServiceGetDto>>> GetAllFamilyMembersInServiceByMemberId(int memberId);
     }
 }

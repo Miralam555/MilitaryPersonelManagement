@@ -2,134 +2,414 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Panel</title>
+    <title>Dynamic DTO Tables</title>
     <style>
         body {
+            margin: 0;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f4f6f8;
-            margin: 20px;
-        }
-
-        .toolbar {
             display: flex;
-            align-items: center;
-            gap: 20px;
-            margin-bottom: 20px;
+            background-color: #f4f6f8;
         }
 
-        .controller-select {
-            padding: 8px 12px;
-            font-size: 16px;
-            border-radius: 8px;
-            border: 1px solid #ccc;
+        /* Sidebar */
+        .sidebar {
+            width: 260px;
+            background-color: #2f3542;
+            color: white;
+            height: 100vh;
+            padding: 20px 15px;
+            box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+        }
+
+            .sidebar h2 {
+                text-align: center;
+                font-size: 20px;
+                margin-bottom: 20px;
+                color: #ffa502;
+            }
+
+            .sidebar button {
+                width: 100%;
+                padding: 12px;
+                margin-top: 8px;
+                background-color: #57606f;
+                border: none;
+                border-radius: 4px;
+                color: white;
+                cursor: pointer;
+                text-align: left;
+                font-size: 15px;
+                transition: background-color 0.3s ease;
+            }
+
+                .sidebar button:hover {
+                    background-color: #747d8c;
+                }
+
+        .table-options {
+            display: none;
+            margin-left: 10px;
+            margin-top: 10px;
+        }
+
+        /* Content */
+        .content {
+            flex-grow: 1;
+            padding: 20px;
+        }
+
+        .actions button {
+            margin: 5px;
+            padding: 10px 20px;
+            border-radius: 4px;
+            border: none;
+            font-size: 14px;
+            cursor: pointer;
+            transition: 0.3s ease;
+        }
+
+            .actions button:hover {
+                opacity: 0.8;
+            }
+
+        .actions .update {
+            background-color: #2ed573;
+            color: white;
+        }
+
+        .actions .delete {
+            background-color: #ff4757;
+            color: white;
+        }
+
+        .actions .add {
+            background-color: #1e90ff;
+            color: white;
+        }
+
+        .actions .get {
+            background-color: #ffa502;
+            color: white;
+        }
+
+        /* Table */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
             background-color: white;
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            transition: 0.3s;
         }
 
-            .controller-select:hover {
-                border-color: #4a90e2;
-            }
-
-        .buttons {
-            display: flex;
-            gap: 10px;
+        th, td {
+            border: 1px solid #dcdde1;
+            padding: 10px;
+            text-align: left;
         }
 
-        .action-btn {
-            padding: 8px 16px;
-            font-size: 15px;
-            border: none;
-            border-radius: 8px;
-            background-color: #4a90e2;
-            color: white;
+        th {
+            background-color: #f1f2f6;
+        }
+
+        tr:hover {
+            background-color: #f8f9fa;
             cursor: pointer;
-            transition: background-color 0.3s, transform 0.2s;
         }
 
-            .action-btn:hover {
-                background-color: #357ABD;
-                transform: scale(1.05);
+        /* Form */
+        form {
+            background-color: white;
+            padding: 15px;
+            margin-top: 15px;
+            border-radius: 4px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+            form input, form select {
+                width: 100%;
+                margin: 8px 0;
+                padding: 10px;
+                border-radius: 4px;
+                border: 1px solid #ced6e0;
+                box-sizing: border-box;
             }
 
-        .table-container {
-            margin-top: 20px;
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-    </style>
+            form button {
+                background-color: #1e90ff;
+                color: white;
+                padding: 10px 20px;
+                border-radius: 4px;
+                border: none;
+                cursor: pointer;
+            }
 
+                form button:hover {
+                    opacity: 0.9;
+                }
+    </style>
 </head>
 <body>
-    <div class="toolbar">
-        <select id="controllerSelect" class="controller-select">
-            <option value="">Cədvəl seçin</option>
-            <option value="militaryrank">Military Rank</option>
-            <option value="specialskill">Xususi Bacariqlari</option>
-            <!-- istəsən buraya başqa cədvəlləri də əlavə edərsən -->
-        </select>
 
-        <div class="buttons">
-            <button id="getAllBtn" class="action-btn">Hamısını Gətir</button>
-            <button id="addBtn" class="action-btn">Əlavə Et</button>
-            <button id="editBtn" class="action-btn">Düzəliş Et</button>
-            <button id="deleteBtn" class="action-btn">Sil</button>
+    <div class="sidebar">
+        <h2>Cədvəl seç</h2>
+        <button onclick="toggleTableOptions()">Cədvəllər ↓</button>
+        <div class="table-options" id="tableOptions">
+            <button onclick="selectTable('Education')">Education</button>
+            <button onclick="selectTable('FamilyMemberForeignTravel')">FamilyMemberForeignTravel</button>
+            <button onclick="selectTable('PersonelRecognition')">PersonelRecognition</button>
         </div>
     </div>
 
-    <div id="content">
-        <!-- Burada seçdiyimiz cədvəl HTML-i dinamik gələcək -->
+    <div class="content" id="contentArea">
+        <h2>Əvvəlcə cədvəl seçin</h2>
     </div>
 
-
     <script>
-        const controllerSelect = document.getElementById('controllerSelect');
-        const contentDiv = document.getElementById('content');
+        let currentEntity = "";
 
-        // Script yükləyən funksiya
-        function loadScript(scriptUrl) {
-            return new Promise((resolve, reject) => {
-                const oldScript = document.getElementById('dynamicScript');
-                if (oldScript) {
-                    oldScript.remove(); // Köhnə script varsa, sil
-                }
-
-                const script = document.createElement('script');
-                script.src = scriptUrl;
-                script.id = 'dynamicScript';
-                script.onload = resolve;
-                script.onerror = reject;
-                document.body.appendChild(script);
-            });
+        function toggleTableOptions() {
+            const options = document.getElementById('tableOptions');
+            options.style.display = options.style.display === 'block' ? 'none' : 'block';
         }
 
-        controllerSelect.addEventListener('change', async () => {
-            const selected = controllerSelect.value;
+        function selectTable(entity) {
+            currentEntity = entity;
+            renderButtons();
+        }
 
-            if (!selected) {
-                contentDiv.innerHTML = '';
+        function renderButtons() {
+            document.getElementById('contentArea').innerHTML = `
+                <h2>${currentEntity} əməliyyatları</h2>
+                <div class="actions">
+                    <button class="get" onclick="getAll()">Get All</button>
+                    <button class="add" onclick="showAddForm()">Add</button>
+                    <button class="update" onclick="showUpdateForm()">Update</button>
+                    <button class="delete" onclick="deleteRow()">Delete</button>
+                </div>
+                <div id="tableArea"></div>
+                <div id="formArea"></div>
+            `;
+        }
+
+        function getAll() {
+            fetch(`https://localhost:44362/api/${currentEntity}/getall`, {
+                headers: {
+                    "Authorization": `Bearer ${localStorage.getItem('token')}`
+                }
+            })
+                .then(res => res.json())
+                .then(data => {
+                    renderTable(data);
+                }).catch(err => {
+                    alert("API-dən cavab alınmadı.");
+                });
+        }
+        function renderTable(data) {
+            if (!data || data.length === 0) {
+                document.getElementById('tableArea').innerHTML = "Məlumat tapılmadı.";
                 return;
             }
 
-            try {
-                const response = await fetch(`/${selected}.html`);
-                if (response.ok) {
-                    const html = await response.text();
-                    contentDiv.innerHTML = html;
+            let headers = Object.keys(data[0]).filter(k => k.toLowerCase() !== "id");
+            let table = `<table><tr>${headers.map(h => `<th>${h}</th>`).join('')}</tr>`;
 
-                    // HTML yükləndi, indi scripti yükləyək
-                    await loadScript(`/js/${selected}.js`);
+            data.forEach((item, index) => {
+                table += `
+            <tr onclick="selectRow(${index})" data-id="${item.Id}">
+                ${headers.map(h => `<td>${item[h]}</td>`).join('')}
+            </tr>
+        `;
+            });
 
-                } else {
-                    contentDiv.innerHTML = '<p>HTML faylı tapılmadı.</p>';
-                }
-            } catch (error) {
-                console.error('Xəta:', error);
-                contentDiv.innerHTML = '<p>Yükləmə zamanı xəta baş verdi.</p>';
+            table += `</table>`;
+            document.getElementById('tableArea').innerHTML = table;
+
+            window.currentData = data;
+            window.selectedRow = null;
+        }
+
+
+        function selectRow(index) {
+            const row = window.currentData[index];  // Seçilən sətirə uyğun məlumatı alırıq
+            window.selectedRow = row;  // Seçilən sətiri saxlayırıq
+            console.log("Seçilən sətir:", window.selectedRow);  // Konsola seçilmiş sətiri çap edirik
+            alert("Sətir seçildi! ID: " + window.selectedRow.id);  // Sətirin ID-sini göstəririk
+        }
+
+        function showAddForm() {
+            let formHtml = "";
+            if (currentEntity === "Education") {
+                formHtml = `
+                    <form onsubmit="submitAdd(event)">
+                        <input name="PersonelId" placeholder="PersonelId" required>
+                        <input name="InstitutionName" placeholder="InstitutionName" required>
+                        <input name="GraduationYear" placeholder="GraduationYear (yyyy-mm-dd)" required>
+                        <input name="Specialization" placeholder="Specialization" required>
+                        <input name="Degree" placeholder="Degree" required>
+                        <input name="EducationTypeId" placeholder="EducationTypeId" required>
+                        <button type="submit">Əlavə et</button>
+                    </form>`;
+            } else if (currentEntity === "FamilyMemberForeignTravel") {
+                formHtml = `
+                    <form onsubmit="submitAdd(event)">
+                        <input name="MemberId" placeholder="MemberId" required>
+                        <input name="StartDate" placeholder="StartDate (yyyy-mm-dd)" required>
+                        <input name="EndDate" placeholder="EndDate (yyyy-mm-dd)" required>
+                        <input name="TravellingCountryName" placeholder="TravellingCountryName" required>
+                        <input name="TravelReason" placeholder="TravelReason">
+                        <input name="Record" placeholder="Record">
+                        <button type="submit">Əlavə et</button>
+                    </form>`;
+            } else if (currentEntity === "PersonelRecognition") {
+                formHtml = `
+                    <form onsubmit="submitAdd(event)">
+                        <input name="PersonelId" placeholder="PersonelId">
+                        <input name="Injunctionİd" placeholder="Injunctionİd" required>
+                        <input name="RecognitionDescription" placeholder="RecognitionDescription">
+                        <input name="Record" placeholder="Record">
+                        <button type="submit">Əlavə et</button>
+                    </form>`;
             }
-        });
+            document.getElementById('formArea').innerHTML = formHtml;
+        }
+
+        function submitAdd(event) {
+            event.preventDefault();
+            const formData = Object.fromEntries(new FormData(event.target));
+            fetch(`https://localhost:44362/api/${currentEntity}/add`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${localStorage.getItem('token')}`
+                },
+                body: JSON.stringify(formData)
+            }).then(res => {
+                alert("Əlavə edildi!");
+                getAll();
+            });
+        }
+
+        function showUpdateForm() {
+            const row = window.selectedRow;
+            const safe = val => (val ?? "").toString();
+            const formatDate = val => {
+                if (!val) return "";
+                const d = new Date(val);
+                return d.toISOString().split("T")[0];
+            };
+
+            let formHtml = "";
+
+            if (currentEntity === "Education") {
+                formHtml = `
+        <form onsubmit="submitUpdate(event)">
+            <input name="Id" value="${safe(window.selectedRow.Id)}" hidden>
+            <input name="PersonelId" value="${safe(window.selectedRow.PersonelId)}" placeholder="PersonelId" required>
+            <input name="InstitutionName" value="${safe(window.selectedRow.InstitutionName)}" placeholder="InstitutionName" required>
+            <input name="GraduationYear" value="${formatDate(window.selectedRow.GraduationYear)}" placeholder="GraduationYear (yyyy-mm-dd)" required>
+            <input name="Specialization" value="${safe(window.selectedRow.Specialization)}" placeholder="Specialization" required>
+            <input name="Degree" value="${safe(window.selectedRow.Degree)}" placeholder="Degree" required>
+            <input name="EducationTypeId" value="${safe(window.selectedRow.EducationTypeId)}" placeholder="EducationTypeId" required>
+            <button type="submit">Yenilə</button>
+        </form>`;
+            } else if (currentEntity === "FamilyMemberForeignTravel") {
+                formHtml = `
+        <form onsubmit="submitUpdate(event)">
+            <input name="Id" value="${safe(window.selectedRow.Id)}" hidden>
+            <input name="MemberId" value="${safe(window.selectedRow.MemberId)}" placeholder="MemberId" required>
+            <input name="StartDate" value="${formatDate(window.selectedRow.StartDate)}" placeholder="StartDate (yyyy-mm-dd)" required>
+            <input name="EndDate" value="${formatDate(window.selectedRow.EndDate)}" placeholder="EndDate (yyyy-mm-dd)" required>
+            <input name="TravellingCountryName" value="${safe(window.selectedRow.TravellingCountryName)}" placeholder="TravellingCountryName" required>
+            <input name="TravelReason" value="${safe(window.selectedRow.TravelReason)}" placeholder="TravelReason">
+            <input name="Record" value="${safe(window.selectedRow.Record)}" placeholder="Record">
+            <button type="submit">Yenilə</button>
+        </form>`;
+            } else if (currentEntity === "PersonelRecognition") {
+                formHtml = `
+        <form onsubmit="submitUpdate(event)">
+            <input name="Id" value="${safe(window.selectedRow.Id)}" hidden>
+            <input name="PersonelId" value="${safe(window.selectedRow.PersonelId)}" placeholder="PersonelId">
+            <input name="Injunctionİd" value="${safe(window.selectedRow.Injunctionİd)}" placeholder="Injunctionİd" required>
+            <input name="RecognitionDescription" value="${safe(window.selectedRow.RecognitionDescription)}" placeholder="RecognitionDescription">
+            <input name="Record" value="${safe(window.selectedRow.Record)}" placeholder="Record">
+            <button type="submit">Yenilə</button>
+        </form>`;
+            }
+
+            document.getElementById('formArea').innerHTML = formHtml;
+
+
+        }
+
+        function submitUpdate(event) {
+            event.preventDefault();
+
+            // Seçilən sətir məlumatlarını alırıq
+            const row = window.selectedRow;  // Seçilən sətir
+            if (!row) {
+                alert("Zəhmət olmasa yeniləmək istədiyiniz sətiri seçin.");
+                return;
+            }
+
+            // Form məlumatlarını alırıq
+            let formData = Object.fromEntries(new FormData(event.target));
+
+            // Seçilən sətirin ID-sini formData-ya əlavə edirik
+            formData.Id = window.selectedRow.id;  // Seçilən sətirin ID-ni form məlumatlarına əlavə edirik
+            console.log("Göndərilən form məlumatları:", formData.id); 
+            // API ilə əlaqə qururuq
+            fetch(`https://localhost:44362/api/${currentEntity}/update`, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${localStorage.getItem('token')}`
+                },
+                body: JSON.stringify(formData)
+            }).then(res => {
+                if (res.ok) {
+                    alert("Yeniləndi!");
+                    getAll();
+                } else {
+                    alert("Yeniləmək mümkün olmadı.");
+                }
+            }).catch(err => {
+                alert("Xəta baş verdi: " + err.message);
+            });
+        }
+
+
+        function deleteRow() {
+            if (!selectedRow) {
+                alert("Zəhmət olmasa silmək istədiyiniz sətiri seçin.");
+                return;
+            }
+
+            const confirmDelete = confirm("Bu sətiri silmək istədiyinizə əminsiniz?");
+            if (!confirmDelete) return;
+
+            const id = selectedRow.Id;
+
+            fetch(`https://localhost:44362/api/${currentEntity}/delete?id=${window.selectedRow.id}`, {
+                method: "DELETE",
+                headers: {
+                    "Authorization": `Bearer ${localStorage.getItem('token')}`
+                }
+            })
+                .then(res => {
+                    if (res.ok) {
+                        alert("Uğurla silindi.");
+                        getAll();
+                        selectedRow = null;
+                    } else {
+                        alert("Silmək mümkün olmadı.");
+                    }
+                })
+                .catch(err => {
+                    alert("Xəta baş verdi: " + err.message);
+                });
+        }
+
+
     </script>
 
 </body>

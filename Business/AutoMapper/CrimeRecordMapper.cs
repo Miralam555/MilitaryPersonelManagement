@@ -15,9 +15,9 @@ namespace Business.AutoMapper
         {
             CreateMap<CrimeRecordAddDto, CrimeRecord>();
 
-            CreateMap<CrimeRecordUpdateAndGetDto, CrimeRecord>()
+            CreateMap<CrimeRecordUpdateDto, CrimeRecord>()
                 .ForMember(dest => dest.CreatedDate, opt => opt.Ignore());
-            CreateMap<CrimeRecord, CrimeRecordUpdateAndGetDto>();
+            
         }
     }
 }

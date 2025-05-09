@@ -20,7 +20,7 @@ namespace Business.Concrete
 {
     public class FamilyMemberManager : IFamilyMemberService
     {
-        
+
         private readonly IFamilyMemberDal _familyMemberDal;
         private readonly IMapper _mapper;
 
@@ -32,32 +32,43 @@ namespace Business.Concrete
         }
 
 
-        
+
         [CacheAspect]
-        [ValidationAspect(typeof(FamilyMemberValidator))]
         [SecuredOperation("admin,cmd.get")]
-        public async Task<IDataResult<List<FamilyMemberUpdateAndGetDto>>> GetAllFamilyMembersByPersonelIdAsync(int id)
+        public async Task<IDataResult<List<FamilyMemberGetDto>>> GetAllFamilyMembersByPersonelIdAsync(int personelId)
         {
-            List<FamilyMember> familyMembers = await _familyMemberDal.GetAllAsync(p => p.PersonelId == id);
+            List<FamilyMemberGetDto> familyMembers = await _familyMemberDal.GetAllMembersByPersonelIdAsync(personelId);
             if (familyMembers.Count > 0)
             {
-                return new SuccessDataResult<List<FamilyMemberUpdateAndGetDto>>(_mapper.Map<List<FamilyMemberUpdateAndGetDto>>(familyMembers));
+                return new SuccessDataResult<List<FamilyMemberGetDto>>(familyMembers);
             }
-            return new ErrorDataResult<List<FamilyMemberUpdateAndGetDto>>();
+            return new ErrorDataResult<List<FamilyMemberGetDto>>(Messages.NoData);
         }
-       
+
         [CacheAspect]
-        [ValidationAspect(typeof(FamilyMemberValidator))]
         [SecuredOperation("admin,cmd.get")]
-        public async Task<IDataResult<List<FamilyMemberUpdateAndGetDto>>> GetAllFamilyMembersAsync()
+        public async Task<IDataResult<List<FamilyMemberGetDto>>> GetAllFamilyMembersAsync()
         {
 
-            List<FamilyMember> familyMembers = await _familyMemberDal.GetAllAsync();
+            List<FamilyMemberGetDto> familyMembers = await _familyMemberDal.GetAllMembersAsync();
             if (familyMembers.Count > 0)
             {
-                return new SuccessDataResult<List<FamilyMemberUpdateAndGetDto>>(_mapper.Map<List<FamilyMemberUpdateAndGetDto>>(familyMembers));
+                return new SuccessDataResult<List<FamilyMemberGetDto>>(familyMembers);
             }
-            return new ErrorDataResult<List<FamilyMemberUpdateAndGetDto>>();
+            return new ErrorDataResult<List<FamilyMemberGetDto>>(Messages.NoData);
+        }
+        [CacheAspect]
+        [SecuredOperation("admin,cmd.get")]
+        public async Task<IDataResult<FamilyMemberGetDto>> GetMemberByIdAsync(int id)
+        {
+
+            FamilyMemberGetDto entity = await _familyMemberDal.GetMemberByIdAsync(id);
+            if (entity == null)
+            {
+                return new ErrorDataResult<FamilyMemberGetDto>(Messages.EntityNotFound);
+
+            }
+            return new SuccessDataResult<FamilyMemberGetDto>(entity);
         }
 
 
@@ -74,15 +85,14 @@ namespace Business.Concrete
         [CacheRemoveAspect("IFamilyMemberService.Get")]
         [ValidationAspect(typeof(FamilyMemberValidator))]
         [SecuredOperation("admin,cmd.update")]
-        public async Task<IResult> UpdateFamilyMemberAsync(FamilyMemberUpdateAndGetDto dto)
+        public async Task<IResult> UpdateFamilyMemberAsync(FamilyMemberUpdateDto dto)
         {
-            FamilyMember entity = await _familyMemberDal.GetAsync(p=>p.Id==dto.Id);
+            FamilyMember entity = await _familyMemberDal.GetAsync(p => p.Id == dto.Id);
             _mapper.Map(dto, entity);
             await _familyMemberDal.UpdateAsync(entity);
             return new SuccessResult(Messages.SuccessfullyUpdated);
         }
         [CacheRemoveAspect("IFamilyMemberService.Get")]
-        [ValidationAspect(typeof(FamilyMemberValidator))]
         [SecuredOperation("admin")]
         public async Task<IResult> DeleteFamilyMemberAsync(int id)
         {
