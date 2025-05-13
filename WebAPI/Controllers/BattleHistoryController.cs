@@ -38,7 +38,7 @@ namespace WebAPI.Controllers
             }
             return BadRequest(result.Message);
         }
-        [HttpPost("addbattlehistory")]
+        [HttpPost("add")]
         public async Task<IActionResult> AddHistory(BattleHistoryAddDto dto)
         {
             
