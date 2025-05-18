@@ -1,19 +1,21 @@
 ﻿using Business.Abstract;
 using Entities.DTOs.MilitaryPersonelDtos;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebAPI.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class MilitaryPersonelController : ControllerBase
+    [Authorize]
+    public class MilitaryPersonelsController : ControllerBase
     {
         private readonly IMilitaryPersonelService _service;
-        public MilitaryPersonelController(IMilitaryPersonelService service)
+        public MilitaryPersonelsController(IMilitaryPersonelService service)
         {
             _service = service;
         }
-        [HttpPost("addpersonel")]
+        [HttpPost]
         public async Task<IActionResult> AddPersonelAsync(MilitaryPersonelAddDto dto)
         {
             var result=await _service.PersonelAddAsync(dto);
@@ -23,7 +25,7 @@ namespace WebAPI.Controllers
             }
             return BadRequest(result.Message);
         }
-        [HttpPut("updatepersonel")]
+        [HttpPut]
         public async Task<IActionResult> UpdatePersonelAsync(MilitaryPersonelUpdateDto dto)
         {
             var result = await _service.PersonelUpdateAsync(dto);
@@ -33,7 +35,7 @@ namespace WebAPI.Controllers
             }
             return BadRequest(result.Message);
         }
-        [HttpGet("getallpersonels")]
+        [HttpGet]
         public async Task<IActionResult> GetPersonelsAsync()
         {
             var result=await _service.GetAllPersonelAsync();
@@ -43,7 +45,7 @@ namespace WebAPI.Controllers
             }
             return BadRequest(result.Message);
         }
-        [HttpGet("getbyidpersonel")]
+        [HttpGet("{id}")]
         public async Task<IActionResult> GetPersonelByIdAsync(int id)
         {
             var result = await _service.GetByIdPersonel(id);

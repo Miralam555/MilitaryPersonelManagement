@@ -28,42 +28,44 @@ namespace Business.Concrete
             _injunctionDal = injunctionDal;
             _mapper = mapper;
         }
-        
+
         [CacheAspect]
         [SecuredOperation("admin,cmd.get")]
-        public async Task<IDataResult<List<InjunctionUpdateAndGetDto>>> GetAllInjunctionsAsync()
+        public async Task<IDataResult<List<InjunctionGetDto>>> GetAllInjunctionsAsync()
         {
-            List<Injunction> injunctions = await _injunctionDal.GetAllInjunctionWithDetailsAsync();
+            List<InjunctionGetDto> list = await _injunctionDal.GetAllInjunctionWithDetailsAsync();
+            if (list.Count > 0)
+            {
+                return new SuccessDataResult<List<InjunctionGetDto>>(list);
+            }
+            return new ErrorDataResult<List<InjunctionGetDto>>(Messages.NoData);
+        }
+
+        [CacheAspect]
+        [SecuredOperation("admin,cmd.get")]
+        public async Task<IDataResult<List<InjunctionGetDto>>> GetAllInjunctionsByIssuedPersonelIdAsync(int personelId)
+        {
+            List<InjunctionGetDto> injunctions = await _injunctionDal.GetAllInjunctionsByPersonelIdAsync(personelId);
             if (injunctions.Count > 0)
             {
-                return new SuccessDataResult<List<InjunctionUpdateAndGetDto>>(_mapper.Map<List<InjunctionUpdateAndGetDto>>(injunctions));
+                return new SuccessDataResult<List<InjunctionGetDto>>();
             }
-            return new ErrorDataResult<List<InjunctionUpdateAndGetDto>>(Messages.NoData);
+            return new ErrorDataResult<List<InjunctionGetDto>>(Messages.NoData);
         }
-        
+
         [CacheAspect]
         [SecuredOperation("admin,cmd.get")]
-        public async Task<IDataResult<List<InjunctionUpdateAndGetDto>>> GetAllInjunctionsByIssuedPersonelIdAsync(int id)
+        public async Task<IDataResult<InjunctionGetDto>> GetInjunctionByIdAsync(int id)
         {
-            List<Injunction> injunctions = await _injunctionDal.GetAllInjunctionsByIssuedPersonelIdWithDetailsAsync(id);
-            if (injunctions.Count > 0)
+            InjunctionGetDto injunction = await _injunctionDal.GetInjunctionByIdAsync(id);
+            if (injunction == null)
             {
-                return new SuccessDataResult<List<InjunctionUpdateAndGetDto>>(_mapper.Map<List<InjunctionUpdateAndGetDto>>(injunctions));
+                return new ErrorDataResult<InjunctionGetDto>(Messages.NoData);
             }
-            return new ErrorDataResult<List<InjunctionUpdateAndGetDto>>(Messages.NoData);
-        }
-
-
-        
-        [CacheAspect]
-        [SecuredOperation("admin,cmd.get")]
-        public async Task<IDataResult<InjunctionUpdateAndGetDto>> GetByIdInjunctionsAsync(int id)
-        {
-            Injunction injunction = await _injunctionDal.GetByIdInjunctionWithDetailsAsync(id);
-
-            return new SuccessDataResult<InjunctionUpdateAndGetDto>(_mapper.Map<InjunctionUpdateAndGetDto>(injunction));
+            return new SuccessDataResult<InjunctionGetDto>(injunction);
 
         }
+
         [CacheRemoveAspect("IInjunctionService.Get")]
         [SecuredOperation("admin,cmd.add")]
         [ValidationAspect(typeof(InjunctionValidator))]
@@ -72,13 +74,18 @@ namespace Business.Concrete
             await _injunctionDal.AddAsync(_mapper.Map<Injunction>(dto));
             return new SuccessResult(Messages.SuccessfullyAdded);
         }
+
         [CacheRemoveAspect("IInjunctionService.Get")]
         [SecuredOperation("admin,cmd.add")]
         [ValidationAspect(typeof(InjunctionValidator))]
-        public async Task<IResult> UpdateInjunctionAsync(InjunctionUpdateAndGetDto dto)
+        public async Task<IResult> UpdateInjunctionAsync(InjunctionUpdateDto dto)
         {
-            Injunction entity= await _injunctionDal.GetAsync(p => p.Id == dto.Id);
-            _mapper.Map(dto,entity);
+            Injunction entity = await _injunctionDal.GetAsync(p => p.Id == dto.Id);
+            if (entity == null)
+            {
+                return new ErrorResult(Messages.EntityNotFound);
+            }
+            _mapper.Map(dto, entity);
             await _injunctionDal.UpdateAsync(entity);
             return new SuccessResult(Messages.SuccessfullyUpdated);
         }
@@ -86,8 +93,11 @@ namespace Business.Concrete
         [SecuredOperation("admin")]
         public async Task<IResult> DeleteInjunctionAsync(int id)
         {
-            Injunction entity= await _injunctionDal.GetAsync(p => p.Id == id);
-           
+            Injunction entity = await _injunctionDal.GetAsync(p => p.Id == id);
+            if (entity == null)
+            {
+                return new ErrorResult(Messages.EntityNotFound);
+            }
             await _injunctionDal.DeleteAsync(entity);
             return new SuccessResult(Messages.SuccessfullyDeleted);
         }

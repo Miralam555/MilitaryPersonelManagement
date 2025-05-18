@@ -8,15 +8,15 @@ namespace WebAPI.Controllers
     [ApiController]
     [Route("api/[controller]")]
     [Authorize]
-    public class PersonelForeignLanguageLevelController : ControllerBase
+    public class PersonelForeignLanguageLevelsController : ControllerBase
     {
         private readonly IMilitaryPersonelForeignLanguageLevelService _service;
 
-        public PersonelForeignLanguageLevelController(IMilitaryPersonelForeignLanguageLevelService service)
+        public PersonelForeignLanguageLevelsController(IMilitaryPersonelForeignLanguageLevelService service)
         {
             _service = service;
         }
-        [HttpGet("getall")]
+        [HttpGet]
         public async Task<IActionResult> GetAllAsync()
         {
             var result = await _service.GetAllLevelAsync();
@@ -26,7 +26,7 @@ namespace WebAPI.Controllers
             }
             return BadRequest(result.Message);
         }
-        [HttpGet("getallbyinjunctionid")]
+        [HttpGet("injunction/{injunctionId}/levels")]
         public async Task<IActionResult> GetAllByInjunctionIdAsync(int injunctionId)
         {
             var result = await _service.GetAllLevelByInjunctionIdAsync(injunctionId);
@@ -36,7 +36,7 @@ namespace WebAPI.Controllers
             }
             return BadRequest(result.Message);
         }
-        [HttpGet("getallbypersonelid")]
+        [HttpGet("personel/{personelId}/levels")]
         public async Task<IActionResult> GetAllByPersonelIdAsync(int personelId)
         {
             var result = await _service.GetAllLevelByPersonelIdAsync(personelId);
@@ -46,7 +46,7 @@ namespace WebAPI.Controllers
             }
             return BadRequest(result.Message);
         }
-        [HttpGet("getbyid")]
+        [HttpGet("{id}")]
         public async Task<IActionResult> GetByIdAsync(int id)
         {
             var result = await _service.GetLevelByIdAsync(id);
@@ -56,7 +56,7 @@ namespace WebAPI.Controllers
             }
             return BadRequest(result.Message);
         }
-        [HttpPost("add")]
+        [HttpPost]
         public async Task<IActionResult> AddAsync(PersonelForeignLanguageLevelAddDto dto)
         {
             var result = await _service.AddLevelAsync(dto);
@@ -66,7 +66,7 @@ namespace WebAPI.Controllers
             }
             return BadRequest(result.Message);
         }
-        [HttpPut("update")]
+        [HttpPut]
         public async Task<IActionResult> UpdateAsync(PersonelForeignLanguageLevelUpdateDto dto)
         {
             var result = await _service.UpdateLevelAsync(dto);
@@ -76,7 +76,7 @@ namespace WebAPI.Controllers
             }
             return BadRequest(result.Message);
         }
-        [HttpDelete("delete")]
+        [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteAsync(int id)
         {
             var result = await _service.DeleteAsync(id);

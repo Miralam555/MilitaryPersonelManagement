@@ -8,6 +8,7 @@ using Core.Aspects.Autofac.Validation;
 using Core.Entities;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
+using Entities.DTOs.MilitaryMedicalAssessmentDtos;
 using Entities.DTOs.PersonelForeignTravelDtos;
 using MyMilitaryFinalProject.Entities.Concrete;
 using System;
@@ -89,6 +90,10 @@ namespace Business.Concrete
         public async Task<IResult> UpdateTravelAsync(PersonelForeignTravelUpdateDto dto)
         {
             var entity=await _personelForeignTravelDal.GetAsync(p => p.Id == dto.Id);
+            if (entity == null)
+            {
+                return new ErrorDataResult<MilitaryMedicalAssessmentGetDto>(Messages.EntityNotFound);
+            }
             _mapper.Map(dto, entity);
             await _personelForeignTravelDal.UpdateAsync(entity);
             return new SuccessResult(Messages.SuccessfullyUpdated);
@@ -99,6 +104,10 @@ namespace Business.Concrete
         public async Task<IResult> DeleteTravelAsync(int id)
         {
             var entity = await _personelForeignTravelDal.GetAsync(p => p.Id == id);
+            if (entity == null)
+            {
+                return new ErrorDataResult<MilitaryMedicalAssessmentGetDto>(Messages.EntityNotFound);
+            }
             await _personelForeignTravelDal.DeleteAsync(entity);
             
             return new SuccessResult(Messages.SuccessfullyDeleted);

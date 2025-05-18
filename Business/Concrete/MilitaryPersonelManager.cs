@@ -6,10 +6,12 @@ using Business.ValidationRules.FluentValidation;
 using Core.Aspects.Autofac.Caching;
 using Core.Aspects.Autofac.Performance;
 using Core.Aspects.Autofac.Validation;
+using Core.Entities;
 using Core.Utilities.Business;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using DataAccess.Conrete.EntityFramework.Context;
+using Entities.DTOs.MilitaryMedicalAssessmentDtos;
 using Entities.DTOs.MilitaryPersonelDtos;
 using Microsoft.EntityFrameworkCore;
 using MyMilitaryFinalProject.Entities.Concrete;
@@ -48,8 +50,12 @@ namespace Business.Concrete
         [SecuredOperation("admin,cmd.update")]
         public async Task<IResult> PersonelUpdateAsync(MilitaryPersonelUpdateDto dto)
         {
-            var personel = _mapper.Map<MilitaryPersonel>(dto);
-            await _militaryPersonelDal.UpdateAsync(personel);
+            var entity = _mapper.Map<MilitaryPersonel>(dto);
+            if (entity == null)
+            {
+                return new ErrorDataResult<MilitaryMedicalAssessmentGetDto>(Messages.EntityNotFound);
+            }
+            await _militaryPersonelDal.UpdateAsync(entity);
             return new SuccessResult(Messages.SuccessfullyUpdated);
         }
     
@@ -73,6 +79,6 @@ namespace Business.Concrete
             return new SuccessDataResult<MilitaryPersonelGetDto>(_mapper.Map<MilitaryPersonelGetDto>(personel));
 
         }
-       
+       //Delete emeliyyati yoxdur arxivde qalsin deye ve ya soft delete istifade etmek olar
     }
 }

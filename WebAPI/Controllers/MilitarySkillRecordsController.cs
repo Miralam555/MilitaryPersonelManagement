@@ -9,15 +9,15 @@ namespace WebAPI.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [Authorize]
-    public class MilitarySkillRecordController : ControllerBase
+    public class MilitarySkillRecordsController : ControllerBase
     {
         private readonly IMilitarySkillRecordService _service;
 
-        public MilitarySkillRecordController(IMilitarySkillRecordService service)
+        public MilitarySkillRecordsController(IMilitarySkillRecordService service)
         {
             _service = service;
         }
-        [HttpGet("getall")]
+        [HttpGet]
         public async Task<IActionResult> GetAllSkillRecordsAsync()
         {
             var result = await _service.GetAllRecordsAsync();
@@ -27,7 +27,7 @@ namespace WebAPI.Controllers
             }
             return BadRequest(result.Message);
         }
-        [HttpGet("getallbypersonelid")]
+        [HttpGet("personel/{personelId}/records")]
         public async Task<IActionResult> GetAllSkillRecordsByPersonelIdAsync(int personelId)
         {
             var result = await _service.GetAllRecordsByPersonelIdAsync(personelId);
@@ -37,7 +37,7 @@ namespace WebAPI.Controllers
             }
             return BadRequest(result.Message);
         }
-        [HttpGet("getbyid")]
+        [HttpGet("{id}")]
         public async Task<IActionResult> GetSkillRecordByIdAsync(int id)
         {
             var result = await _service.GetRecordByIdAsync(id);
@@ -47,7 +47,7 @@ namespace WebAPI.Controllers
             }
             return BadRequest(result.Message);
         }
-        [HttpPost("add")]
+        [HttpPost]
         public async Task<IActionResult> AddSkillRecordAsync(MilitarySkillRecordAddDto dto)
         {
             var result = await _service.AddSkillRecordAsync(dto);
@@ -57,7 +57,7 @@ namespace WebAPI.Controllers
             }
             return BadRequest();
         }
-        [HttpPut("update")]
+        [HttpPut]
         public async Task<IActionResult> UpdateSkillRecordAsync(MilitarySkillRecordUpdateDto dto)
         {
             var result = await _service.UpdateSkillRecordAsync(dto);
@@ -67,7 +67,7 @@ namespace WebAPI.Controllers
             }
             return BadRequest();
         }
-        [HttpDelete("delete")]
+        [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteSkillRecordAsync(int id)
         {
             var result = await _service.DeleteSkillRecordAsync(id);

@@ -7,6 +7,7 @@ using Core.Aspects.Autofac.Caching;
 using Core.Aspects.Autofac.Validation;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
+using Entities.DTOs.MilitaryMedicalAssessmentDtos;
 using Entities.DTOs.MilitaryRankDtos;
 using MyMilitaryFinalProject.Entities.Concrete;
 using System;
@@ -86,6 +87,10 @@ namespace Business.Concrete
         public async Task<IResult> UpdateRankAsync(MilitaryRankUpdateDto dto)
         {
             var entity = await _rankDal.GetAsync(p => p.Id == dto.Id);
+            if (entity == null)
+            {
+                return new ErrorDataResult<MilitaryMedicalAssessmentGetDto>(Messages.EntityNotFound);
+            }
             _mapper.Map(dto, entity);
             await _rankDal.UpdateAsync(entity);
             return new SuccessResult(Messages.SuccessfullyUpdated);
@@ -95,6 +100,10 @@ namespace Business.Concrete
         public async Task<IResult> DeleteRankAsync(int id)
         {
             var entity = await _rankDal.GetAsync(p => p.Id ==id);
+            if (entity == null)
+            {
+                return new ErrorDataResult<MilitaryMedicalAssessmentGetDto>(Messages.EntityNotFound);
+            }
             await _rankDal.DeleteAsync(entity);
             return new SuccessResult(Messages.SuccessfullyDeleted);
         }

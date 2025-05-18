@@ -8,15 +8,15 @@ namespace WebAPI.Controllers
     [ApiController]
     [Route("api/[controller]")]
     [Authorize]
-    public class MilitaryPersonelPenaltyController : ControllerBase
+    public class MilitaryPersonelPenaltiesController : ControllerBase
     {
         public IMilitaryPersonelPenaltyService _service;
 
-        public MilitaryPersonelPenaltyController(IMilitaryPersonelPenaltyService service)
+        public MilitaryPersonelPenaltiesController(IMilitaryPersonelPenaltyService service)
         {
             _service = service;
         }
-        [HttpGet("getall")]
+        [HttpGet]
         public async Task<IActionResult> GetAllPenaltiesAsync()
         {
             var result = await _service.GetAllPenaltiesAsync();
@@ -26,7 +26,7 @@ namespace WebAPI.Controllers
             }
             return BadRequest(result.Message);
         }
-        [HttpGet("getallbypersonelid")]
+        [HttpGet("personel/{personelId}/penalties")]
         public async Task<IActionResult> GetAllPenaltiesByPersonelIdAsync(int personelId)
         {
             var result=await _service.GetAllPenaltiesByPersonelIdAsync(personelId);
@@ -36,7 +36,7 @@ namespace WebAPI.Controllers
             }
             return BadRequest(result.Message);
         }
-        [HttpGet("getbyid")]
+        [HttpGet("{id}")]
         public async Task<IActionResult> GetPenaltyByIdAsync(int id)
         {
             var result = await _service.GetPenaltyByIdAsync(id);
@@ -46,7 +46,7 @@ namespace WebAPI.Controllers
             }
             return BadRequest(result.Message);
         }
-        [HttpPost("add")]
+        [HttpPost]
         public async Task<IActionResult> AddPenaltyAsync(PenaltyAddDto dto)
         {
             var result=await _service.AddPenaltyAsync(dto);
@@ -57,7 +57,7 @@ namespace WebAPI.Controllers
                 
             return BadRequest(result.Message);
         }
-        [HttpPut("update")]
+        [HttpPut]
         public async Task<IActionResult> UpdatePenaltyAsync(PenaltyUpdateDto dto)
         {
             var result = await _service.UpdatePenaltyAsync(dto);
@@ -68,7 +68,7 @@ namespace WebAPI.Controllers
 
             return BadRequest(result.Message);
         }
-        [HttpDelete("delete")]
+        [HttpDelete]
         public async Task<IActionResult> DeletePenaltyAsync(int id)
         {
             var result = await _service.DeletePenaltyAsync(id);

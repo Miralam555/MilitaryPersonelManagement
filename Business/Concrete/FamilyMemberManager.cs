@@ -9,6 +9,7 @@ using Core.Aspects.Autofac.Validation;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.DTOs.FamilyMemberDtos;
+using Entities.DTOs.MilitaryMedicalAssessmentDtos;
 using MyMilitaryFinalProject.Entities.Concrete;
 using System;
 using System.Collections.Generic;
@@ -88,6 +89,10 @@ namespace Business.Concrete
         public async Task<IResult> UpdateFamilyMemberAsync(FamilyMemberUpdateDto dto)
         {
             FamilyMember entity = await _familyMemberDal.GetAsync(p => p.Id == dto.Id);
+            if (entity == null)
+            {
+                return new ErrorDataResult<MilitaryMedicalAssessmentGetDto>(Messages.EntityNotFound);
+            }
             _mapper.Map(dto, entity);
             await _familyMemberDal.UpdateAsync(entity);
             return new SuccessResult(Messages.SuccessfullyUpdated);
@@ -97,6 +102,10 @@ namespace Business.Concrete
         public async Task<IResult> DeleteFamilyMemberAsync(int id)
         {
             FamilyMember entity = await _familyMemberDal.GetAsync(p => p.Id == id);
+            if (entity == null)
+            {
+                return new ErrorDataResult<MilitaryMedicalAssessmentGetDto>(Messages.EntityNotFound);
+            }
             await _familyMemberDal.DeleteAsync(entity);
             return new SuccessResult(Messages.SuccessfullyDeleted);
         }

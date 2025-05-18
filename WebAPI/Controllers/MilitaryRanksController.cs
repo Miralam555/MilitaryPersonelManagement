@@ -9,15 +9,15 @@ namespace WebAPI.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [Authorize]
-    public class MilitaryRankController : ControllerBase
+    public class MilitaryRanksController : ControllerBase
     {
         private readonly IMilitaryRankService _service;
 
-        public MilitaryRankController(IMilitaryRankService service)
+        public MilitaryRanksController(IMilitaryRankService service)
         {
             _service = service;
         }
-        [HttpGet("getall")]
+        [HttpGet]
         public async Task<IActionResult> GetAllRanksAsync()
         {
             var result = await _service.GetAllRanksAsync();
@@ -27,7 +27,7 @@ namespace WebAPI.Controllers
             }
             return BadRequest(result.Message);
         }
-        [HttpGet("getallbypersonelid")]
+        [HttpGet("personel/{personelId}/ranks")]
         public async Task<IActionResult> GetAllRanksByPersonelIdAsync(int personelId)
         {
             var result = await _service.GetAllRanksByPersonelIdAsync(personelId);
@@ -37,7 +37,7 @@ namespace WebAPI.Controllers
             }
             return BadRequest(result.Message);
         }
-        [HttpGet("getallbyinjunctionid")]
+        [HttpGet("injunction/{injunctionId}/ranks")]
         public async Task<IActionResult> GetAllRanksByInjunctionIdAsync(int injunctionId)
         {
             var result = await _service.GetAllRanksByInjunctionIdAsync(injunctionId);
@@ -47,7 +47,7 @@ namespace WebAPI.Controllers
             }
             return BadRequest(result.Message);
         }
-        [HttpGet("getbyid")]
+        [HttpGet("{id}")]
         public async Task<IActionResult> GetRankByIdAsync(int id)
         {
             var result = await _service.GetRankByIdAsync(id);
@@ -57,7 +57,7 @@ namespace WebAPI.Controllers
             }
             return BadRequest(result.Message);
         }
-        [HttpPost("add")]
+        [HttpPost]
         public async Task<IActionResult> AddRankAsync(MilitaryRankAddDto dto)
         {
             var result = await _service.AddRankAsync(dto);
@@ -67,7 +67,7 @@ namespace WebAPI.Controllers
             }
             return BadRequest();
         }
-        [HttpPut("update")]
+        [HttpPut]
         public async Task<IActionResult> UpdateRankAsync(MilitaryRankUpdateDto dto)
         {
             var result = await _service.UpdateRankAsync(dto);
@@ -77,7 +77,7 @@ namespace WebAPI.Controllers
             }
             return BadRequest();
         }
-        [HttpDelete("delete")]
+        [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteRankAsync(int id)
         {
             var result = await _service.DeleteRankAsync(id);

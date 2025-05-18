@@ -11,15 +11,15 @@ namespace WebAPI.Controllers
     [ApiController]
     [Route("api/[controller]")]
     [Authorize]
-    public class BattleHistoryController : ControllerBase
+    public class BattleHistoriesController : ControllerBase
     {
         IBattleHistoryService _service;
-        public BattleHistoryController(IBattleHistoryService service)
+        public BattleHistoriesController(IBattleHistoryService service)
         {
             _service = service;
         }
-        [HttpGet("getall")]
-        public async Task<IActionResult> GetAllHistory()
+        [HttpGet]
+        public async Task<IActionResult> GetAllHistoryAsync()
         {
             var result = await _service.GetAllBattleHistoryAsync();
             if (result.IsSuccess)
@@ -28,18 +28,30 @@ namespace WebAPI.Controllers
             }
             return BadRequest(result.Message);
         }
-        [HttpGet("getallbypersonelId")]
-        public async Task<IActionResult> GetAllByPersonelId(int personelid)
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetHistoryByIdAsync(int id)
         {
-            var result = await _service.GetAllHistoriesByPersonelIdAsync(personelid);
+            var result = await _service.GetHistoryByIdAsync(id);
             if (result.IsSuccess)
             {
                 return Ok(result.Data);
             }
             return BadRequest(result.Message);
         }
-        [HttpPost("add")]
-        public async Task<IActionResult> AddHistory(BattleHistoryAddDto dto)
+        [HttpGet("personel/{personelId}/histories")]
+        public async Task<IActionResult> GetAllByPersonelIdAsync(int personelId)
+        {
+            var result = await _service.GetAllHistoriesByPersonelIdAsync(personelId);
+            if (result.IsSuccess)
+            {
+                return Ok(result.Data);
+            }
+            return BadRequest(result.Message);
+        }
+
+
+        [HttpPost]
+        public async Task<IActionResult> AddHistoryAsync(BattleHistoryAddDto dto)
         {
             
             var result=await _service.AddBattleHistoryAsync(dto);
@@ -49,18 +61,9 @@ namespace WebAPI.Controllers
             }
             return BadRequest(result.Message);
         }
-        [HttpGet("getbyid")]
-        public async Task<IActionResult> GetHistoryByIdAsync(int id)
-        {
-            var result=await _service.GetHistoryByIdAsync(id);
-            if (result.IsSuccess)
-            {
-                return Ok(result.Data);
-            }
-            return BadRequest(result.Message);
-        }
-        [HttpPut("update")]
-        public async Task<IActionResult> UpdateAsync(BattleHistoryUpdateDto dto)
+        
+        [HttpPut]
+        public async Task<IActionResult> UpdateAsyncAsync(BattleHistoryUpdateDto dto)
         {
             var result = await _service.UpdateHistoryAsync(dto);
             if (result.IsSuccess)
@@ -69,7 +72,7 @@ namespace WebAPI.Controllers
             }
             return BadRequest(result.Message);
         }
-        [HttpDelete("delete")]
+        [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteAsync(int id)
         {
             var result = await _service.DeleteHistoryAsync(id);

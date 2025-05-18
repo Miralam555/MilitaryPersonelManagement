@@ -10,15 +10,15 @@ namespace WebAPI.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [Authorize]
-    public class MilitaryServiceExtensionController : ControllerBase
+    public class MilitaryServiceExtensionsController : ControllerBase
     {
         private readonly IMilitaryServiceExtensionService _service;
 
-        public MilitaryServiceExtensionController(IMilitaryServiceExtensionService service)
+        public MilitaryServiceExtensionsController(IMilitaryServiceExtensionService service)
         {
             _service = service;
         }
-        [HttpGet("getall")]
+        [HttpGet]
         public async Task<IActionResult> GetAllExtensionsAsync()
         {
             var result = await _service.GetAllExtensionsAsync();
@@ -28,7 +28,7 @@ namespace WebAPI.Controllers
             }
             return BadRequest(result.Message);
         }
-        [HttpGet("getallbypersonelid")]
+        [HttpGet("personel/{personelId}/extensions")]
         public async Task<IActionResult> GetAllExtensionsByPersonelIdAsync(int personelId)
         {
             var result = await _service.GetAllExtensionsByPersonelIdAsync(personelId);
@@ -38,7 +38,7 @@ namespace WebAPI.Controllers
             }
             return BadRequest(result.Message);
         }
-        [HttpGet("getallbyinjunctionid")]
+        [HttpGet("injunction/{injunctionId}/extensions")]
         public async Task<IActionResult> GetAllExtensionsByInjunctionIdAsync(int injunctionId)
         {
             var result = await _service.GetAllExtensionsByInjunctionIdAsync(injunctionId);
@@ -48,7 +48,7 @@ namespace WebAPI.Controllers
             }
             return BadRequest(result.Message);
         }
-        [HttpGet("getbyid")]
+        [HttpGet("{id}")]
         public async Task<IActionResult> GetExtensionByIdAsync(int id)
         {
             var result = await _service.GetExtensionByIdAsync(id);
@@ -58,7 +58,7 @@ namespace WebAPI.Controllers
             }
             return BadRequest(result.Message);
         }
-        [HttpPost("add")]
+        [HttpPost]
         public async Task<IActionResult> AddExtensionAsync(MilitaryServiceExtensionAddDto dto)
         {
             var result = await _service.AddExtensionASync(dto);
@@ -68,7 +68,7 @@ namespace WebAPI.Controllers
             }
             return BadRequest();
         }
-        [HttpPut("update")]
+        [HttpPut]
         public async Task<IActionResult> UpdateExtensionAsync(MilitaryServiceExtensionUpdateDto dto)
         {
             var result = await _service.UpdateExtensionAsync(dto);
@@ -78,7 +78,7 @@ namespace WebAPI.Controllers
             }
             return BadRequest();
         }
-        [HttpDelete("delete")]
+        [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteExtensionAsync(int id)
         {
             var result = await _service.DeleteExtensionAsync(id);

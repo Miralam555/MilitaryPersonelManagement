@@ -11,15 +11,15 @@ namespace WebAPI.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [Authorize]
-    public class PreMilitaryWorkExperienceController : ControllerBase
+    public class PreMilitaryWorkExperiencesController : ControllerBase
     {
         private readonly IPreMilitaryWorkExperienceService _service;
 
-        public PreMilitaryWorkExperienceController(IPreMilitaryWorkExperienceService service)
+        public PreMilitaryWorkExperiencesController(IPreMilitaryWorkExperienceService service)
         {
             _service = service;
         }
-        [HttpGet("getall")]
+        [HttpGet]
         public async Task<IActionResult> GetAllExperiencesAsync()
         {
             var list = await _service.GetAllExperiencesAsync();
@@ -29,7 +29,7 @@ namespace WebAPI.Controllers
             }
             return BadRequest(list.Message);
         }
-        [HttpGet("getallbypersonelid")]
+        [HttpGet("personel/{personelId}/experiences")]
         public async Task<IActionResult> GetAllExperiencesByPersonelIdAsync(int personelId)
         {
             var result = await _service.GetAllExperiencesByPersonelIdAsync(personelId);
@@ -39,7 +39,7 @@ namespace WebAPI.Controllers
             }
             return BadRequest(result.Message);
         }
-        [HttpGet("getbyid")]
+        [HttpGet("{id}")]
         public async Task<IActionResult> GetExperienceByIdAsync(int id)
         {
             var result = await _service.GetExperienceByIdAsync(id);
@@ -49,7 +49,7 @@ namespace WebAPI.Controllers
             }
             return BadRequest(result.Message);
         }
-        [HttpPost("add")]
+        [HttpPost]
         public async Task<IActionResult> AddExperienceAsync(PreMilitaryWorkExperienceAddDto dto)
         {
             var result = await _service.AddExperienceAsync(dto);
@@ -59,7 +59,7 @@ namespace WebAPI.Controllers
             }
             return BadRequest();
         }
-        [HttpPut("update")]
+        [HttpPut]
         public async Task<IActionResult> UpdateExperienceAsync(PreMilitaryWorkExperienceUpdateDto dto)
         {
             var result = await _service.UpdateExperienceAsync(dto);
@@ -69,7 +69,7 @@ namespace WebAPI.Controllers
             }
             return BadRequest();
         }
-        [HttpDelete("delete")]
+        [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteExperienceAsync(int id)
         {
             var result = await _service.DeleteExperienceAsync(id);

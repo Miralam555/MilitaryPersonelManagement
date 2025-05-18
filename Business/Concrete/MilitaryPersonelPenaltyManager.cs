@@ -29,43 +29,69 @@ namespace Business.Concrete
             _militaryPersonelPenaltyDal = militaryPersonelPenaltyDal;
             _mapper = mapper;
         }
-      
+
         [SecuredOperation("admin,cmd.get")]
         [CacheAspect]
         public async Task<IDataResult<List<PenaltyGetDto>>> GetAllPenaltiesAsync()
         {
-            List<MilitaryPersonelPenalty> list = await _militaryPersonelPenaltyDal.GetAllPenaltiesAsync();
+            List<PenaltyGetDto> list = await _militaryPersonelPenaltyDal.GetAllPenaltiesAsync();
             if (list.Count > 0)
             {
-                return new SuccessDataResult<List<PenaltyGetDto>>(_mapper.Map<List<PenaltyGetDto>>(list));
+                return new SuccessDataResult<List<PenaltyGetDto>>(list);
             }
             return new ErrorDataResult<List<PenaltyGetDto>>(Messages.NoData);
         }
 
-        
+
         [SecuredOperation("admin,cmd.get")]
         [CacheAspect]
-        public async Task<IDataResult<List<PenaltyGetDto>>> GetAllPenaltiesByPersonelIdAsync(int id)
+        public async Task<IDataResult<List<PenaltyGetDto>>> GetAllPenaltiesByPersonelIdAsync(int personelId)
         {
-            List<MilitaryPersonelPenalty> list = await _militaryPersonelPenaltyDal.GetAllPenaltiesByPersonelIdAsync(id);
+            List<PenaltyGetDto> list = await _militaryPersonelPenaltyDal.GetAllPenaltiesByPersonelIdAsync(personelId);
             if (list.Count > 0)
             {
-                return new SuccessDataResult<List<PenaltyGetDto>>(_mapper.Map<List<PenaltyGetDto>>(list));
+                return new SuccessDataResult<List<PenaltyGetDto>>(list);
             }
             return new ErrorDataResult<List<PenaltyGetDto>>(Messages.NoData);
         }
+
+        [SecuredOperation("admin,cmd.get")]
+        [CacheAspect]
+        public async Task<IDataResult<List<PenaltyGetDto>>> GetAllPenaltiesByPenaltyTypeIdAsync(int penaltyTypeId)
+        {
+            List<PenaltyGetDto> list = await _militaryPersonelPenaltyDal.GetAllPenaltiesByPenaltyTypeIdAsync(penaltyTypeId);
+            if (list.Count > 0)
+            {
+                return new SuccessDataResult<List<PenaltyGetDto>>(list);
+            }
+            return new ErrorDataResult<List<PenaltyGetDto>>(Messages.NoData);
+        }
+
+        [SecuredOperation("admin,cmd.get")]
+        [CacheAspect]
+        public async Task<IDataResult<List<PenaltyGetDto>>> GetAllPenaltiesByInjunctiondAsync(int injunctionId)
+        {
+            List<PenaltyGetDto> list = await _militaryPersonelPenaltyDal.GetAllPenaltiesByInjunctionIdAsync(injunctionId);
+            if (list.Count > 0)
+            {
+                return new SuccessDataResult<List<PenaltyGetDto>>(list);
+            }
+            return new ErrorDataResult<List<PenaltyGetDto>>(Messages.NoData);
+        }
+
+
         [SecuredOperation("admin,cmd.get")]
         [CacheAspect]
         public async Task<IDataResult<PenaltyGetDto>> GetPenaltyByIdAsync(int id)
         {
-            MilitaryPersonelPenalty entity = await _militaryPersonelPenaltyDal.GetPenaltyByIdAsync(id);
+            PenaltyGetDto entity = await _militaryPersonelPenaltyDal.GetPenaltyByIdAsync(id);
             if (entity != null)
             {
-                return new SuccessDataResult<PenaltyGetDto>(_mapper.Map<PenaltyGetDto>(entity));
+                return new SuccessDataResult<PenaltyGetDto>(entity);
             }
             return new ErrorDataResult<PenaltyGetDto>(Messages.NoData);
         }
-        
+
         [CacheRemoveAspect("IMilitaryPersonelPenaltyService.Get")]
         [SecuredOperation("admin,cmd.add")]
         [ValidationAspect(typeof(MilitaryPersonelPenaltyValidator))]

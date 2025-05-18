@@ -10,15 +10,15 @@ namespace WebAPI.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [Authorize]
-    public class PersonelReputationRiskFindingController : ControllerBase
+    public class PersonelReputationRiskFindingsController : ControllerBase
     {
         private readonly IMilitaryPersonelReputationRiskFindingService _service;
 
-        public PersonelReputationRiskFindingController(IMilitaryPersonelReputationRiskFindingService service)
+        public PersonelReputationRiskFindingsController(IMilitaryPersonelReputationRiskFindingService service)
         {
             _service = service;
         }
-        [HttpGet("getall")]
+        [HttpGet]
         public async Task<IActionResult> GetAllRisksAsync()
         {
             var result = await _service.GetAllRisksAsync();
@@ -28,7 +28,7 @@ namespace WebAPI.Controllers
             }
             return BadRequest(result.Message);
         }
-        [HttpGet("getallbypersonelid")]
+        [HttpGet("personel/{personelId}/risks")]
         public async Task<IActionResult> GetAllRisksByPersonelIdAsync(int personelId)
         {
             var result = await _service.GetAllRisksByPersonelIdAsync(personelId);
@@ -39,7 +39,7 @@ namespace WebAPI.Controllers
             
             return BadRequest(result.Message);
         }
-        [HttpGet("getbyid")]
+        [HttpGet("{id}")]
         public async Task<IActionResult> GetRiskByIdAsync(int id)
         {
             var result = await _service.GetRiskByIdAsync(id);
@@ -49,7 +49,7 @@ namespace WebAPI.Controllers
             }
             return BadRequest(result.Message);
         }
-        [HttpPost("add")]
+        [HttpPost]
         public async Task<IActionResult> AddRiskAsync(PersonelReputationRiskFindingAddDto dto)
         {
             var result = await _service.AddRiskAsync(dto);
@@ -59,7 +59,7 @@ namespace WebAPI.Controllers
             }
             return BadRequest(result.Message);
         }
-        [HttpPut("update")]
+        [HttpPut]
         public async Task<IActionResult> UpdateRiskAsync(PersonelReputationRiskFindingUpdateDto dto)
         {
             var result = await _service.UpdateRiskAsync(dto);
@@ -69,7 +69,7 @@ namespace WebAPI.Controllers
             }
             return BadRequest(result.Message);
         }
-        [HttpDelete("delete")]
+        [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteRiskAsync(int id)
         {
             var result = await _service.DeleteRiskAsync(id);

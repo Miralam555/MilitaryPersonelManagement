@@ -10,6 +10,7 @@ using Core.CrossCuttingConcerns.Logging.Log4Net.Loggers;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.DTOs.EducationDtos;
+using Entities.DTOs.MilitaryMedicalAssessmentDtos;
 using MyMilitaryFinalProject.Entities.Concrete;
 using System;
 using System.Collections.Generic;
@@ -100,6 +101,10 @@ namespace Business.Concrete
         public async Task<IResult> DeleteAsync(int id)
         {
             var entity = await _militaryPersonelEducationDal.GetAsync(p => p.Id == id);
+            if (entity == null)
+            {
+                return new ErrorDataResult<MilitaryMedicalAssessmentGetDto>(Messages.EntityNotFound);
+            }
             await _militaryPersonelEducationDal.DeleteAsync(entity);
             return new SuccessResult(Messages.SuccessfullyDeleted);
         }

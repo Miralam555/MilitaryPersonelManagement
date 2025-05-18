@@ -1,12 +1,14 @@
 ﻿using Business.Abstract;
 using Entities.DTOs.FamilyMemberDtos;
 using Entities.DTOs.FamilyMembersInServiceDtos;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebAPI.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    [Authorize]
     public class FamilyMembersInServiceController : ControllerBase
     {
         private readonly IFamilyMembersInService_Service _service;
@@ -15,7 +17,7 @@ namespace WebAPI.Controllers
         {
             _service = service;
         }
-        [HttpGet("getall")]
+        [HttpGet]
         public async Task<IActionResult> GetAllFamilyMembersInServiceAsync()
         {
             var result = await _service.GetAllFamilyMembersInService();
@@ -25,7 +27,7 @@ namespace WebAPI.Controllers
             }
             return BadRequest(result.Message);
         }
-        [HttpGet("getallbypersonelid")]
+        [HttpGet("personel/{personelId}/familymembers")]
         public async Task<IActionResult> GetAllFamilyMembersInServiceByPersonelIdAsync(int personelId)
         {
             var result = await _service.GetAllFamilyMembersInServiceByPersonelId(personelId);
@@ -35,8 +37,8 @@ namespace WebAPI.Controllers
             }
             return BadRequest(result.Message);
         }
-        [HttpGet("getallbymemberid")]
-        public async Task<IActionResult> GetAllFamilyMembersInServiceByMemberId(int memberId)
+        [HttpGet("member/{memberId}/familymembers")]
+        public async Task<IActionResult> GetAllFamilyMembersInServiceByMemberIdAsync(int memberId)
         {
             var result = await _service.GetAllFamilyMembersInServiceByMemberId(memberId);
             if (result.IsSuccess)
@@ -45,8 +47,8 @@ namespace WebAPI.Controllers
             }
             return BadRequest(result.Message);
         }
-        [HttpGet("getbyid")]
-        public async Task<IActionResult> GetByIdFamilyMemberInService(int id)
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetByIdFamilyMemberInServiceAsync(int id)
         {
             var result = await _service.GetByIdFamilyMemberInService(id);
             if (result.IsSuccess)
@@ -56,7 +58,7 @@ namespace WebAPI.Controllers
             return BadRequest(result.Message);
         }
 
-        [HttpPost("add")]
+        [HttpPost]
         public async Task<IActionResult> AddFamilyMembersInServiceAsync(FamilyMembersInServiceAddDto dto)
         {
             var result = await _service.AddFamilyMembersInService(dto);
@@ -66,7 +68,7 @@ namespace WebAPI.Controllers
             }
             return BadRequest();
         }
-        [HttpPut("update")]
+        [HttpPut]
         public async Task<IActionResult> UpdateFamilyMembersInServiceAsync(FamilyMembersInServiceUpdateDto dto)
         {
             var result = await _service.UpdateFamilyMembersInService(dto);
@@ -76,7 +78,7 @@ namespace WebAPI.Controllers
             }
             return BadRequest();
         }
-         [HttpPut("delete")]
+         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteFamilyMembersInServiceAsync(int id)
         {
             var result = await _service.DeleteFamilyMembersInService(id);

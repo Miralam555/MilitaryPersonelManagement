@@ -9,70 +9,70 @@ namespace WebAPI.Controllers
     [ApiController]
     [Route("api/[controller]")]
     [Authorize]
-    public class MilitaryMedicalAssessmentController : ControllerBase
+    public class MilitaryMedicalAssessmentsController : ControllerBase
     {
         private readonly IMilitaryMedicalAssessmentService _service;
 
-        public MilitaryMedicalAssessmentController(IMilitaryMedicalAssessmentService service)
+        public MilitaryMedicalAssessmentsController(IMilitaryMedicalAssessmentService service)
         {
             _service = service;
         }
 
-        [HttpGet("getall")]
-        public async Task<IActionResult> GetAllAsync()
+        [HttpGet]
+        public async Task<IActionResult> GetAllAsyncAsync()
         {
-            var result = await _service.GetAllAsync();
+            var result = await _service.GetAllAssessmentsAsync();
             if (result.IsSuccess)
             {
                 return Ok(result);
             }
             return BadRequest();
         }
-        [HttpGet("getallbypersonelid")]
+        [HttpGet("personel/{id}/medicalassessments")]
         public async Task<IActionResult> GetAllByPersonelIdAsync(int id)
         {
-            var result=await _service.GetAllByPersonelIdAsync(id);
+            var result=await _service.GetAllAssessmentsByPersonelIdAsync(id);
             if (result.IsSuccess)
             {
                 return Ok(result);
             }
             return BadRequest();
         }
-        [HttpGet("getbyid")]
+        [HttpGet("{id}")]
         public async Task<IActionResult> GetByIdAsync(int id)
         {
-            var result = await _service.GetByIdAsync(id);
+            var result = await _service.GetAssessmentByIdAsync(id);
             if (result.IsSuccess)
             {
                 return Ok(result);
             }
             return BadRequest();
         }
-        [HttpPost("add")]
+        [HttpPost]
         public async Task<IActionResult> AddAsync(MilitaryMedicalAssessmentAddDto dto)
         {
            
-            var result = await _service.AddAsync(dto);
+            var result = await _service.AddAssessmentAsync(dto);
             if (result.IsSuccess)
             {
                 return Ok(result);
             }
             return BadRequest();
         }
-        [HttpPut("update")]
-        public async Task<IActionResult> UpdateAsync(MilitaryMedicalAsssessmentGetDto dto)
+        [HttpPut]
+        public async Task<IActionResult> UpdateAsync(MilitaryMedicalAssessmentUpdateDto dto)
         {
-            var result = await _service.UpdateAsync(dto);
+            var result = await _service.UpdateAssesmentAsync(dto);
             if (result.IsSuccess)
             {
                 return Ok(result);
             }
             return BadRequest();
         }
-        [HttpDelete("delete")]
+        [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteAsync(int id)
         {
-            var result = await _service.DeleteAsync(id);
+            var result = await _service.DeleteAssesmentAsync(id);
             if (result.IsSuccess)
             {
                 return Ok(result);

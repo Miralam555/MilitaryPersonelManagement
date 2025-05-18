@@ -1,5 +1,6 @@
 ﻿using Business.Abstract;
-using Entities.DTOs.FamilyMemberForeignTravelDtos;
+using Core.Entities;
+using Entities.DTOs.PersonelForeignTravelDtos;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,17 +9,16 @@ namespace WebAPI.Controllers
     [ApiController]
     [Route("api/[controller]")]
     [Authorize]
-    public class FamilyMemberForeignTravelController : ControllerBase
+    public class PersonelForeignTravelsController : ControllerBase
     {
-        private readonly IMilitaryPersonelFamilyMemberForeignTravelService _service;
+        private readonly IMilitaryPersonelForeignTravelService _service;
 
-        public FamilyMemberForeignTravelController(IMilitaryPersonelFamilyMemberForeignTravelService service)
+        public PersonelForeignTravelsController(IMilitaryPersonelForeignTravelService service)
         {
             _service = service;
         }
-
-        [HttpGet("getall")]
-        public async Task<IActionResult> GetAllAsync()
+        [HttpGet]
+        public async Task<IActionResult> GetAllTravelsAsync()
         {
             var result = await _service.GetAllTravelsAsync();
             if (result.IsSuccess)
@@ -27,17 +27,27 @@ namespace WebAPI.Controllers
             }
             return BadRequest(result.Message);
         }
-        [HttpGet("getallbymemberid")]
-        public async Task<IActionResult> GetAllByMemberIdAsync(int memberId)
+        [HttpGet("injunction/{injunctionId}/travels")]
+        public async Task<IActionResult> GetAllTravelsByInjunctionIdAsync(int injunctionId)
         {
-            var result = await _service.GetAllByMemberIdAsync(memberId);
+            var result = await _service.GetAllTravelsByInjunctionIdAsync(injunctionId);
             if (result.IsSuccess)
             {
                 return Ok(result.Data);
             }
             return BadRequest(result.Message);
         }
-        [HttpGet("getbyid")]
+        [HttpGet("personel/{personelId}/travels")]
+        public async Task<IActionResult> GetAllTravelsByPersonelIdAsync(int personelId)
+        {
+            var result = await _service.GetAllTravelsByPersonelIdAsync(personelId);
+            if (result.IsSuccess)
+            {
+                return Ok(result.Data);
+            }
+            return BadRequest(result.Message);
+        }
+        [HttpGet("{id}")]
         public async Task<IActionResult> GetByIdAsync(int id)
         {
             var result = await _service.GetByIdAsync(id);
@@ -47,8 +57,8 @@ namespace WebAPI.Controllers
             }
             return BadRequest(result.Message);
         }
-        [HttpPost("add")]
-        public async Task<IActionResult> AddAsync(FamilyMemberForeignTravelAddDto dto)
+        [HttpPost]
+        public async Task<IActionResult> AddTravelAsync(PersonelForeignTravelAddDto dto)
         {
             var result = await _service.AddTravelAsync(dto);
             if (result.IsSuccess)
@@ -57,8 +67,8 @@ namespace WebAPI.Controllers
             }
             return BadRequest(result.Message);
         }
-        [HttpPut("update")]
-        public async Task<IActionResult> UpdateAsync(FamilyMemberForeignTraveUpdateDto dto)
+        [HttpPut]
+        public async Task<IActionResult> UpdateTravelAsync(PersonelForeignTravelUpdateDto dto)
         {
             var result = await _service.UpdateTravelAsync(dto);
             if (result.IsSuccess)
@@ -67,16 +77,15 @@ namespace WebAPI.Controllers
             }
             return BadRequest(result.Message);
         }
-        [HttpDelete("delete")]
-        public async Task<IActionResult> DeleteAsync(int id)
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteTravelsAsync(int id)
         {
-            var result = await _service.GetByIdAsync(id);
+            var result = await _service.DeleteTravelAsync(id);
             if (result.IsSuccess)
             {
-                return Ok(result.Data);
+                return Ok(result.Message);
             }
             return BadRequest(result.Message);
         }
-
     }
 }

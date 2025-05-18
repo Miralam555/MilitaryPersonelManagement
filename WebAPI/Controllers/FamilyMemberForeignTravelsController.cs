@@ -1,6 +1,5 @@
 ﻿using Business.Abstract;
-using Core.Entities;
-using Entities.DTOs.PersonelForeignTravelDtos;
+using Entities.DTOs.FamilyMemberForeignTravelDtos;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,16 +8,17 @@ namespace WebAPI.Controllers
     [ApiController]
     [Route("api/[controller]")]
     [Authorize]
-    public class PersonelForeignTravelController : ControllerBase
+    public class FamilyMemberForeignTravelsController : ControllerBase
     {
-        private readonly IMilitaryPersonelForeignTravelService _service;
+        private readonly IMilitaryPersonelFamilyMemberForeignTravelService _service;
 
-        public PersonelForeignTravelController(IMilitaryPersonelForeignTravelService service)
+        public FamilyMemberForeignTravelsController(IMilitaryPersonelFamilyMemberForeignTravelService service)
         {
             _service = service;
         }
-        [HttpGet("getall")]
-        public async Task<IActionResult> GetAllTravelsAsync()
+
+        [HttpGet]
+        public async Task<IActionResult> GetAllAsync()
         {
             var result = await _service.GetAllTravelsAsync();
             if (result.IsSuccess)
@@ -27,27 +27,17 @@ namespace WebAPI.Controllers
             }
             return BadRequest(result.Message);
         }
-        [HttpGet("getallbyinjunctionid")]
-        public async Task<IActionResult> GetAllTravelsByInjunctionIdAsync(int injunctionId)
+        [HttpGet("member/{id}/foreigntravels")]
+        public async Task<IActionResult> GetAllByMemberIdAsync(int memberId)
         {
-            var result = await _service.GetAllTravelsByInjunctionIdAsync(injunctionId);
+            var result = await _service.GetAllByMemberIdAsync(memberId);
             if (result.IsSuccess)
             {
                 return Ok(result.Data);
             }
             return BadRequest(result.Message);
         }
-        [HttpGet("getallbypersonelid")]
-        public async Task<IActionResult> GetAllTravelsByPersonelIdAsync(int personelId)
-        {
-            var result = await _service.GetAllTravelsByPersonelIdAsync(personelId);
-            if (result.IsSuccess)
-            {
-                return Ok(result.Data);
-            }
-            return BadRequest(result.Message);
-        }
-        [HttpGet("getbyid")]
+        [HttpGet("{id}")]
         public async Task<IActionResult> GetByIdAsync(int id)
         {
             var result = await _service.GetByIdAsync(id);
@@ -57,8 +47,8 @@ namespace WebAPI.Controllers
             }
             return BadRequest(result.Message);
         }
-        [HttpPost("add")]
-        public async Task<IActionResult> AddTravelAsync(PersonelForeignTravelAddDto dto)
+        [HttpPost]
+        public async Task<IActionResult> AddAsync(FamilyMemberForeignTravelAddDto dto)
         {
             var result = await _service.AddTravelAsync(dto);
             if (result.IsSuccess)
@@ -67,8 +57,8 @@ namespace WebAPI.Controllers
             }
             return BadRequest(result.Message);
         }
-        [HttpPut("update")]
-        public async Task<IActionResult> UpdateTravelAsync(PersonelForeignTravelUpdateDto dto)
+        [HttpPut]
+        public async Task<IActionResult> UpdateAsync(FamilyMemberForeignTraveUpdateDto dto)
         {
             var result = await _service.UpdateTravelAsync(dto);
             if (result.IsSuccess)
@@ -77,15 +67,16 @@ namespace WebAPI.Controllers
             }
             return BadRequest(result.Message);
         }
-        [HttpDelete("delete")]
-        public async Task<IActionResult> DeleteTravelsAsync(int id)
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteAsync(int id)
         {
-            var result = await _service.DeleteTravelAsync(id);
+            var result = await _service.GetByIdAsync(id);
             if (result.IsSuccess)
             {
-                return Ok(result.Message);
+                return Ok(result.Data);
             }
             return BadRequest(result.Message);
         }
+
     }
 }

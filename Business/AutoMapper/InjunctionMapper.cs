@@ -13,11 +13,10 @@ namespace Business.AutoMapper
     {
         public InjunctionMapper()
         {
-            CreateMap<Injunction, InjunctionUpdateAndGetDto>();
-               
-            CreateMap<InjunctionUpdateAndGetDto, Injunction>()
-                .ForMember(dest=>dest.CreatedDate,opt=>opt.Ignore());
             CreateMap<InjunctionAddDto, Injunction>();
+
+            CreateMap<InjunctionUpdateDto, Injunction>()
+                .ForMember(dest => dest.CreatedDate, opt => opt.Ignore());
         }
     }
 }

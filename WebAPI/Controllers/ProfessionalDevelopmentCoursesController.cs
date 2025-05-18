@@ -9,15 +9,15 @@ namespace WebAPI.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [Authorize]
-    public class ProfessionalDevelopmentCourseController : ControllerBase
+    public class ProfessionalDevelopmentCoursesController : ControllerBase
     {
         private readonly IProfessionalDevelopomentCourseService _service;
 
-        public ProfessionalDevelopmentCourseController(IProfessionalDevelopomentCourseService service)
+        public ProfessionalDevelopmentCoursesController(IProfessionalDevelopomentCourseService service)
         {
             _service = service;
         }
-        [HttpGet("getall")]
+        [HttpGet]
         public async Task<IActionResult> GetAllCoursesAsync()
         {
             var result = await _service.GetAllCoursesAsync();
@@ -27,7 +27,7 @@ namespace WebAPI.Controllers
             }
             return BadRequest(result.Message);
         }
-         [HttpGet("getallbypersonelid")]
+         [HttpGet("personel/{personelId}/courses")]
         public async Task<IActionResult> GetAllCoursesByPersonelIdAsync(int personelId)
         {
             var result = await _service.GetAllCoursesByPersonelIdAsync(personelId);
@@ -37,7 +37,7 @@ namespace WebAPI.Controllers
             }
             return BadRequest(result.Message);
         }
-         [HttpGet("getallbyinjunctionid")]
+         [HttpGet("injunction/{injunctionId}/courses")]
         public async Task<IActionResult> GetAllCoursesByInjunctionIdAsync(int injunctionId)
         {
             var result = await _service.GetAllCoursesByInjunctionIdAsync(injunctionId);
@@ -47,7 +47,7 @@ namespace WebAPI.Controllers
             }
             return BadRequest(result.Message);
         }
-         [HttpGet("getbyid")]
+         [HttpGet("{id}")]
         public async Task<IActionResult> GetCourseByIdAsync(int id)
         {
             var result = await _service.GetByIdAsync(id);
@@ -57,7 +57,7 @@ namespace WebAPI.Controllers
             }
             return BadRequest(result.Message);
         }
-        [HttpPost("add")]
+        [HttpPost]
         public async Task<IActionResult> AddCourseAsync(ProfessionalDevelopmentCourseAddDto dto)
         {
             var result = await _service.AddCourseAsync(dto);
@@ -67,7 +67,7 @@ namespace WebAPI.Controllers
             }
             return BadRequest(result.Message);
         }
-        [HttpPut("update")]
+        [HttpPut]
         public async Task<IActionResult> UpdateCourseAsync(ProfessionalDevelopmentCourseUpdateDto dto)
         {
             var result = await _service.UpdateCourseAsync(dto);
@@ -77,7 +77,7 @@ namespace WebAPI.Controllers
             }
             return BadRequest();
         }
-        [HttpDelete("delete")]
+        [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteCourseAsync(int id)
         {
             var result = await _service.DeleteCourseAsync(id);

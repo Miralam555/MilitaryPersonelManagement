@@ -8,16 +8,16 @@ namespace WebAPI.Controllers
     [ApiController]
     [Route("api/[controller]")]
     [Authorize]
-    public class FamilyMemberController : ControllerBase
+    public class FamilyMembersController : ControllerBase
     {
         private readonly IFamilyMemberService _service;
 
-        public FamilyMemberController(IFamilyMemberService service)
+        public FamilyMembersController(IFamilyMemberService service)
         {
             _service = service;
         }
 
-        [HttpPost("add")]
+        [HttpPost]
         public async Task<IActionResult> AddFamilyMemberAsync(FamilyMemberAddDto dto)
         {
             var result = await _service.AddFamilyMemberAsync(dto);
@@ -27,7 +27,7 @@ namespace WebAPI.Controllers
             }
             return BadRequest();
         }
-        [HttpGet("getallbypersonelid")]
+        [HttpGet("personel/{personelId}/familymembers")]
         public async Task<IActionResult> GetAllFamilyMembersByPersonelIdAsync(int personelId)
         {
             var result = await _service.GetAllFamilyMembersByPersonelIdAsync(personelId);
@@ -37,7 +37,7 @@ namespace WebAPI.Controllers
             }
             return BadRequest(result.Message);
         }
-         [HttpGet("getbyid")]
+         [HttpGet("{id}")]
         public async Task<IActionResult> GetMemberByIdAsync(int id)
         {
             var result = await _service.GetMemberByIdAsync(id);
@@ -48,7 +48,7 @@ namespace WebAPI.Controllers
             return BadRequest(result.Message);
         }
 
-        [HttpGet("getall")]
+        [HttpGet]
         public async Task<IActionResult> GetAllFamilyMemberAsync()
         {
             var result = await _service.GetAllFamilyMembersAsync();
@@ -58,7 +58,7 @@ namespace WebAPI.Controllers
             }
             return BadRequest(result.Message);
         }
-        [HttpPut("update")]
+        [HttpPut]
         public async Task<IActionResult> UpdateFamilyMemberAsync(FamilyMemberUpdateDto dto)
         {
             var result = await _service.UpdateFamilyMemberAsync(dto);
@@ -68,7 +68,7 @@ namespace WebAPI.Controllers
             }
             return BadRequest();
         }
-        [HttpDelete("delete")]
+        [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteFamilyMemberAsync(int id)
         {
             var result = await _service.DeleteFamilyMemberAsync(id);

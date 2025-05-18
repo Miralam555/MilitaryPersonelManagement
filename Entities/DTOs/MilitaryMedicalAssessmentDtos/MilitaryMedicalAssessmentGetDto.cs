@@ -1,15 +1,15 @@
 ﻿using Core.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Entities.DTOs.MilitaryMedicalAssessmentDtos
 {
-    public class MilitaryMedicalAssessmentAddDto : IDto
+    public class MilitaryMedicalAssessmentGetDto : IDto
     {
+        public int Id { get; set; }
+
         public int PersonelId { get; set; }
+        public string PersonelName { get; set; } = null!;
+
+        public string PersonelSurname { get; set; } = null!;
 
         public DateOnly AssesmentDate { get; set; }
 

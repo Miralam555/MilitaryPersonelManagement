@@ -8,16 +8,16 @@ namespace WebAPI.Controllers
     [ApiController]
     [Route("api/[controller]")]
     [Authorize]
-    public class CrimeRecordController : ControllerBase
+    public class CrimeRecordsController : ControllerBase
     {
         private readonly ICrimeRecordService _service;
 
-        public CrimeRecordController(ICrimeRecordService service)
+        public CrimeRecordsController(ICrimeRecordService service)
         {
             _service = service;
         }
-        [HttpGet("getall")]
-        public async Task<IActionResult> GetAllCrimeRecords()
+        [HttpGet]
+        public async Task<IActionResult> GetAllCrimeRecordsAsync()
         {
             var result=await _service.GetAllCrimeRecordsAsync();
             if (result.IsSuccess)
@@ -26,28 +26,28 @@ namespace WebAPI.Controllers
             }
             return BadRequest(result.Message);
         }
-        [HttpGet("getbypersonelid")]
-        public async Task<IActionResult> GetCrimeRecordByPersonelId(int id)
+        [HttpGet("personel/{personelId}/crimes")]
+        public async Task<IActionResult> GetCrimeRecordByPersonelIdAsync(int personelId)
         {
-            var result=await _service.GetCrimeRecordsByPersonelIdAsync(id);
+            var result=await _service.GetCrimeRecordsByPersonelIdAsync(personelId);
             if (result.IsSuccess)
             {
                 return Ok(result.Data);
             }
             return BadRequest(result.Message);
         }
-        [HttpGet("getbymemberid")]
-        public async Task<IActionResult> GetCrimeRecordsByMemberId(int id)
+        [HttpGet("familymember/{memberId}/crimes")]
+        public async Task<IActionResult> GetCrimeRecordsByMemberIdAsync(int memberId)
         {
-            var result=await _service.GetCrimeRecordsByMemberIdAsync(id);
+            var result=await _service.GetCrimeRecordsByMemberIdAsync(memberId);
             if (result.IsSuccess)
             {
                 return Ok(result.Data);
             }
             return BadRequest(result.Message);
         }
-         [HttpGet("getbyid")]
-        public async Task<IActionResult> GetCrimeRecordById(int id)
+         [HttpGet("{id}")]
+        public async Task<IActionResult> GetCrimeRecordByIdAsync(int id)
         {
             var result=await _service.GetCrimeRecordByIdAsync(id);
             if (result.IsSuccess)
@@ -57,7 +57,7 @@ namespace WebAPI.Controllers
             return BadRequest(result.Message);
         }
 
-        [HttpPost("add")]
+        [HttpPost]
         public async Task<IActionResult> AddCrimeRecordAsync(CrimeRecordAddDto dto)
         {
             var result=await _service.AddCrimeRecordAsync(dto);
@@ -67,7 +67,7 @@ namespace WebAPI.Controllers
             }
             return BadRequest();
         }
-         [HttpPut("update")]
+         [HttpPut]
         public async Task<IActionResult> UpdateCrimeRecordAsync(CrimeRecordUpdateDto dto)
         {
             var result=await _service.UpdateCrimeRecordAsync(dto);
@@ -77,7 +77,7 @@ namespace WebAPI.Controllers
             }
             return BadRequest();
         }
-        [HttpDelete("delete")]
+        [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteCrimeRecordAsync(int id)
         {
             var result = await _service.DeleteCrimeRecordAsync(id);

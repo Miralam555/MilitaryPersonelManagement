@@ -8,16 +8,16 @@ namespace WebAPI.Controllers
     [ApiController]
     [Route("api/[controller]")]
     [Authorize]
-    public class InjunctionController : ControllerBase
+    public class InjunctionsController : ControllerBase
     {
         private readonly IInjunctionService _service;
 
-        public InjunctionController(IInjunctionService service)
+        public InjunctionsController(IInjunctionService service)
         {
             _service = service;
         }
-        [HttpGet("getall")]
-        public async Task<IActionResult> GetAllInjunctions()
+        [HttpGet]
+        public async Task<IActionResult> GetAllInjunctionsAsync()
         {
             var result = await _service.GetAllInjunctionsAsync();
             if (result.IsSuccess)
@@ -26,18 +26,18 @@ namespace WebAPI.Controllers
             }
             return BadRequest(result.Message);
         }
-        [HttpGet("getbyid")]
-        public async Task<IActionResult> GetById(int id)
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetByIdAsync(int id)
         {
-            var result = await _service.GetByIdInjunctionsAsync(id);
+            var result = await _service.GetInjunctionByIdAsync(id);
             if (result.IsSuccess)
             {
                 return Ok(result.Data);
             }
             return BadRequest(result.Message);
         }
-        [HttpGet("getallbypersonelid")]
-        public async Task<IActionResult> GetByPersonelId(int id)
+        [HttpGet("personel/{personelId}/injunctions")]
+        public async Task<IActionResult> GetByPersonelIdAsync(int id)
         {
             var result = await _service.GetAllInjunctionsByIssuedPersonelIdAsync(id);
             if (result.IsSuccess)
@@ -46,8 +46,8 @@ namespace WebAPI.Controllers
             }
             return BadRequest(result.Message);
         }
-        [HttpPost("add")]
-        public async Task<IActionResult> AddInjunction(InjunctionAddDto dto)
+        [HttpPost]
+        public async Task<IActionResult> AddInjunctionAsync(InjunctionAddDto dto)
         {
             var result = await _service.AddInjunctionAsync(dto);
             if (result.IsSuccess)
@@ -57,8 +57,8 @@ namespace WebAPI.Controllers
             }
             return BadRequest();
         }
-        [HttpPut("update")]
-        public async Task<IActionResult> UpdateInjunction(InjunctionUpdateAndGetDto dto)
+        [HttpPut]
+        public async Task<IActionResult> UpdateInjunctionAsync(InjunctionUpdateDto dto)
         {
             var result = await _service.UpdateInjunctionAsync(dto);
             if (result.IsSuccess)
@@ -68,8 +68,8 @@ namespace WebAPI.Controllers
             }
             return BadRequest();
         }
-        [HttpDelete("delete")]
-        public async Task<IActionResult> DeleteInjunction(int id)
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteInjunctionAsync(int id)
         {
             var result = await _service.DeleteInjunctionAsync(id);
             if (result.IsSuccess)

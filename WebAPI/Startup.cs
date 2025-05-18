@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.OpenApi.Models;
 using System.Security.Claims;
+using WebAPI.Swagger;
 
 namespace WebAPI
 {
@@ -30,7 +31,10 @@ namespace WebAPI
             services.AddControllers();
             
             services.AddEndpointsApiExplorer();
-            services.AddSwaggerGen();
+            services.AddSwaggerGen(c =>
+            {
+                c.SchemaFilter<DateOnlySchemaFilter>();
+            });
 
             services.AddAutoMapper(typeof(MilitaryPersonelMapper));
             services.AddCors(options =>

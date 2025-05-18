@@ -8,6 +8,7 @@ using Core.Aspects.Autofac.Caching;
 using Core.Aspects.Autofac.Validation;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
+using Entities.DTOs.MilitaryMedicalAssessmentDtos;
 using Entities.DTOs.PersonelReputationRiskFindingDtos;
 using MyMilitaryFinalProject.Entities.Concrete;
 using System;
@@ -77,6 +78,10 @@ namespace Business.Concrete
         public async Task<IResult> UpdateRiskAsync(PersonelReputationRiskFindingUpdateDto dto)
         {
             var entity = await _riskFindingDal.GetAsync(p => p.Id == dto.Id);
+            if (entity == null)
+            {
+                return new ErrorDataResult<MilitaryMedicalAssessmentGetDto>(Messages.EntityNotFound);
+            }
             _mapper.Map(dto, entity);
             await _riskFindingDal.UpdateAsync(entity);
             return new SuccessResult(Messages.SuccessfullyUpdated);
@@ -87,6 +92,10 @@ namespace Business.Concrete
         public async Task<IResult> DeleteRiskAsync(int id)
         {
             var entity = await _riskFindingDal.GetAsync(p => p.Id == id);
+            if (entity == null)
+            {
+                return new ErrorDataResult<MilitaryMedicalAssessmentGetDto>(Messages.EntityNotFound);
+            }
             await _riskFindingDal.DeleteAsync(entity);
             return new SuccessResult(Messages.SuccessfullyDeleted);
         }

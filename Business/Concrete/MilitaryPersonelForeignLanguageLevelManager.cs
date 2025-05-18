@@ -7,6 +7,7 @@ using Core.Aspects.Autofac.Caching;
 using Core.Aspects.Autofac.Validation;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
+using Entities.DTOs.MilitaryMedicalAssessmentDtos;
 using Entities.DTOs.PersonelForeignLanguageLevel;
 using MyMilitaryFinalProject.Entities.Concrete;
 using System;
@@ -89,6 +90,10 @@ namespace Business.Concrete
         {
             var entity=await _languageLevelDal.GetAsync(e => e.Id == dto.Id);
             _mapper.Map(dto, entity);
+            if (entity == null)
+            {
+                return new ErrorDataResult<MilitaryMedicalAssessmentGetDto>(Messages.EntityNotFound);
+            }
             await _languageLevelDal.UpdateAsync(entity);
             return new SuccessResult(Messages.SuccessfullyUpdated);
         }
@@ -97,6 +102,10 @@ namespace Business.Concrete
         public async Task<IResult> DeleteAsync(int id)
         {
             var entity=await _languageLevelDal.GetAsync(e => e.Id == id);
+            if (entity == null)
+            {
+                return new ErrorDataResult<MilitaryMedicalAssessmentGetDto>(Messages.EntityNotFound);
+            }
             await _languageLevelDal.DeleteAsync(entity);
             return new SuccessResult(Messages.SuccessfullyDeleted);
         }

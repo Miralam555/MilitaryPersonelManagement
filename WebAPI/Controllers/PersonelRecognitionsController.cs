@@ -9,15 +9,15 @@ namespace WebAPI.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [Authorize]
-    public class PersonelRecognitionController : ControllerBase
+    public class PersonelRecognitionsController : ControllerBase
     {
         private readonly IMilitaryPersonelRecognitionService _service;
 
-        public PersonelRecognitionController(IMilitaryPersonelRecognitionService service)
+        public PersonelRecognitionsController(IMilitaryPersonelRecognitionService service)
         {
             _service = service;
         }
-        [HttpGet("getall")]
+        [HttpGet]
         public async Task<IActionResult> GetAllRecognitionsAsync()
         {
             var result = await _service.GetAllRecognitionsAsync();
@@ -27,7 +27,7 @@ namespace WebAPI.Controllers
             }
             return BadRequest(result.Message);
         }
-        [HttpGet("getallbyinjunctionid")]
+        [HttpGet("injunction/{injunctionId}/recognitions")]
         public async Task<IActionResult> GetAllRecognitionsByInjunctionIdAsync(int injunctionId)
         {
             var result = await _service.GetAllRecognitionsByInjunctionIdAsync(injunctionId);
@@ -37,7 +37,7 @@ namespace WebAPI.Controllers
             }
             return BadRequest(result.Message);
         }
-        [HttpGet("getallbypersonelid")]
+        [HttpGet("personel/{personelId}/recognitions")]
         public async Task<IActionResult> GetAllRecognitionsByPersonelIdAsync(int personelId)
         {
             var result = await _service.GetAllRecognitionsByPersonelIdAsync(personelId);
@@ -47,7 +47,7 @@ namespace WebAPI.Controllers
             }
             return BadRequest(result.Message);
         }
-        [HttpGet("getbyid")]
+        [HttpGet("{id}")]
         public async Task<IActionResult> GetRecognitionByIdAsync(int id)
         {
             var result = await _service.GetRecognitionByIdAsync(id);
@@ -57,7 +57,7 @@ namespace WebAPI.Controllers
             }
             return BadRequest(result.Message);
         }
-        [HttpPost("add")]
+        [HttpPost]
         public async Task<IActionResult> AddRecognitionAsync(PersonelRecognitionAddDto dto)
         {
             var result = await _service.AddRecognitionAsync(dto);
@@ -68,7 +68,7 @@ namespace WebAPI.Controllers
             }
             return BadRequest(result.Message);
         }
-        [HttpPut("update")]
+        [HttpPut]
         public async Task<IActionResult> UpdateRecognitionAsync(PersonelRecognitionUpdateDto dto)
         {
             var result = await _service.UpdateRecognitionAsync(dto);
@@ -79,7 +79,7 @@ namespace WebAPI.Controllers
             }
             return BadRequest(result.Message);
         }
-        [HttpDelete("delete")]
+        [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteRecognitionAsync(int id)
         {
             var result = await _service.DeleteRecognitionAsync(id);

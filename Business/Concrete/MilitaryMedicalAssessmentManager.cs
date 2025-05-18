@@ -35,62 +35,78 @@ namespace Business.Concrete
        
         [SecuredOperation("admin,cmd.get")]
         [CacheAspect]
-        public async Task<IDataResult<List<MilitaryMedicalAsssessmentGetDto>>> GetAllAsync()
+        public async Task<IDataResult<List<MilitaryMedicalAssessmentGetDto>>> GetAllAssessmentsAsync()
         {
-            List<MilitaryMedicalAssessment> entities = await _militaryMedicalAssessmentDal.GetAllAssessmentsAsync();
-            if (entities.Count > 0)
+            List<MilitaryMedicalAssessmentGetDto> list = await _militaryMedicalAssessmentDal.GetAllAssessmentsAsync();
+            if (list.Count > 0)
             {
-                return new SuccessDataResult<List<MilitaryMedicalAsssessmentGetDto>>(_mapper.Map<List<MilitaryMedicalAsssessmentGetDto>>(entities));
+                return new SuccessDataResult<List<MilitaryMedicalAssessmentGetDto>>();
             }
-            return new ErrorDataResult<List<MilitaryMedicalAsssessmentGetDto>>(Messages.NoData);
+            return new ErrorDataResult<List<MilitaryMedicalAssessmentGetDto>>(Messages.NoData);
         }
         
         [SecuredOperation("admin,cmd.get")]
         [CacheAspect]
-        public async Task<IDataResult<List<MilitaryMedicalAsssessmentGetDto>>> GetAllByPersonelIdAsync(int id)
+        public async Task<IDataResult<List<MilitaryMedicalAssessmentGetDto>>> GetAllAssessmentsByPersonelIdAsync(int personelId)
         {
-            List<MilitaryMedicalAssessment> entities = await _militaryMedicalAssessmentDal.GetAllAssessmentsByPersonelIdAsync(id);
-            if (entities.Count > 0)
+            List<MilitaryMedicalAssessmentGetDto> list = await _militaryMedicalAssessmentDal.GetAllAssessmentsByPersonelIdAsync(personelId);
+            if (list.Count > 0)
             {
-                return new SuccessDataResult<List<MilitaryMedicalAsssessmentGetDto>>(_mapper.Map<List<MilitaryMedicalAsssessmentGetDto>>(entities));
+                return new SuccessDataResult<List<MilitaryMedicalAssessmentGetDto>>(list);
             }
-            return new ErrorDataResult<List<MilitaryMedicalAsssessmentGetDto>>(Messages.NoData);
+            return new ErrorDataResult<List<MilitaryMedicalAssessmentGetDto>>(Messages.NoData);
         }
         
         [SecuredOperation("admin,cmd.get")]
         [CacheAspect]
-        public async Task<IDataResult<MilitaryMedicalAssessment>> GetByIdAsync(int id)
+        public async Task<IDataResult<MilitaryMedicalAssessmentGetDto>> GetAssessmentByIdAsync(int id)
         {
-            MilitaryMedicalAssessment entity = await _militaryMedicalAssessmentDal.GetByIdAssessmentAsync(id);
+            MilitaryMedicalAssessmentGetDto entity = await _militaryMedicalAssessmentDal.GetByIdAssessmentAsync(id);
+            if (entity == null)
+            {
+                return new ErrorDataResult<MilitaryMedicalAssessmentGetDto>(Messages.EntityNotFound);
+            }
 
-            return new SuccessDataResult<MilitaryMedicalAssessment>(_mapper.Map<MilitaryMedicalAssessment>(entity));
+            return new SuccessDataResult<MilitaryMedicalAssessmentGetDto>(_mapper.Map<MilitaryMedicalAssessmentGetDto>(entity));
         }
+
+
         [ValidationAspect(typeof(MilitaryMedicalAssessmentValidator))]
         [SecuredOperation("admin,cmd.add")]
         [CacheRemoveAspect("IMilitaryMedicalAssessmentService.Get")]
         
-        public async Task<IResult> AddAsync(MilitaryMedicalAssessmentAddDto dto)
+        public async Task<IResult> AddAssessmentAsync(MilitaryMedicalAssessmentAddDto dto)
         {
             await _militaryMedicalAssessmentDal.AddAsync(_mapper.Map<MilitaryMedicalAssessment>(dto));
             return new SuccessResult(Messages.SuccessfullyAdded);
         }
+
+
         [ValidationAspect(typeof(MilitaryMedicalAssessment))]
         [SecuredOperation("admin,cmd.update")]
         [CacheRemoveAspect("IMilitaryMedicalAssessmentService.Get")]
-        public async Task<IResult> UpdateAsync(MilitaryMedicalAsssessmentGetDto dto)
+        public async Task<IResult> UpdateAssesmentAsync(MilitaryMedicalAssessmentUpdateDto dto)
         {
 
             MilitaryMedicalAssessment entity = await _militaryMedicalAssessmentDal.GetAsync(p => p.Id == dto.Id);
+            if (entity == null)
+            {
+                return new ErrorDataResult<MilitaryMedicalAssessmentGetDto>(Messages.EntityNotFound);
+            }
             await _militaryMedicalAssessmentDal.UpdateAsync(entity);
             return new SuccessResult(Messages.SuccessfullyUpdated);
         }
         [ValidationAspect(typeof(MilitaryMedicalAssessment))]
         [SecuredOperation("admin")]
         [CacheRemoveAspect("IMilitaryMedicalAssessmentService.Get")]
-        public async Task<IResult> DeleteAsync(int id)
+        public async Task<IResult> DeleteAssesmentAsync(int id)
         {
 
             MilitaryMedicalAssessment entity = await _militaryMedicalAssessmentDal.GetAsync(p => p.Id == id);
+            if (entity == null)
+            {
+                return new ErrorDataResult<MilitaryMedicalAssessmentGetDto>(Messages.EntityNotFound);
+            }
             await _militaryMedicalAssessmentDal.DeleteAsync(entity);
             return new SuccessResult(Messages.SuccessfullyDeleted);
         }

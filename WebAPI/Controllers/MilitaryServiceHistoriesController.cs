@@ -9,15 +9,15 @@ namespace WebAPI.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [Authorize]
-    public class MilitaryServiceHistoryController : ControllerBase
+    public class MilitaryServiceHistoriesController : ControllerBase
     {
         private readonly IMilitaryServiceHistoryService _service;
 
-        public MilitaryServiceHistoryController(IMilitaryServiceHistoryService service)
+        public MilitaryServiceHistoriesController(IMilitaryServiceHistoryService service)
         {
             _service = service;
         }
-        [HttpGet("getall")]
+        [HttpGet]
         public async Task<IActionResult> GetAllServiceHistoriesAsync()
         {
             var result = await _service.GetAllServiceHistoriesAsync();
@@ -27,7 +27,7 @@ namespace WebAPI.Controllers
             }
             return BadRequest(result.Message);
         }
-        [HttpGet("getallbypersonelid")]
+        [HttpGet("personel/{personelId}/histories")]
         public async Task<IActionResult> GetAllServiceHistoriesByPersonelIdAsync(int personelId)
         {
             var result = await _service.GetAllServiceHistoriesByPersonelIdAsync(personelId);
@@ -37,7 +37,7 @@ namespace WebAPI.Controllers
             }
             return BadRequest(result.Message);
         }
-        [HttpGet("getallbyinjunctionid")]
+        [HttpGet("injunction/{injunctionId}/histories")]
         public async Task<IActionResult> GetAllServiceHistoriesByInjunctionIdAsync(int injunctionId)
         {
             var result = await _service.GetAllServiceHistoriesByInjunctionIdAsync(injunctionId);
@@ -47,7 +47,7 @@ namespace WebAPI.Controllers
             }
             return BadRequest(result.Message);
         }
-         [HttpGet("getbyid")]
+         [HttpGet("{id}")]
         public async Task<IActionResult> GetByIdAsync(int id)
         {
             var result = await _service.GetServiceHistoryByIdAsync(id);
@@ -57,7 +57,7 @@ namespace WebAPI.Controllers
             }
             return BadRequest(result.Message);
         }
-        [HttpPost("add")]
+        [HttpPost]
         public async Task<IActionResult> AddServiceHistoryAsync(MilitaryServiceHistoryAddDto dto)
         {
             var result = await _service.AddHistoryAsync(dto);
@@ -67,7 +67,7 @@ namespace WebAPI.Controllers
             }
             return BadRequest();
         }
-        [HttpPut("update")]
+        [HttpPut]
         public async Task<IActionResult> UpdateServiceHistoryAsync(MilitaryServiceHistoryUpdateDto dto)
         {
             var result = await _service.UpdateHistoryAsync(dto);
@@ -77,7 +77,7 @@ namespace WebAPI.Controllers
             }
             return BadRequest();
         }
-        [HttpDelete("delete")]
+        [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteServiceHistoryAsync(int id)
         {
             var result = await _service.DeleteHistoryAsync(id);

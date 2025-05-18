@@ -15,14 +15,8 @@ namespace Business.AutoMapper
         {
             CreateMap<MilitaryMedicalAssessmentAddDto, MilitaryMedicalAssessment>();
 
-            CreateMap<MilitaryMedicalAsssessmentGetDto, MilitaryMedicalAssessment>()
-                .ForMember(dest => dest.CreatedDate, opt => opt.Ignore());
-
-            CreateMap<MilitaryMedicalAssessment, MilitaryMedicalAsssessmentGetDto>()
-                .ForMember(dest => dest.MedicalAssessmentPersonelGetDto, opt => opt.MapFrom(src => src.Personel));
-            CreateMap<MilitaryPersonel, MedicalAssessmentPersonelGetDto>()
-                .ForMember(dest=>dest.MedicalAssessmentPersonelInfoGetDto,opt=>opt.MapFrom(src=>src.MilitaryPersonelInfo));
-            CreateMap<MilitaryPersonelInfo, MedicalAssessmentPersonelInfoGetDto>();
+            CreateMap<MilitaryMedicalAssessmentUpdateDto, MilitaryMedicalAssessment>()
+                .ForMember(dest=>dest.CreatedDate,opt=>opt.Ignore());
                 
         }
     }

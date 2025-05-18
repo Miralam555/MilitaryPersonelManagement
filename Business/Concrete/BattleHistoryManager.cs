@@ -11,6 +11,7 @@ using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.DTOs;
 using Entities.DTOs.BattleHistoryDtos;
+using Entities.DTOs.MilitaryMedicalAssessmentDtos;
 using MyMilitaryFinalProject.Entities.Concrete;
 using System;
 using System.Collections.Generic;
@@ -92,6 +93,10 @@ namespace Business.Concrete
         public async Task<IResult> UpdateHistoryAsync(BattleHistoryUpdateDto dto)
         {
             BattleHistory entity = await _battleHistoryDal.GetAsync(p => p.Id == dto.Id);
+            if (entity == null)
+            {
+                return new ErrorDataResult<MilitaryMedicalAssessmentGetDto>(Messages.EntityNotFound);
+            }
             _mapper.Map(dto, entity);
             await _battleHistoryDal.UpdateAsync(entity);
             return new SuccessResult(Messages.SuccessfullyUpdated);
@@ -102,6 +107,10 @@ namespace Business.Concrete
         public async Task<IResult> DeleteHistoryAsync(int id)
         {
             BattleHistory entity = await _battleHistoryDal.GetAsync(p => p.Id == id);
+            if (entity == null)
+            {
+                return new ErrorDataResult<MilitaryMedicalAssessmentGetDto>(Messages.EntityNotFound);
+            }
             await _battleHistoryDal.DeleteAsync(entity);
             return new SuccessResult(Messages.SuccessfullyDeleted);
         }
