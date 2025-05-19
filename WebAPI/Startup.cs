@@ -60,24 +60,7 @@ namespace WebAPI
                         IssuerSigningKey= SecurityKeyHelper.CreateSecurityKey(tokenOptions.SecurityKey)
                         
                     };
-                    options.Events = new JwtBearerEvents
-                    {
-                        OnTokenValidated = context =>
-                        {
-                            Console.WriteLine("Token true");
-                            return Task.CompletedTask;
-                        },
-                        OnAuthenticationFailed = context =>
-                        {
-                            Console.WriteLine($"Authentication error: {context.Exception.Message}");
-                            return Task.CompletedTask;
-                        },
-                        OnChallenge = context =>
-                        {
-                            Console.WriteLine($" Challenge error: {context.Error}, {context.ErrorDescription}");
-                            return Task.CompletedTask;
-                        }
-                    };
+                   
                 });
             services.AddDependencyResolvers(new Core.Utilities.IoC.ICoreModule[]
             {
