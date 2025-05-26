@@ -9,14 +9,16 @@ namespace DataAccess.Conrete.EntityFramework
 {
     public class EfMilitaryPersonelEducationDal : EfEntityRepositoryBase<MilitaryPersonelEducation,MilitaryBaseContext>, IMilitaryPersonelEducationDal
     {
-
+        
+        public EfMilitaryPersonelEducationDal(MilitaryBaseContext context) : base(context)
+        {
+            _context = context;
+        }
         public async Task<List<EducationGetDto>> GetAllEducationsAsync()
         {
-            using (MilitaryBaseContext context=new())
-            {
-                var query = await (from e in context.MilitaryPersonelEducations
-                             join p in context.MilitaryPersonels on e.PersonelId equals p.Id
-                             join t in context.EducationTypes on e.EducationTypeId equals t.Id
+              var query = await (from e in _context.MilitaryPersonelEducations
+                             join p in _context.MilitaryPersonels on e.PersonelId equals p.Id
+                             join t in _context.EducationTypes on e.EducationTypeId equals t.Id
                              select new EducationGetDto
                              {
                                  Id = e.Id,
@@ -31,16 +33,15 @@ namespace DataAccess.Conrete.EntityFramework
                                  Specialization = e.Specialization
                              }).ToListAsync();
                 return query;
-            }
+            
         }
 
         public async Task<List<EducationGetDto>> GetAllEducationByPersonelIdAsync(int personelId)
         {
-            using (MilitaryBaseContext context = new())
-            {
-                var query = await (from e in context.MilitaryPersonelEducations
-                                   join p in context.MilitaryPersonels on e.PersonelId equals p.Id
-                                   join t in context.EducationTypes on e.EducationTypeId equals t.Id
+           
+                var query = await (from e in _context.MilitaryPersonelEducations
+                                   join p in _context.MilitaryPersonels on e.PersonelId equals p.Id
+                                   join t in _context.EducationTypes on e.EducationTypeId equals t.Id
                                    select new EducationGetDto
                                    {
                                        Id = e.Id,
@@ -55,15 +56,14 @@ namespace DataAccess.Conrete.EntityFramework
                                        Specialization = e.Specialization
                                    }).Where(p=>p.PersonelId==personelId).ToListAsync();
                 return query;
-            }
+            
         }
          public async Task<EducationGetDto> GetEducationByIdAsync(int id)
         {
-            using (MilitaryBaseContext context = new())
-            {
-                var query = await (from e in context.MilitaryPersonelEducations
-                                   join p in context.MilitaryPersonels on e.PersonelId equals p.Id
-                                   join t in context.EducationTypes on e.EducationTypeId equals t.Id
+            
+                var query = await (from e in _context.MilitaryPersonelEducations
+                                   join p in _context.MilitaryPersonels on e.PersonelId equals p.Id
+                                   join t in _context.EducationTypes on e.EducationTypeId equals t.Id
                                    select new EducationGetDto
                                    {
                                        Id = e.Id,
@@ -78,7 +78,7 @@ namespace DataAccess.Conrete.EntityFramework
                                        Specialization = e.Specialization
                                    }).FirstOrDefaultAsync(p=>p.Id==id);
                 return query;
-            }
+            
         }
 
 

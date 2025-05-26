@@ -9,12 +9,17 @@ namespace DataAccess.Conrete.EntityFramework
 {
     public class EfBattleHistoryDal : EfEntityRepositoryBase<BattleHistory,MilitaryBaseContext>, IBattleHistoryDal
     {
+        
+
+        public EfBattleHistoryDal(MilitaryBaseContext context) : base(context)
+        {
+            _context = context;
+        }
         public async Task<List<BattleHistoryGetDto>> GetAllHistoriesAsync()
         {
-            using (MilitaryBaseContext context=new())
-            {
-                var query = await (from h in context.BattleHistories
-                                   join p in context.MilitaryPersonels on h.PersonelId equals p.Id
+            
+                var query = await (from h in _context.BattleHistories
+                                   join p in _context.MilitaryPersonels on h.PersonelId equals p.Id
                                    select new BattleHistoryGetDto
                                    {
                                        Id = h.Id,
@@ -29,14 +34,13 @@ namespace DataAccess.Conrete.EntityFramework
                                        VeteranNote = h.VeteranNote
                                    }).ToListAsync();
                 return query;
-            }
+            
         }
         public async Task<List<BattleHistoryGetDto>> GetAllHistoriesByPersonelIdAsync(int personelId)
         {
-            using (MilitaryBaseContext context=new())
-            {
-                var query = await (from h in context.BattleHistories
-                                   join p in context.MilitaryPersonels on h.PersonelId equals p.Id
+            
+                var query = await (from h in _context.BattleHistories
+                                   join p in _context.MilitaryPersonels on h.PersonelId equals p.Id
                                    select new BattleHistoryGetDto
                                    {
                                        Id = h.Id,
@@ -51,14 +55,13 @@ namespace DataAccess.Conrete.EntityFramework
                                        VeteranNote = h.VeteranNote
                                    }).Where(p=>p.PersonelId==personelId).ToListAsync();
                 return query;
-            }
+            
         }
         public async Task<BattleHistoryGetDto> GetHistoryByIdAsync(int id)
         {
-            using (MilitaryBaseContext context=new())
-            {
-                var query = await (from h in context.BattleHistories
-                                   join p in context.MilitaryPersonels on h.PersonelId equals p.Id
+            
+                var query = await (from h in _context.BattleHistories
+                                   join p in _context.MilitaryPersonels on h.PersonelId equals p.Id
                                    select new BattleHistoryGetDto
                                    {
                                        Id = h.Id,
@@ -73,7 +76,7 @@ namespace DataAccess.Conrete.EntityFramework
                                        VeteranNote = h.VeteranNote
                                    }).FirstOrDefaultAsync(p=>p.Id==id);
                 return query;
-            }
+            
         }
 
     }

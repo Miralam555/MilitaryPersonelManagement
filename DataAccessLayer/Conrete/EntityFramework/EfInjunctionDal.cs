@@ -9,13 +9,17 @@ namespace DataAccess.Conrete.EntityFramework
 {
     public class EfInjunctionDal : EfEntityRepositoryBase<Injunction, MilitaryBaseContext>,IInjunctionDal
     {
+       
+        public EfInjunctionDal(MilitaryBaseContext context) : base(context)
+        {
+            _context = context;
+        }
         public async Task<List<InjunctionGetDto>> GetAllInjunctionWithDetailsAsync()
         {
-            using (MilitaryBaseContext context = new())
-            {
-                var query = await (from i in context.Injunctions
-                                   join p in context.MilitaryPersonels on i.IssuedByPersonelId equals p.Id
-                                   join it in context.InjunctionTypes on i.InjunctionTypeId equals it.Id
+            
+                var query = await (from i in _context.Injunctions
+                                   join p in _context.MilitaryPersonels on i.IssuedByPersonelId equals p.Id
+                                   join it in _context.InjunctionTypes on i.InjunctionTypeId equals it.Id
                                    select new InjunctionGetDto
                                    {
                                        Id = i.Id,
@@ -29,16 +33,15 @@ namespace DataAccess.Conrete.EntityFramework
                                        InjunctionIsActive = i.InjunctionIsActive
                                    }).ToListAsync();
                 return query;
-            }
+            
         }
 
         public async Task<List<InjunctionGetDto>> GetAllInjunctionsByPersonelIdAsync(int personelId)
         {
-            using (MilitaryBaseContext context = new())
-            {
-                var query = await (from i in context.Injunctions
-                                   join p in context.MilitaryPersonels on i.IssuedByPersonelId equals p.Id
-                                   join it in context.InjunctionTypes on i.InjunctionTypeId equals it.Id
+            
+                var query = await (from i in _context.Injunctions
+                                   join p in _context.MilitaryPersonels on i.IssuedByPersonelId equals p.Id
+                                   join it in _context.InjunctionTypes on i.InjunctionTypeId equals it.Id
                                    select new InjunctionGetDto
                                    {
                                        Id = i.Id,
@@ -53,18 +56,17 @@ namespace DataAccess.Conrete.EntityFramework
                                    }).Where(p=>p.IssuedByPersonelId==personelId).ToListAsync();
                 return query;
 
-            }
+            
         }
 
 
 
         public async Task<InjunctionGetDto> GetInjunctionByIdAsync(int id)
         {
-            using (MilitaryBaseContext context = new())
-            {
-                var query = await (from i in context.Injunctions
-                                   join p in context.MilitaryPersonels on i.IssuedByPersonelId equals p.Id
-                                   join it in context.InjunctionTypes on i.InjunctionTypeId equals it.Id
+          
+                var query = await (from i in _context.Injunctions
+                                   join p in _context.MilitaryPersonels on i.IssuedByPersonelId equals p.Id
+                                   join it in _context.InjunctionTypes on i.InjunctionTypeId equals it.Id
                                    select new InjunctionGetDto
                                    {
                                        Id = i.Id,
@@ -79,7 +81,7 @@ namespace DataAccess.Conrete.EntityFramework
                                    }).SingleOrDefaultAsync(p => p.Id == id);
                 return query;
 
-            }
+            
         }
 
     }

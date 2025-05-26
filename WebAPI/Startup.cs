@@ -1,6 +1,8 @@
 ﻿using Business.Abstract;
 using Business.AutoMapper;
 using Business.Concrete;
+using Core.DataAccess.EntityFramework;
+using Core.DataAccess;
 using Core.DependencyResolvers;
 using Core.Extensions;
 
@@ -14,6 +16,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.OpenApi.Models;
 using System.Security.Claims;
 using WebAPI.Swagger;
+using DataAccess.Conrete.EntityFramework.Context;
+using Microsoft.EntityFrameworkCore;
 
 namespace WebAPI
 {
@@ -29,6 +33,13 @@ namespace WebAPI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            var connectionString = Configuration.GetConnectionString("SqlServer");
+
+            // DbContext qeydiyyatı edilir və connection string verilir
+            services.AddDbContext<MilitaryBaseContext>(options =>
+            {
+                options.UseSqlServer(connectionString);
+            });
             
             services.AddEndpointsApiExplorer();
             services.AddSwaggerGen(c =>

@@ -9,13 +9,16 @@ namespace DataAccess.Conrete.EntityFramework
 {
     public class EfProfessionalDevelopmentCourseDal : EfEntityRepositoryBase<ProfessionalDevelopmentCourse,MilitaryBaseContext>, IProfessionalDevelopmentCourseDal
     {
+        public EfProfessionalDevelopmentCourseDal(MilitaryBaseContext context) : base(context)
+        {
+            _context = context;
+        }
         public async Task<List<ProfessionalDevelopmentCourseGetDto>> GetAllCoursesAsync()
         {
-            using (MilitaryBaseContext context=new())
-            {
-                var query = await (from c in context.ProfessionalDevelopmentCourses
-                                   join p in context.MilitaryPersonels on c.PersonelId equals p.Id
-                                   join i in context.Injunctions on c.InjunctionId equals i.Id
+            
+                var query = await (from c in _context.ProfessionalDevelopmentCourses
+                                   join p in _context.MilitaryPersonels on c.PersonelId equals p.Id
+                                   join i in _context.Injunctions on c.InjunctionId equals i.Id
                                    select new ProfessionalDevelopmentCourseGetDto
                                    {
                                        PersonelId = c.PersonelId,
@@ -31,15 +34,14 @@ namespace DataAccess.Conrete.EntityFramework
                                        IsCurrentMilitary = c.IsCurrentMilitary
                                    }).ToListAsync();
                 return query;
-            }
+            
         }
         public async Task<List<ProfessionalDevelopmentCourseGetDto>> GetAllCoursesByPersonelIdAsync(int personelId)
         {
-            using (MilitaryBaseContext context=new())
-            {
-                var query = await (from c in context.ProfessionalDevelopmentCourses
-                                   join p in context.MilitaryPersonels on c.PersonelId equals p.Id
-                                   join i in context.Injunctions on c.InjunctionId equals i.Id
+            
+                var query = await (from c in _context.ProfessionalDevelopmentCourses
+                                   join p in _context.MilitaryPersonels on c.PersonelId equals p.Id
+                                   join i in _context.Injunctions on c.InjunctionId equals i.Id
                                    select new ProfessionalDevelopmentCourseGetDto
                                    {
                                        PersonelId = c.PersonelId,
@@ -55,15 +57,14 @@ namespace DataAccess.Conrete.EntityFramework
                                        IsCurrentMilitary = c.IsCurrentMilitary
                                    }).Where(c=>c.PersonelId==personelId).ToListAsync();
                 return query;
-            }
+            
         }
         public async Task<List<ProfessionalDevelopmentCourseGetDto>> GetAllCoursesByInjunctionIdAsync(int injunctionId)
         {
-            using (MilitaryBaseContext context=new())
-            {
-                var query = await (from c in context.ProfessionalDevelopmentCourses
-                                   join p in context.MilitaryPersonels on c.PersonelId equals p.Id
-                                   join i in context.Injunctions on c.InjunctionId equals i.Id
+            
+                var query = await (from c in _context.ProfessionalDevelopmentCourses
+                                   join p in _context.MilitaryPersonels on c.PersonelId equals p.Id
+                                   join i in _context.Injunctions on c.InjunctionId equals i.Id
                                    select new ProfessionalDevelopmentCourseGetDto
                                    {
                                        PersonelId = c.PersonelId,
@@ -79,15 +80,14 @@ namespace DataAccess.Conrete.EntityFramework
                                        IsCurrentMilitary = c.IsCurrentMilitary
                                    }).Where(c=>c.InjunctionId==injunctionId).ToListAsync();
                 return query;
-            }
+            
         }
         public async Task<ProfessionalDevelopmentCourseGetDto> GetByIdAsync(int id)
         {
-            using (MilitaryBaseContext context=new())
-            {
-                var query = await (from c in context.ProfessionalDevelopmentCourses
-                                   join p in context.MilitaryPersonels on c.PersonelId equals p.Id
-                                   join i in context.Injunctions on c.InjunctionId equals i.Id
+            
+                var query = await (from c in _context.ProfessionalDevelopmentCourses
+                                   join p in _context.MilitaryPersonels on c.PersonelId equals p.Id
+                                   join i in _context.Injunctions on c.InjunctionId equals i.Id
                                    select new ProfessionalDevelopmentCourseGetDto
                                    {
                                        Id=c.Id,
@@ -104,7 +104,7 @@ namespace DataAccess.Conrete.EntityFramework
                                        IsCurrentMilitary = c.IsCurrentMilitary
                                    }).FirstOrDefaultAsync(p=>p.Id==id);
                 return query;
-            }
+            
         }
 
     }

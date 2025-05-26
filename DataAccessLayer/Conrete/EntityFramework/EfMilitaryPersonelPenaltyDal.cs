@@ -9,15 +9,18 @@ namespace DataAccess.Conrete.EntityFramework
 {
     public class EfMilitaryPersonelPenaltyDal : EfEntityRepositoryBase<MilitaryPersonelPenalty, MilitaryBaseContext>, IMilitaryPersonelPenaltyDal
     {
+        public EfMilitaryPersonelPenaltyDal(MilitaryBaseContext context) : base(context)
+        {
+            _context = context;
+        }
         public async Task<List<PenaltyGetDto>> GetAllPenaltiesAsync()
         {
-            using (MilitaryBaseContext context = new())
-            {
-                var query = await (from p in context.MilitaryPersonelPenalties
-                                   join mp in context.MilitaryPersonels on p.PersonelId equals mp.Id
-                                   join pt in context.MilitaryPenaltyTypes on p.PenaltyTypeId
+            
+                var query = await (from p in _context.MilitaryPersonelPenalties
+                                   join mp in _context.MilitaryPersonels on p.PersonelId equals mp.Id
+                                   join pt in _context.MilitaryPenaltyTypes on p.PenaltyTypeId
                                    equals pt.Id
-                                   join i in context.Injunctions on p.InjunctionId equals i.Id
+                                   join i in _context.Injunctions on p.InjunctionId equals i.Id
                                    select new PenaltyGetDto
                                    {
                                        Id = p.Id,
@@ -32,17 +35,16 @@ namespace DataAccess.Conrete.EntityFramework
                                        Record = p.Record
                                    }).ToListAsync();
                 return query;
-            }
+            
         }
         public async Task<List<PenaltyGetDto>> GetAllPenaltiesByPersonelIdAsync(int personelId)
         {
-            using (MilitaryBaseContext context = new())
-            {
-                var query = await (from p in context.MilitaryPersonelPenalties
-                                   join mp in context.MilitaryPersonels on p.PersonelId equals mp.Id
-                                   join pt in context.MilitaryPenaltyTypes on p.PenaltyTypeId
+            
+                var query = await (from p in _context.MilitaryPersonelPenalties
+                                   join mp in _context.MilitaryPersonels on p.PersonelId equals mp.Id
+                                   join pt in _context.MilitaryPenaltyTypes on p.PenaltyTypeId
                                    equals pt.Id
-                                   join i in context.Injunctions on p.InjunctionId equals i.Id
+                                   join i in _context.Injunctions on p.InjunctionId equals i.Id
                                    select new PenaltyGetDto
                                    {
                                        Id = p.Id,
@@ -57,17 +59,16 @@ namespace DataAccess.Conrete.EntityFramework
                                        Record = p.Record
                                    }).Where(p => p.PersonelId == personelId).ToListAsync();
                 return query;
-            }
+            
         }
         public async Task<List<PenaltyGetDto>> GetAllPenaltiesByPenaltyTypeIdAsync(int penaltyTypeId)
         {
-            using (MilitaryBaseContext context = new())
-            {
-                var query = await (from p in context.MilitaryPersonelPenalties
-                                   join mp in context.MilitaryPersonels on p.PersonelId equals mp.Id
-                                   join pt in context.MilitaryPenaltyTypes on p.PenaltyTypeId
+            
+                var query = await (from p in _context.MilitaryPersonelPenalties
+                                   join mp in _context.MilitaryPersonels on p.PersonelId equals mp.Id
+                                   join pt in _context.MilitaryPenaltyTypes on p.PenaltyTypeId
                                    equals pt.Id
-                                   join i in context.Injunctions on p.InjunctionId equals i.Id
+                                   join i in _context.Injunctions on p.InjunctionId equals i.Id
                                    select new PenaltyGetDto
                                    {
                                        Id = p.Id,
@@ -82,17 +83,16 @@ namespace DataAccess.Conrete.EntityFramework
                                        Record = p.Record
                                    }).Where(p => p.PenaltyTypeId == penaltyTypeId).ToListAsync();
                 return query;
-            }
+            
         }
         public async Task<List<PenaltyGetDto>> GetAllPenaltiesByInjunctionIdAsync(int injunctionId)
         {
-            using (MilitaryBaseContext context = new())
-            {
-                var query = await (from p in context.MilitaryPersonelPenalties
-                                   join mp in context.MilitaryPersonels on p.PersonelId equals mp.Id
-                                   join pt in context.MilitaryPenaltyTypes on p.PenaltyTypeId
+           
+                var query = await (from p in _context.MilitaryPersonelPenalties
+                                   join mp in _context.MilitaryPersonels on p.PersonelId equals mp.Id
+                                   join pt in _context.MilitaryPenaltyTypes on p.PenaltyTypeId
                                    equals pt.Id
-                                   join i in context.Injunctions on p.InjunctionId equals i.Id
+                                   join i in _context.Injunctions on p.InjunctionId equals i.Id
                                    select new PenaltyGetDto
                                    {
                                        Id = p.Id,
@@ -107,18 +107,17 @@ namespace DataAccess.Conrete.EntityFramework
                                        Record = p.Record
                                    }).Where(p => p.PenaltyTypeId == injunctionId).ToListAsync();
                 return query;
-            }
+            
         }
 
         public async Task<PenaltyGetDto> GetPenaltyByIdAsync(int id)
         {
-            using (MilitaryBaseContext context = new())
-            {
-                var query = await (from p in context.MilitaryPersonelPenalties
-                                   join mp in context.MilitaryPersonels on p.PersonelId equals mp.Id
-                                   join pt in context.MilitaryPenaltyTypes on p.PenaltyTypeId
+            
+                var query = await (from p in _context.MilitaryPersonelPenalties
+                                   join mp in _context.MilitaryPersonels on p.PersonelId equals mp.Id
+                                   join pt in _context.MilitaryPenaltyTypes on p.PenaltyTypeId
                                    equals pt.Id
-                                   join i in context.Injunctions on p.InjunctionId equals i.Id
+                                   join i in _context.Injunctions on p.InjunctionId equals i.Id
                                    select new PenaltyGetDto
                                    {
                                        Id = p.Id,
@@ -133,7 +132,7 @@ namespace DataAccess.Conrete.EntityFramework
                                        Record = p.Record
                                    }).FirstOrDefaultAsync(p => p.Id == id);
                 return query;
-            }
+            
         }
 
     }

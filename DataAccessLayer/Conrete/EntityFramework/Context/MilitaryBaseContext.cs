@@ -1,6 +1,7 @@
 ﻿using Core.Entities;
 using Core.Entities.Concrete;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using MyMilitaryFinalProject.Entities.Concrete;
 using MyMilitaryFinalProject.EntityConfigurations;
 using System;
@@ -13,9 +14,17 @@ namespace DataAccess.Conrete.EntityFramework.Context
 {
     public class MilitaryBaseContext:DbContext
     {
+        readonly IConfiguration _configuration;
+       
+        public MilitaryBaseContext(IConfiguration configuration)
+        {
+            _configuration = configuration;
+        }
+        
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Server=BAYRAMOV\SQLEXPRESS;Database=MilitaryBase;User Id=sa;Password=123;TrustServerCertificate=True;");
+            var connectionString = _configuration.GetSection("ConnectionString")["SqlServer"];
+            optionsBuilder.UseSqlServer(connectionString);
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

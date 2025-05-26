@@ -12,6 +12,10 @@ namespace DataAccess.Conrete.EntityFramework
 {
    public class EfSpecialRecordDal : EfEntityRepositoryBase<SpecialRecord,MilitaryBaseContext>, ISpecialRecordDal
     {
+        public EfSpecialRecordDal(MilitaryBaseContext context) : base(context)
+        {
+            _context = context;
+        }
     }
    
 

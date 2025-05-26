@@ -9,23 +9,27 @@ namespace DataAccess.Conrete.EntityFramework
 {
     public class EfMilitaryPersonelDal:EfEntityRepositoryBase<MilitaryPersonel,MilitaryBaseContext>,IMilitaryPersonelDal
     {
+        
+
+        public EfMilitaryPersonelDal(MilitaryBaseContext context) : base(context)
+        {
+            _context = context;
+        }
         public async  Task<List<MilitaryPersonel>> GetAllPersonelDetails()
         {
-            using (MilitaryBaseContext context = new MilitaryBaseContext())
-            {
-                List<MilitaryPersonel>  personels = await context.MilitaryPersonels.Include(p => p.MilitaryPersonelInfo).ThenInclude(e => e.MaritalStatus).ToListAsync();
+           
+                List<MilitaryPersonel>  personels = await _context.MilitaryPersonels.Include(p => p.MilitaryPersonelInfo).ThenInclude(e => e.MaritalStatus).ToListAsync();
                 return personels;
-            }
+            
             
         }
         public async Task<MilitaryPersonel> GetByIdPersonelDetails(int id)
         {
-            using (MilitaryBaseContext context = new MilitaryBaseContext())
-            {
-                MilitaryPersonel personel = await context.MilitaryPersonels.Include(p => p.MilitaryPersonelInfo).ThenInclude(e => e.MaritalStatus).FirstOrDefaultAsync(p => p.Id == id);
+           
+                MilitaryPersonel personel = await _context.MilitaryPersonels.Include(p => p.MilitaryPersonelInfo).ThenInclude(e => e.MaritalStatus).FirstOrDefaultAsync(p => p.Id == id);
                 return personel;
 
-            }
+            
         }
     }
    

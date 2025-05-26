@@ -9,12 +9,17 @@ namespace DataAccess.Conrete.EntityFramework
 {
     public class EfFamilyMemberDal : EfEntityRepositoryBase<FamilyMember,MilitaryBaseContext>, IFamilyMemberDal
     {
+       
+
+        public EfFamilyMemberDal(MilitaryBaseContext context) : base(context)
+        {
+            _context = context;
+        }
         public async Task<List<FamilyMemberGetDto>> GetAllMembersAsync()
         {
-            using (MilitaryBaseContext context=new())
-            {
-                var query = await (from m in context.FamilyMembers
-                                   join p in context.MilitaryPersonels on m.PersonelId equals p.Id
+            
+                var query = await (from m in _context.FamilyMembers
+                                   join p in _context.MilitaryPersonels on m.PersonelId equals p.Id
                                    select new FamilyMemberGetDto
                                    {
                                        Id = m.Id,
@@ -30,14 +35,13 @@ namespace DataAccess.Conrete.EntityFramework
                                        RelationShip = m.RelationShip
                                    }).ToListAsync();
                 return query;
-            }
+            
         }
         public async Task<List<FamilyMemberGetDto>> GetAllMembersByPersonelIdAsync(int personelId)
         {
-            using (MilitaryBaseContext context=new())
-            {
-                var query = await (from m in context.FamilyMembers
-                                   join p in context.MilitaryPersonels on m.PersonelId equals p.Id
+            
+                var query = await (from m in _context.FamilyMembers
+                                   join p in _context.MilitaryPersonels on m.PersonelId equals p.Id
                                    select new FamilyMemberGetDto
                                    {
                                        Id = m.Id,
@@ -53,14 +57,13 @@ namespace DataAccess.Conrete.EntityFramework
                                        RelationShip = m.RelationShip
                                    }).Where(p=>p.PersonelId==personelId).ToListAsync();
                 return query;
-            }
+            
         }
         public async Task<FamilyMemberGetDto> GetMemberByIdAsync(int id)
         {
-            using (MilitaryBaseContext context=new())
-            {
-                var query = await (from m in context.FamilyMembers
-                                   join p in context.MilitaryPersonels on m.PersonelId equals p.Id
+           
+                var query = await (from m in _context.FamilyMembers
+                                   join p in _context.MilitaryPersonels on m.PersonelId equals p.Id
                                    select new FamilyMemberGetDto
                                    {
                                        Id = m.Id,
@@ -76,7 +79,7 @@ namespace DataAccess.Conrete.EntityFramework
                                        RelationShip = m.RelationShip
                                    }).FirstOrDefaultAsync(p=>p.Id==id);
                 return query;
-            }
+            
         }
 
 

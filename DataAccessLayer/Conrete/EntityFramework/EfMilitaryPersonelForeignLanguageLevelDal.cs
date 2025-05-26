@@ -10,13 +10,18 @@ namespace DataAccess.Conrete.EntityFramework
 {
     public class EfMilitaryPersonelForeignLanguageLevelDal : EfEntityRepositoryBase<MilitaryPersonelForeignLanguageLevel,MilitaryBaseContext>, IMilitaryPersonelForeignLanguageLevelDal
     {
+       
+
+        public EfMilitaryPersonelForeignLanguageLevelDal(MilitaryBaseContext context) : base(context)
+        {
+            _context = context;
+        }
         public async Task<List<PersonelForeignLanguageLevelGetDto>> GetAllLevelAsync()
         {
-            using (MilitaryBaseContext context=new())
-            {
-                var query = await (from l in context.MilitaryPersonelForeignLanguageLevels
-                                   join p in context.MilitaryPersonels on l.PersonelId equals p.Id
-                                   join i in context.Injunctions on l.AllowanceInjunctionId equals i.Id
+            
+                var query = await (from l in _context.MilitaryPersonelForeignLanguageLevels
+                                   join p in _context.MilitaryPersonels on l.PersonelId equals p.Id
+                                   join i in _context.Injunctions on l.AllowanceInjunctionId equals i.Id
                                    select new PersonelForeignLanguageLevelGetDto
                                    {
                                        Id = l.Id,
@@ -30,15 +35,14 @@ namespace DataAccess.Conrete.EntityFramework
                                        Record = l.Record
                                    }).ToListAsync();
                 return query;
-            }
+            
         }
         public async Task<List<PersonelForeignLanguageLevelGetDto>> GetAllLevelByPersonelIdAsync(int personelId)
         {
-            using (MilitaryBaseContext context=new())
-            {
-                var query = await (from l in context.MilitaryPersonelForeignLanguageLevels
-                                   join p in context.MilitaryPersonels on l.PersonelId equals p.Id
-                                   join i in context.Injunctions on l.AllowanceInjunctionId equals i.Id
+            
+                var query = await (from l in _context.MilitaryPersonelForeignLanguageLevels
+                                   join p in _context.MilitaryPersonels on l.PersonelId equals p.Id
+                                   join i in _context.Injunctions on l.AllowanceInjunctionId equals i.Id
                                    select new PersonelForeignLanguageLevelGetDto
                                    {
                                        Id = l.Id,
@@ -52,15 +56,14 @@ namespace DataAccess.Conrete.EntityFramework
                                        Record = l.Record
                                    }).Where(p=>p.PersonelId==personelId).ToListAsync();
                 return query;
-            }
+            
         }
         public async Task<List<PersonelForeignLanguageLevelGetDto>> GetAllLevelByInjunctionIdAsync(int injunctionId)
         {
-            using (MilitaryBaseContext context=new())
-            {
-                var query = await (from l in context.MilitaryPersonelForeignLanguageLevels
-                                   join p in context.MilitaryPersonels on l.PersonelId equals p.Id
-                                   join i in context.Injunctions on l.AllowanceInjunctionId equals i.Id
+           
+                var query = await (from l in _context.MilitaryPersonelForeignLanguageLevels
+                                   join p in _context.MilitaryPersonels on l.PersonelId equals p.Id
+                                   join i in _context.Injunctions on l.AllowanceInjunctionId equals i.Id
                                    select new PersonelForeignLanguageLevelGetDto
                                    {
                                        Id = l.Id,
@@ -73,16 +76,15 @@ namespace DataAccess.Conrete.EntityFramework
                                        LanguageName = l.LanguageName,
                                        Record = l.Record
                                    }).Where(p=>p.AllowanceInjunctionId==injunctionId).ToListAsync();
-                return query;
-            }
+               return query;
+            
         }
         public async Task<PersonelForeignLanguageLevelGetDto> GetLevelByIdAsync(int id)
         {
-            using (MilitaryBaseContext context=new())
-            {
-                var query = await (from l in context.MilitaryPersonelForeignLanguageLevels
-                                   join p in context.MilitaryPersonels on l.PersonelId equals p.Id
-                                   join i in context.Injunctions on l.AllowanceInjunctionId equals i.Id
+            
+                var query = await (from l in _context.MilitaryPersonelForeignLanguageLevels
+                                   join p in _context.MilitaryPersonels on l.PersonelId equals p.Id
+                                   join i in _context.Injunctions on l.AllowanceInjunctionId equals i.Id
                                    select new PersonelForeignLanguageLevelGetDto
                                    {
                                        Id = l.Id,
@@ -96,7 +98,7 @@ namespace DataAccess.Conrete.EntityFramework
                                        Record = l.Record
                                    }).FirstOrDefaultAsync(p => p.Id == id);
                 return query;
-            }
+            
         }
 
 

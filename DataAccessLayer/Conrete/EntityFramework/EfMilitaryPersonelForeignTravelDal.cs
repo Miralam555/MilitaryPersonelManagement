@@ -9,13 +9,16 @@ namespace DataAccess.Conrete.EntityFramework
 {
     public class EfMilitaryPersonelForeignTravelDal:EfEntityRepositoryBase<MilitaryPersonelForeignTravel,MilitaryBaseContext>,IMilitaryPersonelForeignTravelDal
     {
+        public EfMilitaryPersonelForeignTravelDal(MilitaryBaseContext context) : base(context)
+        {
+            _context = context;
+        }
         public async Task<List<PersonelForeignTravelGetDto>> GetAllTravelsAsync()
         {
-            using (MilitaryBaseContext context=new())
-            {
-                var query =await  (from f in context.MilitaryPersonelForeignTravels
-                             join p in context.MilitaryPersonels on f.PersonelId equals p.Id
-                             join i in context.Injunctions on f.InjunctionId equals i.Id
+            
+                var query =await  (from f in _context.MilitaryPersonelForeignTravels
+                             join p in _context.MilitaryPersonels on f.PersonelId equals p.Id
+                             join i in _context.Injunctions on f.InjunctionId equals i.Id
                              select new PersonelForeignTravelGetDto
                              {
                                  Id = f.Id,
@@ -33,15 +36,14 @@ namespace DataAccess.Conrete.EntityFramework
                              }).ToListAsync();
                 return query;
                             
-            }
+            
         }
         public async Task<List<PersonelForeignTravelGetDto>> GetAllByInjunctionIdAsync(int injunctionId)
         {
-            using (MilitaryBaseContext context=new())
-            {
-                var query =await  (from f in context.MilitaryPersonelForeignTravels
-                             join p in context.MilitaryPersonels on f.PersonelId equals p.Id
-                             join i in context.Injunctions on f.InjunctionId equals i.Id
+            
+                var query =await  (from f in _context.MilitaryPersonelForeignTravels
+                             join p in _context.MilitaryPersonels on f.PersonelId equals p.Id
+                             join i in _context.Injunctions on f.InjunctionId equals i.Id
                              select new PersonelForeignTravelGetDto
                              {
                                  Id = f.Id,
@@ -59,15 +61,14 @@ namespace DataAccess.Conrete.EntityFramework
                              }).Where(p=>p.InjunctionId==injunctionId).ToListAsync();
                 return query;
                             
-            }
+            
         }
         public async Task<List<PersonelForeignTravelGetDto>> GetAllByPersonelIdAsync(int personelId)
         {
-            using (MilitaryBaseContext context=new())
-            {
-                var query =await  (from f in context.MilitaryPersonelForeignTravels
-                             join p in context.MilitaryPersonels on f.PersonelId equals p.Id
-                             join i in context.Injunctions on f.InjunctionId equals i.Id
+            
+                var query =await  (from f in _context.MilitaryPersonelForeignTravels
+                             join p in _context.MilitaryPersonels on f.PersonelId equals p.Id
+                             join i in _context.Injunctions on f.InjunctionId equals i.Id
                              select new PersonelForeignTravelGetDto
                              {
                                  Id = f.Id,
@@ -85,15 +86,14 @@ namespace DataAccess.Conrete.EntityFramework
                              }).Where(p=>p.PersonelId==personelId).ToListAsync();
                 return query;
                             
-            }
+            
         }
         public async Task<PersonelForeignTravelGetDto> GetByIdAsync(int id)
         {
-            using (MilitaryBaseContext context=new())
-            {
-                var query =await  (from f in context.MilitaryPersonelForeignTravels
-                             join p in context.MilitaryPersonels on f.PersonelId equals p.Id
-                             join i in context.Injunctions on f.InjunctionId equals i.Id
+            
+                var query =await  (from f in _context.MilitaryPersonelForeignTravels
+                             join p in _context.MilitaryPersonels on f.PersonelId equals p.Id
+                             join i in _context.Injunctions on f.InjunctionId equals i.Id
                              select new PersonelForeignTravelGetDto
                              {
                                  Id = f.Id,
@@ -111,7 +111,7 @@ namespace DataAccess.Conrete.EntityFramework
                              }).FirstOrDefaultAsync(p=>p.Id==id);
                 return query;
                             
-            }
+            
         }
 
     }

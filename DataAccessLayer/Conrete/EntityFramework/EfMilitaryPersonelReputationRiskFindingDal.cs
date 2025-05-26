@@ -9,12 +9,16 @@ namespace DataAccess.Conrete.EntityFramework
 {
     public class EfMilitaryPersonelReputationRiskFindingDal : EfEntityRepositoryBase<MilitaryPersonelReputationRiskFinding,MilitaryBaseContext>, IMilitaryPersonelReputationRiskFindingDal
     {
+
+        public EfMilitaryPersonelReputationRiskFindingDal(MilitaryBaseContext context) : base(context)
+        {
+            _context = context;
+        }
         public async Task<List<PersonelReputationRiskFindingGetDto>> GetAllReportsAsync()
         {
-            using (MilitaryBaseContext context=new())
-            {
-                var query = await (from r in context.MilitaryPersonelReputationRiskFindings
-                             join p in context.MilitaryPersonels on r.PersonelId equals p.Id
+            
+                var query = await (from r in _context.MilitaryPersonelReputationRiskFindings
+                             join p in _context.MilitaryPersonels on r.PersonelId equals p.Id
                              select new PersonelReputationRiskFindingGetDto
                              {
                                  Id = r.Id,
@@ -26,14 +30,13 @@ namespace DataAccess.Conrete.EntityFramework
                                  ReportingAgency = r.ReportingAgency
                              }).ToListAsync();
                 return query;
-            }
+            
         }
         public async Task<List<PersonelReputationRiskFindingGetDto>> GetAllReportsByPerosnelIdAsync(int personelId)
         {
-            using (MilitaryBaseContext context=new())
-            {
-                var query = await (from r in context.MilitaryPersonelReputationRiskFindings
-                             join p in context.MilitaryPersonels on r.PersonelId equals p.Id
+           
+                var query = await (from r in _context.MilitaryPersonelReputationRiskFindings
+                             join p in _context.MilitaryPersonels on r.PersonelId equals p.Id
                              select new PersonelReputationRiskFindingGetDto
                              {
                                  Id = r.Id,
@@ -45,14 +48,12 @@ namespace DataAccess.Conrete.EntityFramework
                                  ReportingAgency = r.ReportingAgency
                              }).Where(p=>p.PersonelId==personelId).ToListAsync();
                 return query;
-            }
+            
         }
         public async Task<PersonelReputationRiskFindingGetDto> GetReportAsync(int id)
         {
-            using (MilitaryBaseContext context=new())
-            {
-                var query = await (from r in context.MilitaryPersonelReputationRiskFindings
-                             join p in context.MilitaryPersonels on r.PersonelId equals p.Id
+              var query = await (from r in _context.MilitaryPersonelReputationRiskFindings
+                             join p in _context.MilitaryPersonels on r.PersonelId equals p.Id
                              select new PersonelReputationRiskFindingGetDto
                              {
                                  Id = r.Id,
@@ -64,7 +65,7 @@ namespace DataAccess.Conrete.EntityFramework
                                  ReportingAgency = r.ReportingAgency
                              }).FirstOrDefaultAsync(p=>p.Id==id);
                 return query;
-            }
+            
         }
 
     }

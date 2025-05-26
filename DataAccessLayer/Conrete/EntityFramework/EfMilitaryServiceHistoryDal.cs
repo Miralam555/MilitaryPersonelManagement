@@ -9,13 +9,16 @@ namespace DataAccess.Conrete.EntityFramework
 {
     public class EfMilitaryServiceHistoryDal : EfEntityRepositoryBase<MilitaryServiceHistory,MilitaryBaseContext>, IMilitaryServiceHistoryDal
     {
+        public EfMilitaryServiceHistoryDal(MilitaryBaseContext context) : base(context)
+        {
+            _context = context;
+        }
         public async Task<List<MilitaryServiceHistoryGetDto>> GetAllServiceHistoryAsync()
         {
-            using (MilitaryBaseContext context = new())
-            {
-                var query = await (from s in context.MilitaryServiceHistories
-                                   join i in context.Injunctions on s.InjunctionId equals i.Id
-                                   join p in context.MilitaryPersonels on s.PersonelId equals p.Id
+            
+                var query = await (from s in _context.MilitaryServiceHistories
+                                   join i in _context.Injunctions on s.InjunctionId equals i.Id
+                                   join p in _context.MilitaryPersonels on s.PersonelId equals p.Id
                                    select new MilitaryServiceHistoryGetDto
                                    {
                                        Id = s.Id,
@@ -32,16 +35,15 @@ namespace DataAccess.Conrete.EntityFramework
                                        IsCurrentMilitary = s.IsCurrentMilitary
                                    }).ToListAsync();
                 return query;
-            }
+            
 
         }
         public async Task<List<MilitaryServiceHistoryGetDto>> GetAllServiceHistoryByPersonelIdAsync(int personelId)
         {
-            using (MilitaryBaseContext context = new())
-            {
-                var query = await (from s in context.MilitaryServiceHistories
-                                   join i in context.Injunctions on s.InjunctionId equals i.Id
-                                   join p in context.MilitaryPersonels on s.PersonelId equals p.Id
+           
+                var query = await (from s in _context.MilitaryServiceHistories
+                                   join i in _context.Injunctions on s.InjunctionId equals i.Id
+                                   join p in _context.MilitaryPersonels on s.PersonelId equals p.Id
                                    select new MilitaryServiceHistoryGetDto
                                    {
                                        Id = s.Id,
@@ -58,16 +60,15 @@ namespace DataAccess.Conrete.EntityFramework
                                        IsCurrentMilitary = s.IsCurrentMilitary
                                    }).Where(p=>p.PersonelId==personelId).ToListAsync();
                 return query;
-            }
+            
 
         }
         public async Task<List<MilitaryServiceHistoryGetDto>> GetAllServiceHistoryByInjunctionIdAsync(int injunctionId)
         {
-            using (MilitaryBaseContext context = new())
-            {
-                var query = await (from s in context.MilitaryServiceHistories
-                                   join i in context.Injunctions on s.InjunctionId equals i.Id
-                                   join p in context.MilitaryPersonels on s.PersonelId equals p.Id
+            
+                var query = await (from s in _context.MilitaryServiceHistories
+                                   join i in _context.Injunctions on s.InjunctionId equals i.Id
+                                   join p in _context.MilitaryPersonels on s.PersonelId equals p.Id
                                    select new MilitaryServiceHistoryGetDto
                                    {
                                        Id = s.Id,
@@ -84,16 +85,15 @@ namespace DataAccess.Conrete.EntityFramework
                                        IsCurrentMilitary = s.IsCurrentMilitary
                                    }).Where(p=>p.InjunctionId==injunctionId).ToListAsync();
                 return query;
-            }
+            
 
         }
         public async Task<MilitaryServiceHistoryGetDto> GetServiceHistoryByIdAsync(int id)
         {
-            using (MilitaryBaseContext context = new())
-            {
-                var query = await (from s in context.MilitaryServiceHistories
-                                   join i in context.Injunctions on s.InjunctionId equals i.Id
-                                   join p in context.MilitaryPersonels on s.PersonelId equals p.Id
+            
+                var query = await (from s in _context.MilitaryServiceHistories
+                                   join i in _context.Injunctions on s.InjunctionId equals i.Id
+                                   join p in _context.MilitaryPersonels on s.PersonelId equals p.Id
                                    select new MilitaryServiceHistoryGetDto
                                    {
                                        Id = s.Id,
@@ -110,7 +110,7 @@ namespace DataAccess.Conrete.EntityFramework
                                        IsCurrentMilitary = s.IsCurrentMilitary
                                    }).FirstOrDefaultAsync(p=>p.Id==id);
                 return query;
-            }
+            
 
         }
 

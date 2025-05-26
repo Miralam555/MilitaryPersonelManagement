@@ -9,14 +9,18 @@ namespace DataAccess.Conrete.EntityFramework
 {
     public class EfCrimeRecordDal : EfEntityRepositoryBase<CrimeRecord, MilitaryBaseContext>, ICrimeRecordDal
     {
+       
+        public EfCrimeRecordDal(MilitaryBaseContext context) : base(context)
+        {
+            _context = context;
+        }
         public async Task<List<CrimeRecordGetDto>> GetAllCrimeRecordsAsync()
         {
 
-            using (MilitaryBaseContext context = new())
-            {
-                var query = await (from c in context.CrimeRecords
-                                   join p in context.MilitaryPersonels on c.PersonelId equals p.Id
-                                   join m in context.FamilyMembers on c.MemberId equals m.Id
+            
+                var query = await (from c in _context.CrimeRecords
+                                   join p in _context.MilitaryPersonels on c.PersonelId equals p.Id
+                                   join m in _context.FamilyMembers on c.MemberId equals m.Id
                                    select new CrimeRecordGetDto
                                    {
                                        Id = c.Id,
@@ -32,16 +36,15 @@ namespace DataAccess.Conrete.EntityFramework
                                        Record = c.Record
                                    }).ToListAsync();
                 return query;
-            }
+            
         }
         public async Task<List<CrimeRecordGetDto>> GetAllCrimeRecordsByMemberIdAsync(int memberId)
         {
 
-            using (MilitaryBaseContext context = new())
-            {
-                var query = await (from c in context.CrimeRecords
-                                   join p in context.MilitaryPersonels on c.PersonelId equals p.Id
-                                   join m in context.FamilyMembers on c.MemberId equals m.Id
+            
+                var query = await (from c in _context.CrimeRecords
+                                   join p in _context.MilitaryPersonels on c.PersonelId equals p.Id
+                                   join m in _context.FamilyMembers on c.MemberId equals m.Id
                                    select new CrimeRecordGetDto
                                    {
                                        Id = c.Id,
@@ -57,16 +60,15 @@ namespace DataAccess.Conrete.EntityFramework
                                        Record = c.Record
                                    }).Where(p => p.MemberId == memberId).ToListAsync();
                 return query;
-            }
+            
         }
         public async Task<List<CrimeRecordGetDto>> GetAllCrimeRecordsByPersonelIdAsync(int personelId)
         {
 
-            using (MilitaryBaseContext context = new())
-            {
-                var query = await (from c in context.CrimeRecords
-                                   join p in context.MilitaryPersonels on c.PersonelId equals p.Id
-                                   join m in context.FamilyMembers on c.MemberId equals m.Id
+            
+                var query = await (from c in _context.CrimeRecords
+                                   join p in _context.MilitaryPersonels on c.PersonelId equals p.Id
+                                   join m in _context.FamilyMembers on c.MemberId equals m.Id
                                    select new CrimeRecordGetDto
                                    {
                                        Id = c.Id,
@@ -82,16 +84,15 @@ namespace DataAccess.Conrete.EntityFramework
                                        Record = c.Record
                                    }).Where(p => p.PersonelId == personelId).ToListAsync();
                 return query;
-            }
+            
         }
         public async Task<CrimeRecordGetDto> GetCrimeRecordByIdAsync(int id)
         {
 
-            using (MilitaryBaseContext context = new())
-            {
-                var query = await (from c in context.CrimeRecords
-                                   join p in context.MilitaryPersonels on c.PersonelId equals p.Id
-                                   join m in context.FamilyMembers on c.MemberId equals m.Id
+           
+                var query = await (from c in _context.CrimeRecords
+                                   join p in _context.MilitaryPersonels on c.PersonelId equals p.Id
+                                   join m in _context.FamilyMembers on c.MemberId equals m.Id
                                    select new CrimeRecordGetDto
                                    {
                                        Id = c.Id,
@@ -107,7 +108,7 @@ namespace DataAccess.Conrete.EntityFramework
                                        Record = c.Record
                                    }).FirstOrDefaultAsync(p => p.Id == id);
                 return query;
-            }
+            
         }
 
     }

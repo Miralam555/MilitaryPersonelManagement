@@ -7,6 +7,10 @@ namespace DataAccess.Conrete.EntityFramework
 {
     public class EfServiceYearsWithBenefitDal : EfEntityRepositoryBase<ServiceYearsWithBenefit,MilitaryBaseContext>, IServiceYearsWithBenefitDal
     {
+        public EfServiceYearsWithBenefitDal(MilitaryBaseContext context) : base(context)
+        {
+            _context = context;
+        }
     }
    
 
