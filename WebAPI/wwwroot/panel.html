@@ -11,7 +11,7 @@
             background-color: #f4f6f8;
         }
 
-        /* Sidebar */
+        
         .sidebar {
             width: 260px;
             background-color: #2f3542;
@@ -52,7 +52,7 @@
             margin-top: 10px;
         }
 
-        /* Content */
+        
         .content {
             flex-grow: 1;
             padding: 20px;
@@ -92,7 +92,7 @@
             color: white;
         }
 
-        /* Table */
+       
         table {
             width: 100%;
             border-collapse: collapse;
@@ -116,7 +116,7 @@
             cursor: pointer;
         }
 
-        /* Form */
+        
         form {
             background-color: white;
             padding: 15px;
@@ -157,20 +157,20 @@
             <button onclick="selectTable('Educations')">Education</button>
             <button onclick="selectTable('FamilyMemberForeignTravels')">FamilyMemberForeignTravel</button>
             <button onclick="selectTable('PersonelRecognitions')">PersonelRecognition</button>
-            <button onclick="selectTable('BattleHistories')">BattleHistory</button>
-            <button onclick="selectTable('CrimeRecords')">Doyus Tarixi</button>
+            <button onclick="selectTable('BattleHistories')">Doyus Tarixi</button>
+            <button onclick="selectTable('CrimeRecords')">Toredilen Cinayet</button>
             <button onclick="selectTable('FamilyMembers')">Aile uzvleri</button>
             <button onclick="selectTable('MilitaryRanks')">Herbi Rutbeler</button>
-            <button onclick="selectTable('FamilyMembersInServices')">Eyni Qurumda olan aile uzvleri</button>
+            <button onclick="selectTable('FamilyMembersInService')">Eyni Qurumda olan aile uzvleri</button>
             <button onclick="selectTable('MilitaryServiceExtensions')">Muqavile</button>
             <button onclick="selectTable('MilitaryServiceHistories')">Herbi Xidmet tarixi</button>
             <button onclick="selectTable('PersonelReputationRiskFindings')">Herbi Qullugcunun reputasiyasina riskler</button>
             <button onclick="selectTable('PersonelForeignTravels')">Herbi Qullugcunun xarici seyahetleri</button>
             <button onclick="selectTable('PersonelForeignLanguageLevels')">Xarici Dil Bilikleri</button>
-            <button onclick="selectTable('MilitarySkillRecords')">Bacariglari</button>
-            <button onclick="selectTable('ProfessionalDevelopmentCourses')">Bacariglari</button>
-            <button onclick="selectTable('PreMilitaryWorkExperiences')">Bacariglari</button>
-            <button onclick="selectTable('PersonelSpecialSkills')">Bacariglari</button>
+            <button onclick="selectTable('MilitarySkillRecords')">Bacarig Qeyd</button>
+            <button onclick="selectTable('ProfessionalDevelopmentCourses')">Ixtisas artirma kurslari</button>
+            <button onclick="selectTable('PreMilitaryWorkExperiences')">Isden evvelki tecrube</button>
+            <button onclick="selectTable('PersonelSpecialSkills')">Xususi bacariglari</button>
 
         </div>
     </div>
@@ -207,7 +207,7 @@
         }
 
         function getAll() {
-            fetch(`https://localhost:44362/api/${currentEntity}/getall`, {
+            fetch(`https://localhost:44362/api/${currentEntity}`, {
                 headers: {
                     "Authorization": `Bearer ${localStorage.getItem('token')}`
                 }
@@ -253,7 +253,7 @@
 
         function showAddForm() {
             let formHtml = "";
-            if (currentEntity === "Education") {
+            if (currentEntity === "Educations") {
                 formHtml = `
                                 <form onsubmit="submitAdd(event)">
                                     <input name="PersonelId" placeholder="PersonelId" required>
@@ -264,7 +264,7 @@
                                     <input name="EducationTypeId" placeholder="EducationTypeId" required>
                                     <button type="submit">Əlavə et</button>
                                 </form>`;
-            } else if (currentEntity === "FamilyMemberForeignTravel") {
+            } else if (currentEntity === "FamilyMemberForeignTravels") {
                 formHtml = `
                                 <form onsubmit="submitAdd(event)">
                                     <input name="MemberId" placeholder="MemberId" required>
@@ -275,7 +275,7 @@
                                     <input name="Record" placeholder="Record">
                                     <button type="submit">Əlavə et</button>
                                 </form>`;
-            } else if (currentEntity === "PersonelRecognition") {
+            } else if (currentEntity === "PersonelRecognitions") {
                 formHtml = `
                                 <form onsubmit="submitAdd(event)">
                                     <input name="PersonelId" placeholder="PersonelId">
@@ -284,7 +284,7 @@
                                     <input name="Record" placeholder="Record">
                                     <button type="submit">Əlavə et</button>
                                 </form>`;
-            } else if (currentEntity === "BattleHistory") {
+            } else if (currentEntity === "BattleHistories") {
                 formHtml = `
                     <form onsubmit="submitAdd(event)">
                         <input name="PersonelId" placeholder="PersonelId">
@@ -296,7 +296,7 @@
                         <input name="VeteranNote" placeholder="VeteranNote">
                         <button type="submit">Əlavə et</button>
                     </form>`;
-            } else if (currentEntity === "CrimeRecord") {
+            } else if (currentEntity === "CrimeRecords") {
                 formHtml = `
                     <form onsubmit="submitAdd(event)">
                         <input name="PersonelId" placeholder="PersonelId" required>
@@ -307,7 +307,7 @@
                         <input name="Record" placeholder="Record">
                         <button type="submit">Əlavə et</button>
                     </form>`;
-            } else if (currentEntity === "FamilyMember") {
+            } else if (currentEntity === "FamilyMembers") {
                 formHtml = `
             <form onsubmit="submitAdd(event)">
                 <input name="PersonelId" placeholder="PersonelId" required>
@@ -320,7 +320,7 @@
                 <input name="Occupation" placeholder="Occupation" required>
                 <button type="submit">Əlavə et</button>
             </form>`;
-            } else if (currentEntity === "MilitaryRank") {
+            } else if (currentEntity === "MilitaryRanks") {
                 formHtml = `
     <form onsubmit="submitAdd(event)">
         <input name="PersonelId" placeholder="PersonelId" required>
@@ -336,7 +336,7 @@
         <input name="Record" placeholder="Record">
         <button type="submit">Əlavə et</button>
     </form>`;
-            } else if (currentEntity === "MilitaryServiceExtension") {
+            } else if (currentEntity === "MilitaryServiceExtensions") {
                 formHtml = `
     <form onsubmit="submitAdd(event)">
         <input name="PersonelId" placeholder="PersonelId" required>
@@ -346,7 +346,7 @@
         <input name="Record" placeholder="Record">
         <button type="submit">Əlavə et</button>
     </form>`;
-            } else if (currentEntity === "MilitaryServiceHistory") {
+            } else if (currentEntity === "MilitaryServiceHistories") {
                 formHtml = `
     <form onsubmit="submitAdd(event)">
         <input name="StartDate" placeholder="StartDate (yyyy-mm-dd)" required>
@@ -364,7 +364,7 @@
         </label>
         <button type="submit">Əlavə et</button>
     </form>`;
-            } else if (currentEntity === "MilitarySkillRecord") {
+            } else if (currentEntity === "MilitarySkillRecords") {
                 formHtml = `
     <form onsubmit="submitAdd(event)">
         <input name="PersonelId" placeholder="PersonelId" required>
@@ -374,7 +374,7 @@
         <input name="Record" placeholder="Record">
         <button type="submit">Əlavə et</button>
     </form>`;
-            } else if (currentEntity === "PersonelForeignLanguageLevel") {
+            } else if (currentEntity === "PersonelForeignLanguageLevels") {
                 formHtml = `
     <form onsubmit="submitAdd(event)">
         <input name="PersonelId" placeholder="PersonelId" required>
@@ -384,7 +384,7 @@
         <input name="AllowanceInjunctionId" placeholder="AllowanceInjunctionId" required>
         <button type="submit">Əlavə et</button>
     </form>`;
-            } else if (currentEntity === "PersonelForeignTravel") {
+            } else if (currentEntity === "PersonelForeignTravels") {
                 formHtml = `
     <form onsubmit="submitAdd(event)">
         <input name="PersonelId" placeholder="PersonelId" required>
@@ -396,7 +396,7 @@
         <input name="InjunctionId" placeholder="InjunctionId" required>
         <button type="submit">Əlavə et</button>
     </form>`;
-            } else if (currentEntity === "PersonelReputationRiskFinding") {
+            } else if (currentEntity === "PersonelReputationRiskFindings") {
                 formHtml = `
     <form onsubmit="submitAdd(event)">
         <input name="PersonelId" placeholder="PersonelId" required>
@@ -405,14 +405,14 @@
         <input name="Record" placeholder="Record">
         <button type="submit">Əlavə et</button>
     </form>`;
-            } else if (currentEntity === "PersonelSpecialSkill") {
+            } else if (currentEntity === "PersonelSpecialSkills") {
                 formHtml = `
             <form onsubmit="submitAdd(event)">
                 <input name="PersonelId" placeholder="PersonelId" required>
                 <input name="Skill" placeholder="Skill">
                 <button type="submit">Əlavə et</button>
             </form>`;
-            } else if (currentEntity === "PreMilitaryWorkExperience" ) {
+            } else if (currentEntity === "PreMilitaryWorkExperiences" ) {
                 formHtml = `
     <form onsubmit="submitAdd(event)">
         <input name="PersonelId" placeholder="PersonelId" required>
@@ -422,7 +422,7 @@
         <input name="Position" placeholder="Vəzifə" required>
         <button type="submit">Əlavə et</button>
     </form>`;
-            } else if (currentEntity === "ProfessionalDevelopmentCourse" ) {
+            } else if (currentEntity === "ProfessionalDevelopmentCourses" ) {
                 formHtml = `
     <form onsubmit="submitAdd(event)">
         <input name="PersonelId" placeholder="PersonelId" required>
@@ -448,7 +448,7 @@
         function submitAdd(event) {
             event.preventDefault();
             const formData = Object.fromEntries(new FormData(event.target));
-            fetch(`https://localhost:44362/api/${currentEntity}/add`, {
+            fetch(`https://localhost:44362/api/${currentEntity}`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -684,21 +684,21 @@
         function submitUpdate(event) {
             event.preventDefault();
 
-            // Seçilən sətir məlumatlarını alırıq
-            const row = window.selectedRow;  // Seçilən sətir
+            
+            const row = window.selectedRow;  
             if (!row) {
                 alert("Zəhmət olmasa yeniləmək istədiyiniz sətiri seçin.");
                 return;
             }
 
-            // Form məlumatlarını alırıq
+            
             let formData = Object.fromEntries(new FormData(event.target));
 
-            // Seçilən sətirin ID-sini formData-ya əlavə edirik
-            formData.Id = window.selectedRow.id;  // Seçilən sətirin ID-ni form məlumatlarına əlavə edirik
+            
+            formData.Id = window.selectedRow.id; 
             console.log("Göndərilən form məlumatları:", formData.id);
-            // API ilə əlaqə qururuq
-            fetch(`https://localhost:44362/api/${currentEntity}/update`, {
+            
+            fetch(`https://localhost:44362/api/${currentEntity}`, {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",

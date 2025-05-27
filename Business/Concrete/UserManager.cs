@@ -13,12 +13,12 @@ namespace Business.Concrete
             _userDal = userDal;
         }
 
-        public List<OperationClaim> GetClaims(User user)
+        public Task<List<OperationClaim>> GetClaimsAsync(User user)
         {
-            return _userDal.GetClaims(user);
+            return _userDal.GetClaimsAsync(user);
         }
 
-        public async Task Add(User user)
+        public async Task AddAsync(User user)
         {
             await _userDal.AddAsync(user);
         }

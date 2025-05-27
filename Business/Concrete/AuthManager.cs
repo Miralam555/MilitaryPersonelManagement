@@ -37,7 +37,7 @@ namespace Business.Concrete
                 PasswordSalt = passwordSalt,
                 Status = true
             };
-            _userService.Add(user);
+            _userService.AddAsync(user);
             return new SuccessDataResult<User>(user, Messages.UserRegistered);
         }
 
@@ -67,9 +67,9 @@ namespace Business.Concrete
             return new SuccessResult();
         }
 
-        public IDataResult<AccessToken> CreateAccessToken(User user)
+        public async Task<IDataResult<AccessToken>> CreateAccessToken(User user)
         {
-            var claims = _userService.GetClaims(user);
+            var claims = await _userService.GetClaimsAsync(user);
             var accessToken = _tokenHelper.CreateToken(user, claims);
             return new SuccessDataResult<AccessToken>(accessToken, Messages.AccessTokenCreated);
         }

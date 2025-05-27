@@ -2,6 +2,7 @@
 using Core.Entities.Concrete;
 using DataAccess.Abstract;
 using DataAccess.Conrete.EntityFramework.Context;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,7 +17,7 @@ namespace DataAccess.Conrete.EntityFramework
         {
             _context = context;
         }
-        public List<OperationClaim> GetClaims(User user)
+        public Task<List<OperationClaim>> GetClaimsAsync(User user)
         {
            
                 var result = from operationClaim in _context.OperationClaims
@@ -24,9 +25,8 @@ namespace DataAccess.Conrete.EntityFramework
                                  on operationClaim.Id equals userOperationClaim.OperationClaimId
                              where userOperationClaim.UserId == user.Id
                              select new OperationClaim { Id = operationClaim.Id, Name = operationClaim.Name };
-                return result.ToList();
-
-            
+                return result.ToListAsync();
         }
+        
     }
 }

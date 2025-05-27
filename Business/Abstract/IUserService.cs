@@ -9,8 +9,8 @@ namespace Business.Abstract
 {
     public interface IUserService
     {
-        List<OperationClaim> GetClaims(User user);
-        Task Add(User user);
+        Task<List<OperationClaim>> GetClaimsAsync(User user);
+        Task AddAsync(User user);
         Task<User> GetByMailAsync(string email);
     }
 }
