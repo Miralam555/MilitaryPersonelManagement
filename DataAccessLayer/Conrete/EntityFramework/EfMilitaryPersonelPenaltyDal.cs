@@ -33,7 +33,7 @@ namespace DataAccess.Conrete.EntityFramework
                                        PenaltyType = pt.PenaltyType,
                                        PenaltyDescription = p.PenaltyDescription,
                                        Record = p.Record
-                                   }).ToListAsync();
+                                   }).AsNoTracking().ToListAsync();
                 return query;
             
         }
@@ -57,7 +57,7 @@ namespace DataAccess.Conrete.EntityFramework
                                        PenaltyType = pt.PenaltyType,
                                        PenaltyDescription = p.PenaltyDescription,
                                        Record = p.Record
-                                   }).Where(p => p.PersonelId == personelId).ToListAsync();
+                                   }).Where(p => p.PersonelId == personelId).AsNoTracking().ToListAsync();
                 return query;
             
         }
@@ -81,7 +81,7 @@ namespace DataAccess.Conrete.EntityFramework
                                        PenaltyType = pt.PenaltyType,
                                        PenaltyDescription = p.PenaltyDescription,
                                        Record = p.Record
-                                   }).Where(p => p.PenaltyTypeId == penaltyTypeId).ToListAsync();
+                                   }).Where(p => p.PenaltyTypeId == penaltyTypeId).AsNoTracking().ToListAsync();
                 return query;
             
         }
@@ -105,7 +105,7 @@ namespace DataAccess.Conrete.EntityFramework
                                        PenaltyType = pt.PenaltyType,
                                        PenaltyDescription = p.PenaltyDescription,
                                        Record = p.Record
-                                   }).Where(p => p.PenaltyTypeId == injunctionId).ToListAsync();
+                                   }).Where(p => p.PenaltyTypeId == injunctionId).AsNoTracking().ToListAsync();
                 return query;
             
         }

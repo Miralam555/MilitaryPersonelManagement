@@ -89,7 +89,7 @@ namespace Business.Concrete
             {
                 return new SuccessDataResult<PenaltyGetDto>(entity);
             }
-            return new ErrorDataResult<PenaltyGetDto>(Messages.NoData);
+            return new ErrorDataResult<PenaltyGetDto>(Messages.EntityNotFound);
         }
 
         [CacheRemoveAspect("IMilitaryPersonelPenaltyService.Get")]
@@ -97,7 +97,8 @@ namespace Business.Concrete
         [ValidationAspect(typeof(MilitaryPersonelPenaltyValidator))]
         public async Task<IResult> AddPenaltyAsync(PenaltyAddDto dto)
         {
-            await _militaryPersonelPenaltyDal.AddAsync(_mapper.Map<MilitaryPersonelPenalty>(dto));
+            var entity = _mapper.Map<MilitaryPersonelPenalty>(dto);
+            await _militaryPersonelPenaltyDal.AddAsync(entity);
             return new SuccessResult(Messages.SuccessfullyAdded);
         }
 
@@ -110,6 +111,7 @@ namespace Business.Concrete
             if (entity != null)
             {
                 _mapper.Map(dto, entity);
+                await _militaryPersonelPenaltyDal.UpdateAsync(entity);
                 return new SuccessResult(Messages.SuccessfullyUpdated);
             }
             return new ErrorResult(Messages.EntityNotFound);
@@ -124,7 +126,7 @@ namespace Business.Concrete
             if (entity != null)
             {
                 await _militaryPersonelPenaltyDal.DeleteAsync(entity);
-                return new SuccessResult(Messages.SuccessfullyUpdated);
+                return new SuccessResult(Messages.SuccessfullyDeleted);
             }
             return new ErrorResult(Messages.EntityNotFound);
         }

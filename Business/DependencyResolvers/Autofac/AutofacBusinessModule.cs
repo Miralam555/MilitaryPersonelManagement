@@ -35,6 +35,10 @@ namespace Business.DependencyResolvers.Autofac
             builder.RegisterType<FamilyMemberManager>().As<IFamilyMemberService>().SingleInstance();
             builder.RegisterType<EfFamilyMemberDal>().As<IFamilyMemberDal>().SingleInstance();
 
+
+            builder.RegisterType<FamilyMembersInServiceManager>().As<IFamilyMembersInService_Service>().SingleInstance();
+            builder.RegisterType<EfFamilyMembersInServiceDal>().As<IFamilyMemberInServiceDal>().SingleInstance();
+
             builder.RegisterType<InjunctionManager>().As<IInjunctionService>().SingleInstance();
             builder.RegisterType<EfInjunctionDal>().As<IInjunctionDal>().SingleInstance();
 
@@ -59,6 +63,10 @@ namespace Business.DependencyResolvers.Autofac
 
             builder.RegisterType<PersonelForeignTravelManager>().As<IMilitaryPersonelForeignTravelService>().SingleInstance();
             builder.RegisterType<EfMilitaryPersonelForeignTravelDal>().As<IMilitaryPersonelForeignTravelDal>().SingleInstance();
+
+
+            builder.RegisterType<MilitarySkillRecordManager>().As<IMilitarySkillRecordService>().SingleInstance();
+            builder.RegisterType<EfMilitarySkillRecordDal>().As<IMilitarySkillRecordDal>().SingleInstance();
 
 
             builder.RegisterType<PersonelRecognitionManager>().As<IMilitaryPersonelRecognitionService>().SingleInstance();

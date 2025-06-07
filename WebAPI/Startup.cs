@@ -35,11 +35,11 @@ namespace WebAPI
             services.AddControllers();
             var connectionString = Configuration.GetConnectionString("SqlServer");
 
-            // DbContext qeydiyyatı edilir və connection string verilir
+            
             services.AddDbContext<MilitaryBaseContext>(options =>
             {
                 options.UseSqlServer(connectionString);
-            });
+            },ServiceLifetime.Singleton);
             
             services.AddEndpointsApiExplorer();
             services.AddSwaggerGen(c =>

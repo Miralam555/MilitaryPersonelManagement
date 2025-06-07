@@ -12,8 +12,8 @@ namespace Business.Abstract
     {
         Task<IResult> PersonelAddAsync(MilitaryPersonelAddDto dto);
         Task<IResult> PersonelUpdateAsync(MilitaryPersonelUpdateDto dto);
-        Task<IDataResult<List<MilitaryPersonelGetDto>>> GetAllPersonelAsync();
-        Task<IDataResult<MilitaryPersonelGetDto>> GetByIdPersonel(int id);
+        Task<IDataResult<List<PersonelGetDto>>> GetAllPersonelsAsync();
+        Task<IDataResult<PersonelGetDto>> GetPersonelById(int id);
     }
     
 

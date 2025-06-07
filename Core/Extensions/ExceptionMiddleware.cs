@@ -1,7 +1,8 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using FluentValidation;
+using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Net;
 using System.Text;
@@ -24,8 +25,10 @@ namespace Core.Extensions
             {
                 await _next(httpContext);
             }
+            
             catch (Exception e)
             {
+                
                 await HandleExceptionAsync(httpContext, e);
             }
         }

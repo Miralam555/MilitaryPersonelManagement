@@ -31,7 +31,7 @@ namespace DataAccess.Conrete.EntityFramework.Context
 
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(BattleHistoryConfiguration).Assembly);
         }
-        public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+        public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
             var datas = ChangeTracker.Entries<IEntity>();
             foreach (var data in datas)
@@ -39,13 +39,15 @@ namespace DataAccess.Conrete.EntityFramework.Context
                 _ = data.State switch
                 {
                     EntityState.Added => data.Entity.CreatedDate = DateTime.Now,
+                    EntityState.Unchanged => data.Entity.CreatedDate = DateTime.Now,
                     EntityState.Modified => data.Entity.UpdatedDate = DateTime.Now,
                     EntityState.Deleted => data.Entity.UpdatedDate = null
                 };
 
 
             }
-            return base.SaveChangesAsync(cancellationToken);
+       
+            return await base.SaveChangesAsync(cancellationToken);
         }
         public DbSet<BattleHistory> BattleHistories { get; set; }
         public DbSet<UserOperationClaim> UserOperationClaims { get; set; }

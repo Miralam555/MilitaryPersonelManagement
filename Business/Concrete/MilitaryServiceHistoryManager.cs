@@ -93,7 +93,7 @@ namespace Business.Concrete
             }
             _mapper.Map(dto, entity);
             await _historyDal.UpdateAsync(entity);
-            return new SuccessResult(Messages.SuccessfullyAdded);
+            return new SuccessResult(Messages.SuccessfullyUpdated);
         }
         [CacheRemoveAspect("IMilitaryServiceHistoryService.Get")]
         [SecuredOperation("admin")]

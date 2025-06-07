@@ -48,7 +48,7 @@ namespace Business.Concrete
             List<InjunctionGetDto> injunctions = await _injunctionDal.GetAllInjunctionsByPersonelIdAsync(personelId);
             if (injunctions.Count > 0)
             {
-                return new SuccessDataResult<List<InjunctionGetDto>>();
+                return new SuccessDataResult<List<InjunctionGetDto>>(injunctions);
             }
             return new ErrorDataResult<List<InjunctionGetDto>>(Messages.NoData);
         }

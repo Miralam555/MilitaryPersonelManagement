@@ -32,7 +32,7 @@ namespace DataAccess.Conrete.EntityFramework
                                        StartDate = h.StartDate,
                                        EndDate = h.EndDate,
                                        VeteranNote = h.VeteranNote
-                                   }).ToListAsync();
+                                   }).AsNoTracking().ToListAsync();
                 return query;
             
         }

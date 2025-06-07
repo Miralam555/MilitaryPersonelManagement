@@ -61,22 +61,30 @@ namespace Business.Concrete
     
         [CacheAspect]
         [SecuredOperation("admin,cmd.get")]
-        public async Task<IDataResult<List<MilitaryPersonelGetDto>>> GetAllPersonelAsync()
+        public async Task<IDataResult<List<PersonelGetDto>>> GetAllPersonelsAsync()
         {
-            List<MilitaryPersonel> militaryPersonels= await _militaryPersonelDal.GetAllPersonelDetails();
+            List<PersonelGetDto> militaryPersonels= await _militaryPersonelDal.GetAllPersonelDetails();
+            if (militaryPersonels is null)
+            {
+                return new ErrorDataResult<List<PersonelGetDto>>(Messages.NoData);
+            }
 
-            return new SuccessDataResult<List<MilitaryPersonelGetDto>>(_mapper.Map<List<MilitaryPersonelGetDto>>(militaryPersonels));
+            return new SuccessDataResult<List<PersonelGetDto>>(militaryPersonels);
 
         }
        
         [CacheAspect]
         [SecuredOperation("admin,cmd.get")]
-        public async Task<IDataResult<MilitaryPersonelGetDto>> GetByIdPersonel(int id)
+        public async Task<IDataResult<PersonelGetDto>> GetPersonelById(int id)
         {
-            MilitaryPersonel personel = await _militaryPersonelDal.GetByIdPersonelDetails(id);
+            PersonelGetDto personel = await _militaryPersonelDal.GetByIdPersonelDetails(id);
             
+            if(personel is null)
+            {
+               return  new ErrorDataResult<PersonelGetDto>(Messages.EntityNotFound);
+            }
          
-            return new SuccessDataResult<MilitaryPersonelGetDto>(_mapper.Map<MilitaryPersonelGetDto>(personel));
+            return new SuccessDataResult<PersonelGetDto>(personel);
 
         }
        //Delete emeliyyati yoxdur arxivde qalsin deye ve ya soft delete istifade etmek olar

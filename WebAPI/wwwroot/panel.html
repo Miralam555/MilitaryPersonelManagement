@@ -154,24 +154,14 @@
         <h2>Cədvəl seç</h2>
         <button onclick="toggleTableOptions()">Cədvəllər ↓</button>
         <div class="table-options" id="tableOptions">
-            <button onclick="selectTable('Educations')">Education</button>
-            <button onclick="selectTable('FamilyMemberForeignTravels')">FamilyMemberForeignTravel</button>
-            <button onclick="selectTable('PersonelRecognitions')">PersonelRecognition</button>
-            <button onclick="selectTable('BattleHistories')">Doyus Tarixi</button>
-            <button onclick="selectTable('CrimeRecords')">Toredilen Cinayet</button>
-            <button onclick="selectTable('FamilyMembers')">Aile uzvleri</button>
-            <button onclick="selectTable('MilitaryRanks')">Herbi Rutbeler</button>
-            <button onclick="selectTable('FamilyMembersInService')">Eyni Qurumda olan aile uzvleri</button>
-            <button onclick="selectTable('MilitaryServiceExtensions')">Muqavile</button>
-            <button onclick="selectTable('MilitaryServiceHistories')">Herbi Xidmet tarixi</button>
-            <button onclick="selectTable('PersonelReputationRiskFindings')">Herbi Qullugcunun reputasiyasina riskler</button>
-            <button onclick="selectTable('PersonelForeignTravels')">Herbi Qullugcunun xarici seyahetleri</button>
-            <button onclick="selectTable('PersonelForeignLanguageLevels')">Xarici Dil Bilikleri</button>
-            <button onclick="selectTable('MilitarySkillRecords')">Bacarig Qeyd</button>
-            <button onclick="selectTable('ProfessionalDevelopmentCourses')">Ixtisas artirma kurslari</button>
-            <button onclick="selectTable('PreMilitaryWorkExperiences')">Isden evvelki tecrube</button>
-            <button onclick="selectTable('PersonelSpecialSkills')">Xususi bacariglari</button>
-
+            <button onclick="selectTable('Educations')">Təhsili</button>
+            <button onclick="selectTable('FamilyMemberForeignTravels')">Aile üzvlərin xarici səyahəti</button>
+            <button onclick="selectTable('PersonelRecognitions')">Mükafatlar</button>
+            <button onclick="selectTable('BattleHistories')">Döyüş Tarixi</button>
+            <button onclick="selectTable('CrimeRecords')">Törədilən Cinayət</button>
+            <button onclick="selectTable('FamilyMembers')">Aile üzvləri</button>
+            <button onclick="selectTable('MilitaryRanks')">Hərbi Rütbələr</button>
+            
         </div>
     </div>
 
@@ -472,42 +462,42 @@
 
             let formHtml = "";
 
-            if (currentEntity === "Education") {
+            if (currentEntity === "Educations") {
                 formHtml = `
                     <form onsubmit="submitUpdate(event)">
                         <input name="Id" value="${safe(window.selectedRow.Id)}" hidden>
-                        <input name="PersonelId" value="${safe(window.selectedRow.PersonelId)}" placeholder="PersonelId" required>
-                        <input name="InstitutionName" value="${safe(window.selectedRow.InstitutionName)}" placeholder="InstitutionName" required>
-                        <input name="GraduationYear" value="${formatDate(window.selectedRow.GraduationYear)}" placeholder="GraduationYear (yyyy-mm-dd)" required>
-                        <input name="Specialization" value="${safe(window.selectedRow.Specialization)}" placeholder="Specialization" required>
-                        <input name="Degree" value="${safe(window.selectedRow.Degree)}" placeholder="Degree" required>
+                        <input name="PersonelId"  placeholder="PersonelId" required>
+                        <input name="InstitutionName"  placeholder="InstitutionName" required>
+                        <input name="GraduationYear"  placeholder="GraduationYear (yyyy-mm-dd)" required>
+                        <input name="Specialization"  placeholder="Specialization" required>
+                        <input name="Degree"  placeholder="Degree" required>
                         <input name="EducationTypeId" value="${safe(window.selectedRow.EducationTypeId)}" placeholder="EducationTypeId" required>
                         <button type="submit">Yenilə</button>
                     </form>`;
-            } else if (currentEntity === "FamilyMemberForeignTravel") {
+            } else if (currentEntity === "FamilyMemberForeignTravels") {
                 formHtml = `
                     <form onsubmit="submitUpdate(event)">
                         <input name="Id" value="${safe(window.selectedRow.Id)}" hidden>
                         <input name="MemberId" value="${safe(window.selectedRow.MemberId)}" placeholder="MemberId" required>
-                        <input name="StartDate" value="${formatDate(window.selectedRow.StartDate)}" placeholder="StartDate (yyyy-mm-dd)" required>
-                        <input name="EndDate" value="${formatDate(window.selectedRow.EndDate)}" placeholder="EndDate (yyyy-mm-dd)" required>
-                        <input name="TravellingCountryName" value="${safe(window.selectedRow.TravellingCountryName)}" placeholder="TravellingCountryName" required>
-                        <input name="TravelReason" value="${safe(window.selectedRow.TravelReason)}" placeholder="TravelReason">
-                        <input name="Record" value="${safe(window.selectedRow.Record)}" placeholder="Record">
+                        <input name="StartDate"  placeholder="StartDate (yyyy-mm-dd)" required>
+                        <input name="EndDate"  placeholder="EndDate (yyyy-mm-dd)" required>
+                        <input name="TravellingCountryName"  placeholder="TravellingCountryName" required>
+                        <input name="TravelReason"  placeholder="TravelReason" required>
+                        <input name="Record"  placeholder="Record" required>
                         <button type="submit">Yenilə</button>
                     </form>`;
-            } else if (currentEntity === "PersonelRecognition") {
+            } else if (currentEntity === "PersonelRecognitions") {
                 formHtml = `
                     <form onsubmit="submitUpdate(event)">
                         <input name="Id" value="${safe(window.selectedRow.Id)}" hidden>
                         <input name="PersonelId" value="${safe(window.selectedRow.PersonelId)}" placeholder="PersonelId">
                         <input name="Injunctionİd" value="${safe(window.selectedRow.Injunctionİd)}" placeholder="Injunctionİd" required>
-                        <input name="RecognitionDescription" value="${safe(window.selectedRow.RecognitionDescription)}" placeholder="RecognitionDescription">
-                        <input name="Record" value="${safe(window.selectedRow.Record)}" placeholder="Record">
+                        <input name="RecognitionDescription"  placeholder="RecognitionDescription">
+                        <input name="Record"  placeholder="Record">
                         <button type="submit">Yenilə</button>
                     </form>`;
             }
-            else if (currentEntity === "BattleHistory") {
+            else if (currentEntity === "BattleHistories") {
                 formHtml = `
                     <form onsubmit="submitUpdate(event)">
                         <input name="Id" value="${safe(window.selectedRow.Id)}" hidden>
@@ -521,7 +511,7 @@
                         <button type="submit">Yenilə</button>
                     </form>`;
             }
-            else if (currentEntity === "CrimeRecord") {
+            else if (currentEntity === "CrimeRecords") {
                 formHtml = `
                 <form onsubmit="submitUpdate(event)">
                     <input name="Id" value="${safe(window.selectedRow.Id)}" hidden>
@@ -533,7 +523,7 @@
                     <input name="Record" placeholder="Record">
                     <button type="submit">Yenilə</button>
                 </form>`;
-            } else if (currentEntity === "FamilyMember") {
+            } else if (currentEntity === "FamilyMembers") {
                 formHtml = `
                 <form onsubmit="submitUpdate(event)">
                     <input name="Id" value="${safe(window.selectedRow.Id)}" hidden>
@@ -547,7 +537,7 @@
                     <input name="Occupation" placeholder="Occupation" required>
                     <button type="submit">Yenilə</button>
                 </form>`;
-            } else if (currentEntity === "MilitaryRank") {
+            } else if (currentEntity === "MilitaryRanks") {
                 formHtml = `
                 <form onsubmit="submitUpdate(event)">
                     <input name="Id" value="${safe(window.selectedRow.Id)}" hidden>
@@ -565,7 +555,7 @@
                 <input name="Record" placeholder="Record">
                 <button type="submit">Yenilə</button>
             </form>`;
-            } else if (currentEntity === "MilitaryServiceExtension") {
+            } else if (currentEntity === "MilitaryServiceExtensions") {
                 formHtml = `
             <form onsubmit="submitUpdate(event)">
                <input name="Id" value="${safe(window.selectedRow.Id)}" hidden>
@@ -576,7 +566,7 @@
                 <input name="Record" placeholder="Record">
                 <button type="submit">Yenilə</button>
             </form>`;
-            } else if (currentEntity === "MilitaryServiceHistory") {
+            } else if (currentEntity === "MilitaryServiceHistories") {
                 formHtml = `
             <form onsubmit="submitUpdate(event)">
                 <input name="Id" value="${safe(window.selectedRow.Id)}" hidden>
@@ -595,7 +585,7 @@
                 </label>
                 <button type="submit">Yenilə</button>
             </form>`;
-            } else if (currentEntity === "MilitarySkillRecord") {
+            } else if (currentEntity === "MilitarySkillRecords") {
                 formHtml = `
             <form onsubmit="submitUpdate(event)">
                 <input name="Id" value="${safe(window.selectedRow.Id)}" hidden>
@@ -606,7 +596,7 @@
                 <input name="Record" placeholder="Record">
                 <button type="submit">Yenilə</button>
             </form>`;
-            } else if (currentEntity === "PersonelForeignLanguageLevel") {
+            } else if (currentEntity === "PersonelForeignLanguageLevels") {
                 formHtml = `
             <form onsubmit="submitUpdate(event)">
                 <input name="Id" value="${safe(window.selectedRow.Id)}" hidden>
@@ -617,7 +607,7 @@
                 <input name="AllowanceInjunctionId" placeholder="AllowanceInjunctionId" required>
                 <button type="submit">Yenilə</button>
             </form>`;
-            } else if (currentEntity === "PersonelForeignTravel") {
+            } else if (currentEntity === "PersonelForeignTravels") {
                 formHtml = `
             <form onsubmit="submitUpdate(event)">
                 <input name="Id" value="${safe(window.selectedRow.Id)}" hidden>
@@ -630,7 +620,7 @@
                 <input name="InjunctionId" placeholder="InjunctionId" required>
                 <button type="submit">Yenilə</button>
             </form>`;
-            } else if (currentEntity === "PersonelReputationRiskFinding") {
+            } else if (currentEntity === "PersonelReputationRiskFindings") {
                 formHtml = `
             <form onsubmit="submitUpdate(event)">
                 <input name="Id" value="${safe(window.selectedRow.Id)}" hidden>
@@ -640,7 +630,7 @@
                 <input name="Record" placeholder="Record">
                 <button type="submit">Yenilə</button>
             </form>`;
-            }  else if (currentEntity === "PersonelSpecialSkill" ) {
+            }  else if (currentEntity === "PersonelSpecialSkills" ) {
                 formHtml = `
             <form onsubmit="submitUpdate(event)">
                 <input name="Id" value="${safe(window.selectedRow.Id)}" hidden>
@@ -648,7 +638,7 @@
                 <input name="Skill" placeholder="Skill">
                 <button type="submit">Yenilə</button>
             </form>`;
-            } else if (currentEntity === "PreMilitaryWorkExperience") {
+            } else if (currentEntity === "PreMilitaryWorkExperiences") {
                 formHtml = `
             <form onsubmit="submitUpdate(event)">
                 <input name="Id" value="${safe(window.selectedRow.Id)}" hidden>
@@ -659,7 +649,7 @@
                 <input name="Position" placeholder="Vəzifə" required>
                 <button type="submit">Yenilə</button>
             </form>`;
-            }  else if (currentEntity === "ProfessionalDevelopmentCourse" ) {
+            }  else if (currentEntity === "ProfessionalDevelopmentCourses" ) {
                 formHtml = `
     <form onsubmit="submitUpdate(event)">
         <input name="Id" value="${safe(window.selectedRow.Id)}" hidden>

@@ -40,7 +40,7 @@ namespace Business.Concrete
             {
                 return new SuccessDataResult<List<FamilyMembersInServiceGetDto>>(services);
             }
-            return new ErrorDataResult<List<FamilyMembersInServiceGetDto>>();
+            return new ErrorDataResult<List<FamilyMembersInServiceGetDto>>(Messages.NoData);
         }
         [CacheAspect]
         [SecuredOperation("admin,cmd.get")]
@@ -51,7 +51,7 @@ namespace Business.Concrete
             {
                 return new SuccessDataResult<List<FamilyMembersInServiceGetDto>>(services);
             }
-            return new ErrorDataResult<List<FamilyMembersInServiceGetDto>>();
+            return new ErrorDataResult<List<FamilyMembersInServiceGetDto>>(Messages.NoData);
         }
         [CacheAspect]
         [SecuredOperation("admin,cmd.get")]
@@ -62,7 +62,7 @@ namespace Business.Concrete
             {
                 return new SuccessDataResult<List<FamilyMembersInServiceGetDto>>(services);
             }
-            return new ErrorDataResult<List<FamilyMembersInServiceGetDto>>();
+            return new ErrorDataResult<List<FamilyMembersInServiceGetDto>>(Messages.NoData);
         }
 
         [CacheAspect]

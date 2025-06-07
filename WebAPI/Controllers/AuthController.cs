@@ -1,11 +1,13 @@
 ﻿using Business.Abstract;
 using Entities.DTOs.UserDtos;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [AllowAnonymous]
     public class AuthController : Controller
     {
         private IAuthService _authService;

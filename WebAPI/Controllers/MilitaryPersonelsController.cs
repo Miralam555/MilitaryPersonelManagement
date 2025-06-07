@@ -38,7 +38,7 @@ namespace WebAPI.Controllers
         [HttpGet]
         public async Task<IActionResult> GetPersonelsAsync()
         {
-            var result=await _service.GetAllPersonelAsync();
+            var result=await _service.GetAllPersonelsAsync();
             if (result.IsSuccess)
             {
                 return Ok(result.Data);
@@ -48,7 +48,7 @@ namespace WebAPI.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetPersonelByIdAsync(int id)
         {
-            var result = await _service.GetByIdPersonel(id);
+            var result = await _service.GetPersonelById(id);
             if (result.IsSuccess)
             {
                 return Ok(result.Data);

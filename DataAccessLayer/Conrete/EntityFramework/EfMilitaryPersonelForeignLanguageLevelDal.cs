@@ -33,7 +33,7 @@ namespace DataAccess.Conrete.EntityFramework
                                        LanguageLevel = l.LanguageLevel,
                                        LanguageName = l.LanguageName,
                                        Record = l.Record
-                                   }).ToListAsync();
+                                   }).AsNoTracking().ToListAsync();
                 return query;
             
         }

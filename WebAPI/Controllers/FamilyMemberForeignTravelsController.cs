@@ -28,9 +28,9 @@ namespace WebAPI.Controllers
             return BadRequest(result.Message);
         }
         [HttpGet("member/{id}/foreigntravels")]
-        public async Task<IActionResult> GetAllByMemberIdAsync(int memberId)
+        public async Task<IActionResult> GetAllByMemberIdAsync(int id)
         {
-            var result = await _service.GetAllByMemberIdAsync(memberId);
+            var result = await _service.GetAllByMemberIdAsync(id);
             if (result.IsSuccess)
             {
                 return Ok(result.Data);
@@ -70,10 +70,10 @@ namespace WebAPI.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteAsync(int id)
         {
-            var result = await _service.GetByIdAsync(id);
+            var result = await _service.DeleteAsync(id);
             if (result.IsSuccess)
             {
-                return Ok(result.Data);
+                return Ok(result.Message);
             }
             return BadRequest(result.Message);
         }

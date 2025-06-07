@@ -31,7 +31,7 @@ namespace DataAccess.Conrete.EntityFramework
                                  GraduationYear = e.GraduationYear,
                                  InstitutionName = e.InstitutionName,
                                  Specialization = e.Specialization
-                             }).ToListAsync();
+                             }).AsNoTracking().ToListAsync();
                 return query;
             
         }
@@ -54,7 +54,7 @@ namespace DataAccess.Conrete.EntityFramework
                                        GraduationYear = e.GraduationYear,
                                        InstitutionName = e.InstitutionName,
                                        Specialization = e.Specialization
-                                   }).Where(p=>p.PersonelId==personelId).ToListAsync();
+                                   }).Where(p=>p.PersonelId==personelId).AsNoTracking().ToListAsync();
                 return query;
             
         }

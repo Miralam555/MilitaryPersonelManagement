@@ -31,7 +31,7 @@ namespace DataAccess.Conrete.EntityFramework
                                  TravellingCountryName = f.TravellingCountryName,
                                  TravelReason = f.TravelReason,
                                  Record = f.Record
-                             }).ToListAsync();
+                             }).AsNoTracking().ToListAsync();
                 return query;
 
             
@@ -52,7 +52,7 @@ namespace DataAccess.Conrete.EntityFramework
                                  TravellingCountryName = f.TravellingCountryName,
                                  TravelReason = f.TravelReason,
                                  Record = f.Record
-                             }).Where(p=>p.MemberId==memberId).ToListAsync();
+                             }).Where(p=>p.MemberId==memberId).AsNoTracking().ToListAsync();
                 return query;
 
             

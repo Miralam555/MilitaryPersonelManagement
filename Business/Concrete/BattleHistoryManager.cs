@@ -82,6 +82,7 @@ namespace Business.Concrete
             //BusinessRules.Run(//hansisa bir Iresult qaytaran metodlar)
 
             var entity = _mapper.Map<BattleHistory>(dto);
+            
             await _battleHistoryDal.AddAsync(entity);
             return new SuccessResult(Messages.SuccessfullyAdded);
         }

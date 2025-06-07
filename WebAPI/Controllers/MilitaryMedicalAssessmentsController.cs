@@ -24,9 +24,9 @@ namespace WebAPI.Controllers
             var result = await _service.GetAllAssessmentsAsync();
             if (result.IsSuccess)
             {
-                return Ok(result);
+                return Ok(result.Data);
             }
-            return BadRequest();
+            return BadRequest(result.Message);
         }
         [HttpGet("personel/{id}/medicalassessments")]
         public async Task<IActionResult> GetAllByPersonelIdAsync(int id)
@@ -34,9 +34,9 @@ namespace WebAPI.Controllers
             var result=await _service.GetAllAssessmentsByPersonelIdAsync(id);
             if (result.IsSuccess)
             {
-                return Ok(result);
+                return Ok(result.Data);
             }
-            return BadRequest();
+            return BadRequest(result.Message);
         }
         [HttpGet("{id}")]
         public async Task<IActionResult> GetByIdAsync(int id)
@@ -44,9 +44,9 @@ namespace WebAPI.Controllers
             var result = await _service.GetAssessmentByIdAsync(id);
             if (result.IsSuccess)
             {
-                return Ok(result);
+                return Ok(result.Data);
             }
-            return BadRequest();
+            return BadRequest(result.Message);
         }
         [HttpPost]
         public async Task<IActionResult> AddAsync(MilitaryMedicalAssessmentAddDto dto)
@@ -55,7 +55,7 @@ namespace WebAPI.Controllers
             var result = await _service.AddAssessmentAsync(dto);
             if (result.IsSuccess)
             {
-                return Ok(result);
+                return Ok(result.Message);
             }
             return BadRequest();
         }
@@ -65,7 +65,7 @@ namespace WebAPI.Controllers
             var result = await _service.UpdateAssesmentAsync(dto);
             if (result.IsSuccess)
             {
-                return Ok(result);
+                return Ok(result.Message);
             }
             return BadRequest();
         }
@@ -75,7 +75,7 @@ namespace WebAPI.Controllers
             var result = await _service.DeleteAssesmentAsync(id);
             if (result.IsSuccess)
             {
-                return Ok(result);
+                return Ok(result.Message);
             }
             return BadRequest();
         }

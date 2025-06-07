@@ -62,13 +62,13 @@ namespace Business.Concrete
         [SecuredOperation("admin,cmd.get")]
         public async Task<IDataResult<EducationGetDto>> GetByIdAsync(int id)
         {
-            EducationGetDto list = await _militaryPersonelEducationDal.GetEducationByIdAsync(id);
-            if (list == null)
+            EducationGetDto entity = await _militaryPersonelEducationDal.GetEducationByIdAsync(id);
+            if (entity == null)
             {
                 return new ErrorDataResult<EducationGetDto>(Messages.NoData);
 
             }
-            return new SuccessDataResult<EducationGetDto>();
+            return new SuccessDataResult<EducationGetDto>(entity);
         }
 
         [CacheRemoveAspect("IMilitaryPersonelEducationService.Get")]

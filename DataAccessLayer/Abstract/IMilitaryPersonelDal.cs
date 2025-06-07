@@ -1,4 +1,5 @@
 ﻿using Core.DataAccess;
+using Entities.DTOs.MilitaryPersonelDtos;
 using MyMilitaryFinalProject.Entities.Concrete;
 using System;
 using System.Collections.Generic;
@@ -10,8 +11,8 @@ namespace DataAccess.Abstract
 {
     public interface IMilitaryPersonelDal:IEntityRepository<MilitaryPersonel>
     {
-        Task<List<MilitaryPersonel>> GetAllPersonelDetails();
-        Task<MilitaryPersonel> GetByIdPersonelDetails(int id);
+        Task<List<PersonelGetDto>> GetAllPersonelDetails();
+        Task<PersonelGetDto> GetByIdPersonelDetails(int id);
     }
 
 }

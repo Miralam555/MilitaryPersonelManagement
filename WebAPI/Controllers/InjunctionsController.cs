@@ -37,9 +37,9 @@ namespace WebAPI.Controllers
             return BadRequest(result.Message);
         }
         [HttpGet("personel/{personelId}/injunctions")]
-        public async Task<IActionResult> GetByPersonelIdAsync(int id)
+        public async Task<IActionResult> GetByPersonelIdAsync(int personelId)
         {
-            var result = await _service.GetAllInjunctionsByIssuedPersonelIdAsync(id);
+            var result = await _service.GetAllInjunctionsByIssuedPersonelIdAsync(personelId);
             if (result.IsSuccess)
             {
                 return Ok(result.Data);

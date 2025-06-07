@@ -31,7 +31,7 @@ namespace DataAccess.Conrete.EntityFramework
                                        PersonelSurname = p.PersonelSurname,
                                        InjuctionStartDate = i.InjuctionStartDate,
                                        InjunctionIsActive = i.InjunctionIsActive
-                                   }).ToListAsync();
+                                   }).AsNoTracking().ToListAsync();
                 return query;
             
         }
@@ -53,7 +53,7 @@ namespace DataAccess.Conrete.EntityFramework
                                        PersonelSurname = p.PersonelSurname,
                                        InjuctionStartDate = i.InjuctionStartDate,
                                        InjunctionIsActive = i.InjunctionIsActive
-                                   }).Where(p=>p.IssuedByPersonelId==personelId).ToListAsync();
+                                   }).Where(p=>p.IssuedByPersonelId==personelId).AsNoTracking().ToListAsync();
                 return query;
 
             

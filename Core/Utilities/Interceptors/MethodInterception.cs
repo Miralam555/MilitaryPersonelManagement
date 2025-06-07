@@ -49,7 +49,7 @@ namespace Core.Utilities.Interceptors
 
         private void InterceptAsync(IInvocation invocation, Type returnType)
         {
-            OnBefore(invocation);
+             OnBefore(invocation);
             invocation.Proceed();
 
             if (returnType == typeof(Task))

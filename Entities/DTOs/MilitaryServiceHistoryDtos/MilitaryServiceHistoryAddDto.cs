@@ -4,6 +4,7 @@ namespace Entities.DTOs.MilitaryServiceHistoryDtos
 {
     public class MilitaryServiceHistoryAddDto:IDto
     {
+        public int PersonelId { get; set; }
 
         public DateOnly StartDate { get; set; }
 

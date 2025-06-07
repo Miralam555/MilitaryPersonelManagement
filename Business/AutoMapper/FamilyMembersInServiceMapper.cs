@@ -13,8 +13,8 @@ namespace Business.AutoMapper
     {
         public FamilyMembersInServiceMapper()
         {
-            CreateMap<FamilyMembersInServiceAddDto, FamilyMember>();
-            CreateMap<FamilyMembersInServiceUpdateDto, FamilyMember>()
+            CreateMap<FamilyMembersInServiceAddDto, FamilyMembersInService>();
+            CreateMap<FamilyMembersInServiceUpdateDto, FamilyMembersInService>()
                 .ForMember(d => d.CreatedDate, opt => opt.Ignore());
         }
     }

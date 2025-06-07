@@ -36,7 +36,7 @@ namespace DataAccess.Conrete.EntityFramework
                                        MemberName = m.MemberName,
                                        MemberSurName = m.MemberSurName,
                                        Record = f.Record
-                                   }).ToListAsync();
+                                   }).AsNoTracking().ToListAsync();
                 return query;
             
         }
@@ -56,7 +56,7 @@ namespace DataAccess.Conrete.EntityFramework
                                        MemberName = m.MemberName,
                                        MemberSurName = m.MemberSurName,
                                        Record = f.Record
-                                   }).Where(p => p.PersonelId == personelId).ToListAsync();
+                                   }).Where(p => p.PersonelId == personelId).AsNoTracking().ToListAsync();
                 return query;
             
         }
@@ -76,7 +76,7 @@ namespace DataAccess.Conrete.EntityFramework
                                        MemberName = m.MemberName,
                                        MemberSurName = m.MemberSurName,
                                        Record = f.Record
-                                   }).Where(p => p.PersonelId == memberId).ToListAsync();
+                                   }).Where(p => p.MemberId == memberId).AsNoTracking().ToListAsync();
                 return query;
             
         }

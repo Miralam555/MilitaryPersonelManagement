@@ -28,7 +28,7 @@ namespace DataAccess.Conrete.EntityFramework
                                        AssesmentDate = m.AssesmentDate,
                                        Opinion = m.Opinion,
                                        Record = m.Record
-                                   }).ToListAsync();
+                                   }).AsNoTracking().ToListAsync();
                 return query;
             
         }
@@ -47,7 +47,7 @@ namespace DataAccess.Conrete.EntityFramework
                                        AssesmentDate = m.AssesmentDate,
                                        Opinion = m.Opinion,
                                        Record = m.Record
-                                   }).Where(p=>p.PersonelId==personelId).ToListAsync();
+                                   }).Where(p=>p.PersonelId==personelId).AsNoTracking().ToListAsync();
                 return query;
             
         }

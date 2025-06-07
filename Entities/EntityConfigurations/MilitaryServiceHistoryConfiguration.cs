@@ -9,12 +9,13 @@ namespace MyMilitaryFinalProject.EntityConfigurations
         {
             builder.HasKey(e => e.Id);
 
-            builder.ToTable("MilitaryServiceHistory");
+            builder.ToTable("MilitaryServiceHistories");
 
-            builder.Property(e => e.Id).ValueGeneratedNever();
+            
             
             builder.Property(e => e.OfficialRank).HasMaxLength(40);
             builder.Property(e => e.Position).HasMaxLength(40);
+            builder.Property(e => e.OrganizationName).HasMaxLength(40);
 
             builder.HasOne(d => d.Injunction).WithOne(p => p.MilitaryServiceHistory)
                 .HasForeignKey<MilitaryServiceHistory>(d => d.InjunctionId)

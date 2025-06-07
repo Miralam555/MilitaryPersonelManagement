@@ -23,7 +23,7 @@ namespace DataAccess.Conrete.EntityFramework
                                    select new FamilyMemberGetDto
                                    {
                                        Id = m.Id,
-                                       PersonelId = m.Id,
+                                       PersonelId = m.PersonelId,
                                        PersonelName = p.PersonelName,
                                        PersonelSurname = p.PersonelSurname,
                                        MemberName = m.MemberName,
@@ -33,7 +33,7 @@ namespace DataAccess.Conrete.EntityFramework
                                        MemberPatronymic = m.MemberPatronymic,
                                        Occupation = m.Occupation,
                                        RelationShip = m.RelationShip
-                                   }).ToListAsync();
+                                   }).AsNoTracking().ToListAsync();
                 return query;
             
         }
@@ -45,7 +45,7 @@ namespace DataAccess.Conrete.EntityFramework
                                    select new FamilyMemberGetDto
                                    {
                                        Id = m.Id,
-                                       PersonelId = m.Id,
+                                       PersonelId = m.PersonelId,
                                        PersonelName = p.PersonelName,
                                        PersonelSurname = p.PersonelSurname,
                                        MemberName = m.MemberName,
@@ -55,7 +55,7 @@ namespace DataAccess.Conrete.EntityFramework
                                        MemberPatronymic = m.MemberPatronymic,
                                        Occupation = m.Occupation,
                                        RelationShip = m.RelationShip
-                                   }).Where(p=>p.PersonelId==personelId).ToListAsync();
+                                   }).Where(p=>p.PersonelId==personelId).AsNoTracking().ToListAsync();
                 return query;
             
         }
@@ -67,7 +67,7 @@ namespace DataAccess.Conrete.EntityFramework
                                    select new FamilyMemberGetDto
                                    {
                                        Id = m.Id,
-                                       PersonelId = m.Id,
+                                       PersonelId = m.PersonelId,
                                        PersonelName = p.PersonelName,
                                        PersonelSurname = p.PersonelSurname,
                                        MemberName = m.MemberName,

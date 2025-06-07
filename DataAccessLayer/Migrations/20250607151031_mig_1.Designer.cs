@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataAccess.Migrations
 {
     [DbContext(typeof(MilitaryBaseContext))]
-    [Migration("20250427091022_mig_1")]
+    [Migration("20250607151031_mig_1")]
     partial class mig_1
     {
         /// <inheritdoc />
@@ -985,7 +985,10 @@ namespace DataAccess.Migrations
             modelBuilder.Entity("MyMilitaryFinalProject.Entities.Concrete.MilitaryServiceHistory", b =>
                 {
                     b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
@@ -1006,7 +1009,8 @@ namespace DataAccess.Migrations
 
                     b.Property<string>("OrganizationName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(40)
+                        .HasColumnType("nvarchar(40)");
 
                     b.Property<int>("PersonelId")
                         .HasColumnType("int");
@@ -1029,13 +1033,16 @@ namespace DataAccess.Migrations
 
                     b.HasIndex("PersonelId");
 
-                    b.ToTable("MilitaryServiceHistory", (string)null);
+                    b.ToTable("MilitaryServiceHistories", (string)null);
                 });
 
             modelBuilder.Entity("MyMilitaryFinalProject.Entities.Concrete.MilitarySkillRecord", b =>
                 {
                     b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int>("ApprovedByInjunctionId")
                         .HasColumnType("int");

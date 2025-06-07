@@ -22,12 +22,12 @@ namespace Core.Utilities.Interceptors
             classAttributes.AddRange(methodAttributes);
             if (!classAttributes.Any(x => x is LogAspect))
             {
-                classAttributes.Add(new LogAspect(typeof(FileLogger)));
+                classAttributes.Add(new LogAspect(typeof(DatabaseLogger)));
             }
-            if (!classAttributes.Any(x => x is PerformanceAspect))
-            {
-                classAttributes.Add(new PerformanceAspect(7));
-            }
+            //if (!classAttributes.Any(x => x is PerformanceAspect))
+            //{
+            //    classAttributes.Add(new PerformanceAspect(7));
+            //}
 
             if (!classAttributes.Any(x => x is ExceptionLogAspect))
             {

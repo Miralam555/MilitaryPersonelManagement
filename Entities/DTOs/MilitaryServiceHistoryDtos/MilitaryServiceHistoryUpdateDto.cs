@@ -10,6 +10,7 @@ namespace Entities.DTOs.MilitaryServiceHistoryDtos
     public class MilitaryServiceHistoryUpdateDto:IDto
     {
         public int Id { get; set; }
+        public int PersonelId { get; set; }
 
         public DateOnly StartDate { get; set; }
 

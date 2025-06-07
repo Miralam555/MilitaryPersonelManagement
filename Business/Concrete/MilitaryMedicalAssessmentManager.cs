@@ -40,7 +40,7 @@ namespace Business.Concrete
             List<MilitaryMedicalAssessmentGetDto> list = await _militaryMedicalAssessmentDal.GetAllAssessmentsAsync();
             if (list.Count > 0)
             {
-                return new SuccessDataResult<List<MilitaryMedicalAssessmentGetDto>>();
+                return new SuccessDataResult<List<MilitaryMedicalAssessmentGetDto>>(list);
             }
             return new ErrorDataResult<List<MilitaryMedicalAssessmentGetDto>>(Messages.NoData);
         }

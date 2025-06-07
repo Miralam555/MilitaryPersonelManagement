@@ -699,15 +699,16 @@ namespace DataAccess.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "MilitaryServiceHistory",
+                name: "MilitaryServiceHistories",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     PersonelId = table.Column<int>(type: "int", nullable: false),
                     StartDate = table.Column<DateOnly>(type: "date", nullable: false),
                     EndDate = table.Column<DateOnly>(type: "date", nullable: false),
                     InjunctionId = table.Column<int>(type: "int", nullable: false),
-                    OrganizationName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    OrganizationName = table.Column<string>(type: "nvarchar(40)", maxLength: 40, nullable: false),
                     Position = table.Column<string>(type: "nvarchar(40)", maxLength: 40, nullable: false),
                     OfficialRank = table.Column<string>(type: "nvarchar(40)", maxLength: 40, nullable: false),
                     IsCurrentMilitary = table.Column<bool>(type: "bit", nullable: false),
@@ -716,14 +717,14 @@ namespace DataAccess.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_MilitaryServiceHistory", x => x.Id);
+                    table.PrimaryKey("PK_MilitaryServiceHistories", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_MilitaryServiceHistory_Injunctions_InjunctionId",
+                        name: "FK_MilitaryServiceHistories_Injunctions_InjunctionId",
                         column: x => x.InjunctionId,
                         principalTable: "Injunctions",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_MilitaryServiceHistory_MilitaryPersonels_PersonelId",
+                        name: "FK_MilitaryServiceHistories_MilitaryPersonels_PersonelId",
                         column: x => x.PersonelId,
                         principalTable: "MilitaryPersonels",
                         principalColumn: "PersonelID");
@@ -733,7 +734,8 @@ namespace DataAccess.Migrations
                 name: "MilitarySkillRecords",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     PersonelId = table.Column<int>(type: "int", nullable: false),
                     SkillDegree = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
                     IssuedByInjunctionId = table.Column<int>(type: "int", nullable: false),
@@ -949,14 +951,14 @@ namespace DataAccess.Migrations
                 column: "PersonelId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_MilitaryServiceHistory_InjunctionId",
-                table: "MilitaryServiceHistory",
+                name: "IX_MilitaryServiceHistories_InjunctionId",
+                table: "MilitaryServiceHistories",
                 column: "InjunctionId",
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_MilitaryServiceHistory_PersonelId",
-                table: "MilitaryServiceHistory",
+                name: "IX_MilitaryServiceHistories_PersonelId",
+                table: "MilitaryServiceHistories",
                 column: "PersonelId");
 
             migrationBuilder.CreateIndex(
@@ -1055,7 +1057,7 @@ namespace DataAccess.Migrations
                 name: "MilitaryServiceExtension");
 
             migrationBuilder.DropTable(
-                name: "MilitaryServiceHistory");
+                name: "MilitaryServiceHistories");
 
             migrationBuilder.DropTable(
                 name: "MilitarySkillRecords");
