@@ -21,6 +21,8 @@ namespace Business.Constants
         public static string SuccessfullyDeleted = "Ugurla Silindi";
         public static string EntityNotFound = "Bu Id ile match tapilmadi";
         public static string NoData = "Data yoxdur bazada";
+        public static string NotAdded = "Elave olunmadi";
+        public static string NotUpdated= "Duzelis olunmadi";
 
     }
 }

@@ -43,9 +43,9 @@ namespace Business.Concrete
 
             if (histories != null)
             {
-                return new SuccessDataResult<List<BattleHistoryGetDto>>(_mapper.Map<List<BattleHistoryGetDto>>(histories));
+                return new SuccessDataResult<List<BattleHistoryGetDto>>(histories);
             }
-            return new ErrorDataResult<List<BattleHistoryGetDto>>();
+            return new ErrorDataResult<List<BattleHistoryGetDto>>(Messages.NoData);
         }
 
         [SecuredOperation("admin,cmd.get")]
@@ -56,7 +56,7 @@ namespace Business.Concrete
 
             if (history != null)
             {
-                return new SuccessDataResult<List<BattleHistoryGetDto>>(_mapper.Map<List<BattleHistoryGetDto>>(history));
+                return new SuccessDataResult<List<BattleHistoryGetDto>>(history);
             }
             return new ErrorDataResult<List<BattleHistoryGetDto>>(Messages.EntityNotFound);
         }

@@ -18,17 +18,17 @@ namespace Core.DataAccess.EntityFramework
         {
             _context = context;
         }
-        public async Task AddAsync(TEntity entity)
+        public async Task<int> AddAsync(TEntity entity)
         {
             _context.Set<TEntity>().Add(entity);
-            await _context.SaveChangesAsync();
+           return  await _context.SaveChangesAsync();
         }
 
         
-        public async Task DeleteAsync(TEntity entity)
+        public async Task<int> DeleteAsync(TEntity entity)
         {
             _context.Set<TEntity>().Remove(entity);
-            await _context.SaveChangesAsync();
+            return await _context.SaveChangesAsync();
         }
 
         public async Task<TEntity> GetAsync(Expression<Func<TEntity, bool>> filter)
@@ -43,10 +43,10 @@ namespace Core.DataAccess.EntityFramework
                 : await _context.Set<TEntity>().Where(filter).ToListAsync();
         }
 
-        public async Task UpdateAsync(TEntity entity)
+        public async Task<int> UpdateAsync(TEntity entity)
         {
             _context.Set<TEntity>().Update(entity);
-            await _context.SaveChangesAsync();
+            return await _context.SaveChangesAsync();
         }
     }
 }

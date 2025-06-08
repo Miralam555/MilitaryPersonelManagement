@@ -33,21 +33,30 @@ namespace DataAccess.Conrete.EntityFramework.Context
         }
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
-            var datas = ChangeTracker.Entries<IEntity>();
+            var datas = ChangeTracker.Entries<IEntity>().Where(p=>p.State==EntityState.Added||p.State==EntityState.Modified||p.State==EntityState.Deleted);
             foreach (var data in datas)
             {
                 _ = data.State switch
                 {
                     EntityState.Added => data.Entity.CreatedDate = DateTime.Now,
-                    EntityState.Unchanged => data.Entity.CreatedDate = DateTime.Now,
                     EntityState.Modified => data.Entity.UpdatedDate = DateTime.Now,
                     EntityState.Deleted => data.Entity.UpdatedDate = null
                 };
 
 
             }
-       
-            return await base.SaveChangesAsync(cancellationToken);
+            int result = default;
+            try
+            {
+                result= await base.SaveChangesAsync(cancellationToken);
+            }
+            catch (Exception)
+            {
+                ChangeTracker.Clear();
+                throw;
+            }
+
+            return result;
         }
         public DbSet<BattleHistory> BattleHistories { get; set; }
         public DbSet<UserOperationClaim> UserOperationClaims { get; set; }

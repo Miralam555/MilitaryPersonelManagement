@@ -21,6 +21,7 @@ namespace DataAccess.Conrete.EntityFramework
                                    join i in _context.Injunctions on c.InjunctionId equals i.Id
                                    select new ProfessionalDevelopmentCourseGetDto
                                    {
+                                       Id=c.Id,
                                        PersonelId = c.PersonelId,
                                        InjunctionId = c.InjunctionId,
                                        PersonelName = p.PersonelName,
@@ -44,6 +45,7 @@ namespace DataAccess.Conrete.EntityFramework
                                    join i in _context.Injunctions on c.InjunctionId equals i.Id
                                    select new ProfessionalDevelopmentCourseGetDto
                                    {
+                                       Id=c.Id,
                                        PersonelId = c.PersonelId,
                                        InjunctionId = c.InjunctionId,
                                        PersonelName = p.PersonelName,
@@ -67,6 +69,7 @@ namespace DataAccess.Conrete.EntityFramework
                                    join i in _context.Injunctions on c.InjunctionId equals i.Id
                                    select new ProfessionalDevelopmentCourseGetDto
                                    {
+                                       Id=c.Id,
                                        PersonelId = c.PersonelId,
                                        InjunctionId = c.InjunctionId,
                                        PersonelName = p.PersonelName,

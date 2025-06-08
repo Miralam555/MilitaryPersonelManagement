@@ -20,7 +20,8 @@ namespace DataAccess.Conrete.EntityFramework
             
                 var query = await (from c in _context.CrimeRecords
                                    join p in _context.MilitaryPersonels on c.PersonelId equals p.Id
-                                   join m in _context.FamilyMembers on c.MemberId equals m.Id
+                                   join m in _context.FamilyMembers on c.MemberId equals m.Id into memberJoin
+                                   from m in memberJoin.DefaultIfEmpty()
                                    select new CrimeRecordGetDto
                                    {
                                        Id = c.Id,
@@ -34,7 +35,7 @@ namespace DataAccess.Conrete.EntityFramework
                                        ChargeDescription = c.ChargeDescription,
                                        PenalInstitution = c.PenalInstitution,
                                        Record = c.Record
-                                   }).ToListAsync();
+                                   }).AsNoTracking().ToListAsync();
                 return query;
             
         }
@@ -58,7 +59,7 @@ namespace DataAccess.Conrete.EntityFramework
                                        ChargeDescription = c.ChargeDescription,
                                        PenalInstitution = c.PenalInstitution,
                                        Record = c.Record
-                                   }).Where(p => p.MemberId == memberId).ToListAsync();
+                                   }).Where(p => p.MemberId == memberId).AsNoTracking().ToListAsync();
                 return query;
             
         }
@@ -68,7 +69,8 @@ namespace DataAccess.Conrete.EntityFramework
             
                 var query = await (from c in _context.CrimeRecords
                                    join p in _context.MilitaryPersonels on c.PersonelId equals p.Id
-                                   join m in _context.FamilyMembers on c.MemberId equals m.Id
+                                   join m in _context.FamilyMembers on c.MemberId equals m.Id into memberJoin
+                                   from m in memberJoin.DefaultIfEmpty()
                                    select new CrimeRecordGetDto
                                    {
                                        Id = c.Id,
@@ -82,7 +84,7 @@ namespace DataAccess.Conrete.EntityFramework
                                        ChargeDescription = c.ChargeDescription,
                                        PenalInstitution = c.PenalInstitution,
                                        Record = c.Record
-                                   }).Where(p => p.PersonelId == personelId).ToListAsync();
+                                   }).Where(p => p.PersonelId == personelId).AsNoTracking().ToListAsync();
                 return query;
             
         }
@@ -92,7 +94,8 @@ namespace DataAccess.Conrete.EntityFramework
            
                 var query = await (from c in _context.CrimeRecords
                                    join p in _context.MilitaryPersonels on c.PersonelId equals p.Id
-                                   join m in _context.FamilyMembers on c.MemberId equals m.Id
+                                   join m in _context.FamilyMembers on c.MemberId equals m.Id into memberJoin
+                                   from m in memberJoin.DefaultIfEmpty()
                                    select new CrimeRecordGetDto
                                    {
                                        Id = c.Id,

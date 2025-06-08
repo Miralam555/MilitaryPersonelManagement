@@ -18,12 +18,12 @@ namespace DataAccess.Conrete.EntityFramework
            
                 var query = await (from r in _context.MilitaryPersonelRecognitions
                                    join p in _context.MilitaryPersonels on r.PersonelId equals p.Id
-                                   join i in _context.Injunctions on r.Injunctionİd equals i.Id
+                                   join i in _context.Injunctions on r.InjunctionId equals i.Id
                                    select new PersonelRecognitionGetDto
                                    {
                                        Id = r.Id,
                                        PersonelId = r.PersonelId,
-                                       Injunctionİd = r.Injunctionİd,
+                                       Injunctionİd = r.InjunctionId,
                                        InjunctionNumber = i.InjunctionNumber,
                                        PersonelName = p.PersonelName,
                                        PersonelSurname = p.PersonelSurname,
@@ -38,12 +38,12 @@ namespace DataAccess.Conrete.EntityFramework
            
                 var query = await (from r in _context.MilitaryPersonelRecognitions
                                    join p in _context.MilitaryPersonels on r.PersonelId equals p.Id
-                                   join i in _context.Injunctions on r.Injunctionİd equals i.Id
+                                   join i in _context.Injunctions on r.InjunctionId equals i.Id
                                    select new PersonelRecognitionGetDto
                                    {
                                        Id = r.Id,
                                        PersonelId = r.PersonelId,
-                                       Injunctionİd = r.Injunctionİd,
+                                       Injunctionİd = r.InjunctionId,
                                        InjunctionNumber = i.InjunctionNumber,
                                        PersonelName = p.PersonelName,
                                        PersonelSurname = p.PersonelSurname,
@@ -58,12 +58,12 @@ namespace DataAccess.Conrete.EntityFramework
             
                 var query = await (from r in _context.MilitaryPersonelRecognitions
                                    join p in _context.MilitaryPersonels on r.PersonelId equals p.Id
-                                   join i in _context.Injunctions on r.Injunctionİd equals i.Id
+                                   join i in _context.Injunctions on r.InjunctionId equals i.Id
                                    select new PersonelRecognitionGetDto
                                    {
                                        Id = r.Id,
                                        PersonelId = r.PersonelId,
-                                       Injunctionİd = r.Injunctionİd,
+                                       Injunctionİd = r.InjunctionId,
                                        InjunctionNumber = i.InjunctionNumber,
                                        PersonelName = p.PersonelName,
                                        PersonelSurname = p.PersonelSurname,
@@ -78,12 +78,12 @@ namespace DataAccess.Conrete.EntityFramework
             
                 var query = await (from r in _context.MilitaryPersonelRecognitions
                                    join p in _context.MilitaryPersonels on r.PersonelId equals p.Id
-                                   join i in _context.Injunctions on r.Injunctionİd equals i.Id
+                                   join i in _context.Injunctions on r.InjunctionId equals i.Id
                                    select new PersonelRecognitionGetDto
                                    {
                                        Id = r.Id,
                                        PersonelId = r.PersonelId,
-                                       Injunctionİd = r.Injunctionİd,
+                                       Injunctionİd = r.InjunctionId,
                                        InjunctionNumber = i.InjunctionNumber,
                                        PersonelName = p.PersonelName,
                                        PersonelSurname = p.PersonelSurname,

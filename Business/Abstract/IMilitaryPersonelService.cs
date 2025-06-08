@@ -1,10 +1,6 @@
 ﻿using Core.Utilities.Results;
 using Entities.DTOs.MilitaryPersonelDtos;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using MyMilitaryFinalProject.Entities.Concrete;
 
 namespace Business.Abstract
 {
@@ -12,8 +8,8 @@ namespace Business.Abstract
     {
         Task<IResult> PersonelAddAsync(MilitaryPersonelAddDto dto);
         Task<IResult> PersonelUpdateAsync(MilitaryPersonelUpdateDto dto);
-        Task<IDataResult<List<PersonelGetDto>>> GetAllPersonelsAsync();
-        Task<IDataResult<PersonelGetDto>> GetPersonelById(int id);
+        Task<IDataResult<List<MilitaryPersonel>>> GetAllPersonelsAsync();
+        Task<IDataResult<MilitaryPersonel>> GetPersonelById(int id);
     }
     
 

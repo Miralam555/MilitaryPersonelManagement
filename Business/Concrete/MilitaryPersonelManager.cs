@@ -50,7 +50,8 @@ namespace Business.Concrete
         [SecuredOperation("admin,cmd.update")]
         public async Task<IResult> PersonelUpdateAsync(MilitaryPersonelUpdateDto dto)
         {
-            var entity = _mapper.Map<MilitaryPersonel>(dto);
+            var entity = await _militaryPersonelDal.GetByIdPersonelDetails(dto.Id);
+            _mapper.Map(dto, entity);
             if (entity == null)
             {
                 return new ErrorDataResult<MilitaryMedicalAssessmentGetDto>(Messages.EntityNotFound);
@@ -61,30 +62,30 @@ namespace Business.Concrete
     
         [CacheAspect]
         [SecuredOperation("admin,cmd.get")]
-        public async Task<IDataResult<List<PersonelGetDto>>> GetAllPersonelsAsync()
+        public async Task<IDataResult<List<MilitaryPersonel>>> GetAllPersonelsAsync()
         {
-            List<PersonelGetDto> militaryPersonels= await _militaryPersonelDal.GetAllPersonelDetails();
+            List<MilitaryPersonel> militaryPersonels= await _militaryPersonelDal.GetAllPersonelDetails();
             if (militaryPersonels is null)
             {
-                return new ErrorDataResult<List<PersonelGetDto>>(Messages.NoData);
+                return new ErrorDataResult<List<MilitaryPersonel>>(Messages.NoData);
             }
 
-            return new SuccessDataResult<List<PersonelGetDto>>(militaryPersonels);
+            return new SuccessDataResult<List<MilitaryPersonel>>(militaryPersonels);
 
         }
        
         [CacheAspect]
         [SecuredOperation("admin,cmd.get")]
-        public async Task<IDataResult<PersonelGetDto>> GetPersonelById(int id)
+        public async Task<IDataResult<MilitaryPersonel>> GetPersonelById(int id)
         {
-            PersonelGetDto personel = await _militaryPersonelDal.GetByIdPersonelDetails(id);
+            MilitaryPersonel personel = await _militaryPersonelDal.GetByIdPersonelDetails(id);
             
             if(personel is null)
             {
-               return  new ErrorDataResult<PersonelGetDto>(Messages.EntityNotFound);
+               return  new ErrorDataResult<MilitaryPersonel>(Messages.EntityNotFound);
             }
          
-            return new SuccessDataResult<PersonelGetDto>(personel);
+            return new SuccessDataResult<MilitaryPersonel   >(personel);
 
         }
        //Delete emeliyyati yoxdur arxivde qalsin deye ve ya soft delete istifade etmek olar

@@ -1,5 +1,6 @@
 ﻿using FluentValidation;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System;
 using System.Collections.Generic;
@@ -13,6 +14,7 @@ namespace Core.Extensions
     public class ExceptionMiddleware
     {
         private RequestDelegate _next;
+        
 
         public ExceptionMiddleware(RequestDelegate next)
         {
@@ -30,6 +32,7 @@ namespace Core.Extensions
             {
                 
                 await HandleExceptionAsync(httpContext, e);
+                
             }
         }
 

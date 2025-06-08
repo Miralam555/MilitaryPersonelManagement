@@ -12,7 +12,7 @@ namespace MyMilitaryFinalProject.EntityConfigurations
             builder.ToTable("MilitaryPersonelRecognition");
 
             builder.HasOne(d => d.InjunctionİdNavigation).WithMany(p => p.MilitaryPersonelRecognitions)
-                .HasForeignKey(d => d.Injunctionİd)
+                .HasForeignKey(d => d.InjunctionId)
                 .OnDelete(DeleteBehavior.ClientSetNull);
 
             builder.HasOne(d => d.Personel).WithMany(p => p.MilitaryPersonelRecognitions)

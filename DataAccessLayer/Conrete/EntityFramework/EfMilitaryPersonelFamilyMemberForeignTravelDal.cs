@@ -23,7 +23,7 @@ namespace DataAccess.Conrete.EntityFramework
                              select new FamilyMemberForeignTravelGetDto
                              {
                                  Id = f.Id,
-                                 MemberId = f.Id,
+                                 MemberId = f.MemberId,
                                  MemberName = p.MemberName,
                                  MemberSurName = p.MemberSurName,
                                  EndDate = f.EndDate,
@@ -44,7 +44,7 @@ namespace DataAccess.Conrete.EntityFramework
                              select new FamilyMemberForeignTravelGetDto
                              {
                                  Id = f.Id,
-                                 MemberId = f.Id,
+                                 MemberId = f.MemberId,
                                  MemberName = p.MemberName,
                                  MemberSurName = p.MemberSurName,
                                  EndDate = f.EndDate,
@@ -65,7 +65,7 @@ namespace DataAccess.Conrete.EntityFramework
                                    select new FamilyMemberForeignTravelGetDto
                                    {
                                        Id = f.Id,
-                                       MemberId = f.Id,
+                                       MemberId = f.MemberId,
                                        MemberName = p.MemberName,
                                        MemberSurName = p.MemberSurName,
                                        EndDate = f.EndDate,

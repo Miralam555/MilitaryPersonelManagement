@@ -82,7 +82,7 @@ namespace Business.Concrete
         }
 
 
-        [ValidationAspect(typeof(MilitaryMedicalAssessment))]
+        [ValidationAspect(typeof(MilitaryMedicalAssessmentValidator))]
         [SecuredOperation("admin,cmd.update")]
         [CacheRemoveAspect("IMilitaryMedicalAssessmentService.Get")]
         public async Task<IResult> UpdateAssesmentAsync(MilitaryMedicalAssessmentUpdateDto dto)
@@ -93,10 +93,11 @@ namespace Business.Concrete
             {
                 return new ErrorDataResult<MilitaryMedicalAssessmentGetDto>(Messages.EntityNotFound);
             }
+            _mapper.Map(dto, entity);
             await _militaryMedicalAssessmentDal.UpdateAsync(entity);
             return new SuccessResult(Messages.SuccessfullyUpdated);
         }
-        [ValidationAspect(typeof(MilitaryMedicalAssessment))]
+        
         [SecuredOperation("admin")]
         [CacheRemoveAspect("IMilitaryMedicalAssessmentService.Get")]
         public async Task<IResult> DeleteAssesmentAsync(int id)

@@ -11,9 +11,9 @@ namespace Entities.DTOs.CrimeRecordDtos
         public string PersonelSurname { get; set; } = null!;
 
         public int? MemberId { get; set; }
-        public string MemberName { get; set; } = null!;
+        public string? MemberName { get; set; }
 
-        public string MemberSurName { get; set; } = null!;
+        public string? MemberSurName { get; set; }
 
         public string ChargeDescription { get; set; } = null!;
 

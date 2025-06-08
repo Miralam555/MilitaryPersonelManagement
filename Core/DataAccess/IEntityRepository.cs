@@ -12,9 +12,9 @@ namespace Core.DataAccess
     {
         Task<List<TEntity>> GetAllAsync(Expression<Func<TEntity,bool>> filter=null);
         Task<TEntity> GetAsync(Expression<Func<TEntity,bool>> filter);
-        Task AddAsync(TEntity entity);
-        Task UpdateAsync(TEntity entity);
-        Task DeleteAsync(TEntity entity);
+        Task<int> AddAsync(TEntity entity);
+        Task<int> UpdateAsync(TEntity entity);
+        Task<int> DeleteAsync(TEntity entity);
        
     }
 }

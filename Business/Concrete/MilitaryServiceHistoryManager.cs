@@ -82,7 +82,7 @@ namespace Business.Concrete
             return new SuccessResult(Messages.SuccessfullyAdded);
         }
         [CacheRemoveAspect("IMilitaryServiceHistoryService.Get")]
-        [SecuredOperation("admin,cmd.add")]
+        [SecuredOperation("admin,cmd.update")]
         [ValidationAspect(typeof(MilitaryServiceHistoryValidator))]
         public async Task<IResult> UpdateHistoryAsync(MilitaryServiceHistoryUpdateDto dto)
         {

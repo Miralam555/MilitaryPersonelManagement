@@ -57,9 +57,10 @@ namespace Business.Concrete
             var entity = await _recordDal.GetSkillRecordByIdAsync(id);
             if (entity == null)
             {
-                return new SuccessDataResult<MilitarySkillRecordGetDto>(Messages.EntityNotFound);
+                return new ErrorDataResult<MilitarySkillRecordGetDto>(Messages.EntityNotFound);
             }
-            return new ErrorDataResult<MilitarySkillRecordGetDto>(entity);
+            return new SuccessDataResult<MilitarySkillRecordGetDto>(entity);
+            
         }
         [CacheRemoveAspect("IMilitarySkillRecordService.Get")]
         [SecuredOperation("admin,cmd.add")]

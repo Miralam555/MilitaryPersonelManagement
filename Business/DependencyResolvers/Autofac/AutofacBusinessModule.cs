@@ -93,6 +93,10 @@ namespace Business.DependencyResolvers.Autofac
             builder.RegisterType<EfPreMilitaryWorkExperienceDal>().As<IPreMilitaryWorkExperienceDal>().SingleInstance();
 
 
+            builder.RegisterType<ProfessionalDevelopmentCourseManager>().As<IProfessionalDevelopomentCourseService>().SingleInstance();
+            builder.RegisterType<EfProfessionalDevelopmentCourseDal>().As<IProfessionalDevelopmentCourseDal>().SingleInstance();
+
+
 
 
             builder.RegisterType<UserManager>().As<IUserService>();

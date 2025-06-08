@@ -11,8 +11,8 @@ namespace DataAccess.Abstract
 {
     public interface IMilitaryPersonelDal:IEntityRepository<MilitaryPersonel>
     {
-        Task<List<PersonelGetDto>> GetAllPersonelDetails();
-        Task<PersonelGetDto> GetByIdPersonelDetails(int id);
+        Task<List<MilitaryPersonel>> GetAllPersonelDetails();
+        Task<MilitaryPersonel> GetByIdPersonelDetails(int id);
     }
 
 }

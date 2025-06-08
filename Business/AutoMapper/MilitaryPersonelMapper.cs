@@ -20,9 +20,11 @@ namespace Business.AutoMapper
 
 
             CreateMap<MilitaryPersonelUpdateDto, MilitaryPersonel>()
-              .ForMember(dest => dest.MilitaryPersonelInfo, opt => opt.MapFrom(src => src.MilitaryPersonelInfoUpdateDto));
+              .ForMember(dest => dest.MilitaryPersonelInfo, opt => opt.MapFrom(src => src.MilitaryPersonelInfoUpdateDto))
+              .ForMember(dest => dest.CreatedDate, opt => opt.Ignore());
 
-            CreateMap<MilitaryPersonelInfoUpdateDto, MilitaryPersonelInfo>();
+            CreateMap<MilitaryPersonelInfoUpdateDto, MilitaryPersonelInfo>()
+                .ForMember(dest=>dest.CreatedDate,opt=>opt.Ignore());
 
 
             CreateMap<MilitaryPersonel, MilitaryPersonelGetDto>()

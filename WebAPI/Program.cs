@@ -117,7 +117,7 @@ namespace WebAPI
             app.ConfigureCustomExceptionMiddleware();
             
 
-            app.UseStaticFiles();
+           
             app.UseRouting();
 
             

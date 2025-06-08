@@ -8,7 +8,7 @@ namespace Entities.DTOs.MilitaryPersonelRecognitionDtos
 
         public int? PersonelId { get; set; }
 
-        public int Injunctionİd { get; set; }
+        public int InjunctionId { get; set; }
 
         public string? RecognitionDescription { get; set; }
 
