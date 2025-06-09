@@ -1,10 +1,5 @@
 ﻿using FluentValidation;
-using Microsoft.IdentityModel.Tokens;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace Core.CrossCuttingConcerns.Validation
 {
@@ -16,7 +11,7 @@ namespace Core.CrossCuttingConcerns.Validation
             var result = validator.Validate(context);
             if (!result.IsValid)
             {
-                throw new FluentValidation.ValidationException(result.Errors);
+                throw new ValidationException(result.Errors);
             }
         }
     }

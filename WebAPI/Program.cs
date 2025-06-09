@@ -41,7 +41,7 @@ namespace WebAPI
             {
                 options.UseSqlServer(connectionString);
             }, ServiceLifetime.Singleton);
-
+            
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen(c =>
             {
@@ -114,7 +114,7 @@ namespace WebAPI
             }
 
            
-            app.ConfigureCustomExceptionMiddleware();
+            app.UseCustomExceptionMiddleware();
             
 
            

@@ -10,6 +10,7 @@ using System.Net.Mail;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Configuration;
 
 namespace Core.Aspects.Autofac.Performance
 {
@@ -17,11 +18,12 @@ namespace Core.Aspects.Autofac.Performance
     {
         private int _interval;
         private Stopwatch _stopwatch;
-
+        private readonly IConfiguration _configuration; 
         public PerformanceAspect(int interval)
         {
             _interval = interval;
             _stopwatch = ServiceTool.ServiceProvider.GetService<Stopwatch>();
+            _configuration = ServiceTool.ServiceProvider.GetService<IConfiguration>();
         }
 
 
@@ -41,13 +43,13 @@ namespace Core.Aspects.Autofac.Performance
         }
         private void SendMailPerformanceWarning(IInvocation invocation)
         {
-            string fromMail = "my@gmail.com";
-            string fromPassword = "iaddf asdfasdf asdfasd ";
+            string fromMail = _configuration.GetSection("SendEmailOptions")["FromMail"];
+            string fromPassword = _configuration.GetSection("SendEmailOptions")["FromPassword"];
 
             MailMessage message = new MailMessage();
             message.From = new MailAddress(fromMail);
             message.Subject = "Performance Warning";
-            message.To.Add(new MailAddress("example@mail.com"));
+            message.To.Add(new MailAddress("androidapps634@gmail.com"));
             message.Body = $"<html><body> {invocation.Method.DeclaringType.FullName}.{invocation.Method.Name}-->{_stopwatch.Elapsed.TotalSeconds} </body></html>";
             message.IsBodyHtml = true;
 

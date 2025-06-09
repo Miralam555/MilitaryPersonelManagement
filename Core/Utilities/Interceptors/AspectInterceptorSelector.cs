@@ -2,6 +2,8 @@
 using Core.Aspects.Autofac.Logging;
 using Core.Aspects.Autofac.Performance;
 using Core.CrossCuttingConcerns.Logging.Log4Net.Loggers;
+using Core.Utilities.IoC;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,10 +26,10 @@ namespace Core.Utilities.Interceptors
             {
                 classAttributes.Add(new LogAspect(typeof(DatabaseLogger)));
             }
-            //if (!classAttributes.Any(x => x is PerformanceAspect))
-            //{
-            //    classAttributes.Add(new PerformanceAspect(7));
-            //}
+            if (!classAttributes.Any(x => x is PerformanceAspect))
+            {
+                classAttributes.Add(new PerformanceAspect(7));
+            }
 
             if (!classAttributes.Any(x => x is ExceptionLogAspect))
             {
