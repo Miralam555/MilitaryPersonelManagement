@@ -23,17 +23,17 @@ namespace WebAPI
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            // Autofac üçün
+            
             builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
             builder.Host.ConfigureContainer<ContainerBuilder>(containerBuilder =>
             {
                 containerBuilder.RegisterModule(new AutofacBusinessModule());
             });
 
-            // Konfiqurasiya oxuma
+            
             var configuration = builder.Configuration;
 
-            // Servisləri əlavə et
+           
             builder.Services.AddControllers();
 
             var connectionString = configuration.GetConnectionString("SqlServer");
